@@ -1,0 +1,33 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.listOfMembers:
+    class: 'Qc\QcWidgets\Widgets\Provider\Imp\ListOfMembersProviderImp'
+    arguments:
+      $table: 'be_users'
+      $orderField: 'crdate'
+      $limit: 7
+      $order: 'DESC'
+
+  dashboard.widget.listOfMembers:
+    class: 'Qc\QcWidgets\Widgets\ListOfMembersWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.listOfMembers'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'listOfMembers'
+        groupNames: 'qcWidgets'
+        title: 'List of members widget'
+        description: 'List of members widget description'
+        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        height: 'medium'
+        width: 'medium'

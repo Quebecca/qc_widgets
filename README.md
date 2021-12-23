@@ -1,2 +1,4 @@
-# qc_widgets
-Qc Widgets for typo3 dashboard
+Sitepackage for the project "Qc widgets"
+==============================================================
+
+Add some explanation here.

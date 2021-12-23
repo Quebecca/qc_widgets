@@ -1,0 +1,32 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.listOfLastModifiedPages:
+    class: 'Qc\QcWidgets\Widgets\Provider\Imp\ListOfLastModifiedPagesProviderImp'
+    arguments:
+      $table: 'be_users'
+      $orderField: 'crdate'
+      $limit: 7
+
+  dashboard.widget.listOfLastModifiedPages:
+    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPagesWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.listOfLastModifiedPages'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'listOfLastModifiedPages'
+        groupNames: 'qcWidgets'
+        title: 'List of my last modified pages'
+        description: 'List of my last modified pages widget description'
+        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        height: 'medium'
+        width: 'medium'

@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>List of my team members</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">RealName</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Last connected</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <f:for each="{members}" as="member">
+                            <tr>
+                                <td colspan="4" style="text-align : center; background-color : yellow;">Team 1</td>
+                            </tr>
+                            <tr>
+                                <td>{member.username}</td>
+                                <td>{member.realName}</td>
+                                <td>{member.email}</td>
+                                <td>{member.tstamp}</td>
+                            </tr>
+                        </f:for>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+<br><br>
+</html>

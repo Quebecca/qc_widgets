@@ -1,0 +1,4 @@
+module.tx_dashboard.view {
+  templateRootPaths.110 = EXT:qc_widgets/Resources/Private/Templates
+  partialRootPaths.110 = EXT:qc_widgets/Resources/Private/Partials
+}

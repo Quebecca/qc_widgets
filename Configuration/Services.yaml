@@ -1,0 +1,4 @@
+imports:
+  - { resource: Backend/Widgets/ListOfMembersWidget.yaml }
+  - { resource: Backend/Widgets/ListOfLastModifiedPagesWidget.yaml }
+  - { resource: Backend/Widgets/ListOfLastCreatedPagesWidget.yaml }

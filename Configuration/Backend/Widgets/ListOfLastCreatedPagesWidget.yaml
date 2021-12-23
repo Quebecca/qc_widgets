@@ -1,0 +1,32 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.listOfLastCreatedPages:
+    class: 'Qc\QcWidgets\Widgets\Provider\Imp\ListOfLastCreatedPagesProviderImp'
+    arguments:
+      $table: 'be_users'
+      $orderField: 'crdate'
+      $limit: 7
+
+  dashboard.widget.listOfLastCreatedPages:
+    class: 'Qc\QcWidgets\Widgets\ListOfLastCreatedPagesWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.listOfLastCreatedPages'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'listOfLastCreatedPages'
+        groupNames: 'qcWidgets'
+        title: 'List of my last created pages'
+        description: 'List of my last created pages widget description'
+        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        height: 'medium'
+        width: 'medium'

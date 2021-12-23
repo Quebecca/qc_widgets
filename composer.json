@@ -1,0 +1,23 @@
+{
+    "name": "quebecca/qc-widgets",
+    "type": "typo3-cms-extension",
+    "description": "Qc Widgets",
+    "homepage": "https://quebec.ca",
+    "license": ["GPL-2.0-or-later"],
+    "keywords": ["TYPO3 CMS"],
+    "require": {
+        "typo3/cms-core": "^10.4",
+        "typo3/cms-rte-ckeditor": "^10.4",
+        "typo3/cms-fluid-styled-content": "^10.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qc\\QcWidgets\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "qc_widgets"
+        }
+    }
+}
