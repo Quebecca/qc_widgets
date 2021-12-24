@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="EXT:qc_info_rights/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" product-name="qcinforights">
+		<header/>
+		<body>
+			<trans-unit id="emailNotProvided" >
+				<source>Email not provided</source>
+			</trans-unit>
+            <trans-unit id="realNameNotProvided" >
+                <source>Real name not provided</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

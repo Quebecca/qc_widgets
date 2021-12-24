@@ -15,24 +15,24 @@
                         <thead>
                         <tr>
                             <th scope="col">Username</th>
-                            <th scope="col">RealName</th>
                             <th scope="col">Email</th>
+                            <th scope="col">RealName</th>
                             <th scope="col">Last connected</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <f:for each="{members}" as="member">
-                            <tr>
-                                <td colspan="4" style="text-align : center; background-color : yellow;">Team 1</td>
-                            </tr>
-                            <tr>
-                                <td>{member.username}</td>
-                                <td>{member.realName}</td>
-                                <td>{member.email}</td>
-                                <td>{member.tstamp}</td>
-                            </tr>
-                        </f:for>
-
+                            <f:for each="{data}" as="item">
+                                <tr>
+                                    <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
+                                </tr>
+                                <f:for each="{item.members}" as="user">
+                                    <tr>
+                                        <f:for each="{user}" as="details" >
+                                            <td> {details.username}</td>
+                                        </f:for>
+                                    </tr>
+                                </f:for>
+                            </f:for>
                         </tbody>
                     </table>
                 </div>

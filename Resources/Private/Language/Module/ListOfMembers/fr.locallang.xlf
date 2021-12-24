@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr_CA" datatype="plaintext" original="messages" date="2021-09-16UTC15:45:380">
+		<header>
+			<authorName>Quebec.ca</authorName>
+		</header>
+		<body>
+            <trans-unit id="emailNotProvided" >
+                <source>Email not provided</source>
+                <target>Courriel non fourni</target>
+            </trans-unit>
+            <trans-unit id="realNameNotProvided" >
+                <source>Real name not provided</source>
+                <target>Nom réel non fourni</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

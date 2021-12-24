@@ -32,19 +32,9 @@ class ListOfMembersWidget implements WidgetInterface
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-        $members = [];
-        foreach ($data as $item){
-            $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
-            if($item['realName'] == ''){
-                $item['realName'] = 'Not provided';
-            }
-            if($item['email'] == ''){
-                $item['email'] = 'Not provided';
-            }
-            array_push($members, $item);
-        }
+
         $this->view->setTemplate('Widget/ListOfMembersWidget');
-        $this->view->assign('members', $members);
+        $this->view->assign('data', $data);
         return $this->view->render();
     }
 }
