@@ -3,6 +3,12 @@
 	<file source-language="en" datatype="plaintext" original="EXT:qc_info_rights/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" product-name="qcinforights">
 		<header/>
 		<body>
+            <trans-unit id="listOfMembers" >
+                <source>List Of my groups members</source>
+            </trans-unit>
+            <trans-unit id="listOfMembersDescription" >
+                <source>Displays the list of all members of my groups</source>
+            </trans-unit>
 			<trans-unit id="emailNotProvided" >
 				<source>Email not provided</source>
 			</trans-unit>
@@ -11,6 +17,9 @@
             </trans-unit>
             <trans-unit id="listOfMyTeamsMembers" >
                 <source>List of my groups members</source>
+            </trans-unit>
+            <trans-unit id="listOfAdmins" >
+                <source>List of admins</source>
             </trans-unit>
 		</body>
 	</file>

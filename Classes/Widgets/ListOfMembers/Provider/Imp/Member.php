@@ -1,6 +1,6 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
 
 
 class Member

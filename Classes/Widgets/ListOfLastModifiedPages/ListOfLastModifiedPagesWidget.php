@@ -1,17 +1,18 @@
 <?php
-namespace Qc\QcWidgets\Widgets;
 
-use Qc\QcWidgets\Widgets\Provider\ListOfLastCreatedPagesProvider;
+namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages;
+
+use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfLastCreatedPagesWidget implements WidgetInterface
+class ListOfLastModifiedPagesWidget implements WidgetInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfLastCreatedPagesProvider
+     * @var ListOfLastModifiedPagesProvider
      */
     protected $dataProvider;
 
@@ -21,7 +22,7 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfLastCreatedPagesProvider $dataProvider
+        ListOfLastModifiedPagesProvider $dataProvider
     )
     {
         $this->configuration = $configuration;
@@ -31,7 +32,7 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface
 
     public function renderWidgetContent(): string
     {
-        $this->view->setTemplate('Widget/ListOfLastCreatedPagesWidget');
+        $this->view->setTemplate('Widget/ListOfLastModifiedPagesWidget');
         return $this->view->render();
     }
 }

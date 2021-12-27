@@ -1,6 +1,6 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\Provider;
+namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider;
 
 interface ListOfLastModifiedPagesProvider
 {

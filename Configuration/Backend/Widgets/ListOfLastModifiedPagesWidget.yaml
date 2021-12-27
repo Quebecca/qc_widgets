@@ -9,14 +9,14 @@ services:
     resource: '../Classes/*'
 
   dashboard.provider.listOfLastModifiedPages:
-    class: 'Qc\QcWidgets\Widgets\Provider\Imp\ListOfLastModifiedPagesProviderImp'
+    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp\ListOfLastModifiedPagesProviderImp'
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
       $limit: 7
 
   dashboard.widget.listOfLastModifiedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPagesWidget'
+    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\ListOfLastModifiedPagesWidget'
     arguments:
       $dataProvider: '@dashboard.provider.listOfLastModifiedPages'
       $view: '@dashboard.views.widget'

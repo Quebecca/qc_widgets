@@ -1,7 +1,7 @@
 <?php
-namespace Qc\QcWidgets\Widgets\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
 
-use Qc\QcWidgets\Widgets\Provider\ListOfMembersProvider;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
 use TYPO3\CMS\Beuser\Domain\Model\Demand;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -115,17 +115,75 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
 
         // Methode 2
         $users = [];
-        $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
-        foreach ($groupsUid as $guid) {
-            $demand = new Demand();
-            $demand->setBackendUserGroup((int)$guid);
-            $groupName = $this->backendUserGroupRepository->findByUid($guid);
+
+        // check if the user is admin, if true we will display the list of admins users
+        if ($GLOBALS['BE_USER']->isAdmin()) {
+            // get the list of admins
+            $admins =  \TYPO3\CMS\Backend\Utility\BackendUtility::getUserNames('username,realName, email,lastlogin', "AND ADMIN = 1 AND disable = 1");
+            $members = [];
+            foreach ($admins as $admin){
+                $member = new Member();
+                $member->setUsername($admin['username']);
+                $member->setRealName($admin['realName']);
+                $member->setEmail($admin['email']);
+                $member->setLastLogin($admin['lastLogin'] ?? '-');
+                // check if the email or realName is an empty value
+                if ($member->getEmail() === '') {
+                    $member->setEmail(
+                        $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
+                    );
+                }
+                if ($member->getRealName() === '') {
+                    $member->setRealName(
+                        $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
+                    );
+                }
+                $members[] = $member;
+            }
             $users[] = [
-                "group" => $groupName->getTitle(),
-                "members" => $this->formattingUserItems($this->backendUserRepository->findDemanded($demand))
+                "group" => '',
+                "members" =>$members
             ];
+
         }
-        return $users;
+        else{
+            $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
+            foreach ($groupsUid as $guid) {
+                $demand = new Demand();
+                $demand->setBackendUserGroup((int)$guid);
+                $groupName = $this->backendUserGroupRepository->findByUid($guid);
+                $members = [];
+                $data = $this->backendUserRepository->findDemanded($demand);
+                foreach ($data as $item){
+                    $member = new Member();
+                    $member->setUsername($item->getUsername());
+                    $member->setRealName($item->getRealName());
+                    $member->setEmail($item->getEmail());
+                    $member->setLastLogin(date_format($item->getLastLoginDateAndTime(), 'Y-m-d H:i:s'));
+                    // check if the email or realName is an empty value
+                    if ($member->getEmail() === '') {
+                        $member->setEmail(
+                            $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
+                        );
+                    }
+                    if ($member->getRealName() === '') {
+                        $member->setRealName(
+                            $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
+                        );
+                    }
+
+                    $members [] = $members;
+                }
+                $users[] = [
+                    "group" => $groupName->getTitle(),
+                    "members" =>$members
+                ];
+            }
+        }
+        return [
+            'usersData' => $users,
+            'isAdmin' => $GLOBALS['BE_USER']->isAdmin()
+        ];
     }
 
     public function formattingUserItems( $usersData): array

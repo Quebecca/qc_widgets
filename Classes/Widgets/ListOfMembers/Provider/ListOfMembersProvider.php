@@ -1,7 +1,7 @@
 <?php
-namespace Qc\QcWidgets\Widgets\Provider;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider;
 
-interface ListOfLastCreatedPagesProvider
+interface ListOfMembersProvider
 {
     public function getTable() : string;
     public function getItems(): array;

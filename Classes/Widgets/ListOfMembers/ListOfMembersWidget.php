@@ -1,7 +1,7 @@
 <?php
-namespace Qc\QcWidgets\Widgets;
+namespace Qc\QcWidgets\Widgets\ListOfMembers;
 
-use Qc\QcWidgets\Widgets\Provider\ListOfMembersProvider;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;

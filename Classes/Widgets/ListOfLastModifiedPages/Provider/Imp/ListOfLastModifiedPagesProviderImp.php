@@ -1,8 +1,9 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp;
 
-use Qc\QcWidgets\Widgets\Provider\ListOfLastModifiedPagesProvider;
+
+use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
 
 class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvider
 {

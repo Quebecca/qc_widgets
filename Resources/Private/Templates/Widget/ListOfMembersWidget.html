@@ -1,49 +1,97 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
-    <div class="container">
-        <div class="row">
-            <h2>
-                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMyTeamsMembers"/>
-            </h2>
+
+
+<div class="container">
+    <br>
+    <div class="d-flex flex-row">
+        <div class="p-2">
+            <f:if condition="{data.isAdmin} == true">
+                <f:then>
+                    <h2>
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfAdmins"/>
+                    </h2>
+                </f:then>
+                <f:else>
+                    <h2>
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMyTeamsMembers"/>
+                    </h2>
+                </f:else>
+            </f:if>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <div class="p-2">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-                    <table class="table table-bordered table-striped mb-0">
-                        <thead>
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">RealName</th>
+                        <th scope="col">Last connected</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{data.members}" as="item">
                         <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">RealName</th>
-                            <th scope="col">Last connected</th>
+                            <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <f:for each="{data}" as="item">
+                        <f:for each="{item.members}" as="user">
                             <tr>
-                                <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
+                                <f:for each="{user}" as="details" key="detailsKey">
+                                    <td> {details.username}</td>
+                                    <td> {details.email}</td>
+                                    <td> {details.realName}</td>
+                                    <td> {details.lastLogin}</td>
+                                </f:for>
                             </tr>
-                            <f:for each="{item.members}" as="user">
-                                <tr>
-                                    <f:for each="{user}" as="details" key="detailsKey">
-                                        <td> {details.username}</td>
-                                        <td> {details.email}</td>
-                                        <td> {details.realName}</td>
-                                        <td> {details.lastLogin}</td>
-                                    </f:for>
-                                </tr>
-                            </f:for>
                         </f:for>
-                        </tbody>
-                    </table>
+                    </f:for>
+                    </tbody>
+                </table>
 
+            </div>
+        </div>
+    </div>
+    <br>
+    <f:comment>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="collapse in">
+                    <div class="table-fit">
+                        <table class="table table-striped table-hover table-wrapper-scroll-y my-custom-scrollbar ">
+                            <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">RealName</th>
+                                <th scope="col">Last connected</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <f:for each="{data}" as="item">
+                                <tr>
+                                    <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
+                                </tr>
+                                <f:for each="{item.members}" as="user">
+                                    <tr>
+                                        <f:for each="{user}" as="details" key="detailsKey">
+                                            <td> {details.username}</td>
+                                            <td> {details.email}</td>
+                                            <td> {details.realName}</td>
+                                            <td> {details.lastLogin}</td>
+                                        </f:for>
+                                    </tr>
+                                </f:for>
+                            </f:for>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
+    </f:comment>
+</div>
 
-    </div>
 <br>
 </html>

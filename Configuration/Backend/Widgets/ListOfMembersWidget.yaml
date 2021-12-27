@@ -9,7 +9,7 @@ services:
     resource: '../Classes/*'
 
   dashboard.provider.listOfMembers:
-    class: 'Qc\QcWidgets\Widgets\Provider\Imp\ListOfMembersProviderImp'
+    class: 'Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\ListOfMembersProviderImp'
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
@@ -17,7 +17,7 @@ services:
       $order: 'DESC'
 
   dashboard.widget.listOfMembers:
-    class: 'Qc\QcWidgets\Widgets\ListOfMembersWidget'
+    class: 'Qc\QcWidgets\Widgets\ListOfMembers\ListOfMembersWidget'
     arguments:
       $dataProvider: '@dashboard.provider.listOfMembers'
       $view: '@dashboard.views.widget'
@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'listOfMembers'
         groupNames: 'qcWidgets'
-        title: 'List of members widget'
-        description: 'List of members widget description'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembers'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembersDescription'
         iconIdentifier: 'tx-qc_widgets-extension-icon'
         height: 'medium'
-        width: 'medium'
+        width: 'large'
