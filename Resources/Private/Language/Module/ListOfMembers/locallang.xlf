@@ -21,6 +21,9 @@
             <trans-unit id="listOfAdmins" >
                 <source>List of admins</source>
             </trans-unit>
+            <trans-unit id="listOfMembers" >
+                <source>List of members</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

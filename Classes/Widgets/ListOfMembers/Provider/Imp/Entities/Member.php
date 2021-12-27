@@ -5,6 +5,11 @@ namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities;
 class Member
 {
     /**
+     * @var int
+     */
+    protected int $uid = 0;
+
+    /**
      * @var string
      */
     protected string $username;
@@ -20,6 +25,24 @@ class Member
      * @var string
      */
     protected string $lastLogin;
+
+    /**
+     * @return int
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param int $uid
+     */
+    public function setUid($uid): void
+    {
+        $this->uid = $uid;
+    }
+
+
 
     /**
      * @return string

@@ -1,7 +1,6 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
 
-use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\GroupOfMember;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\ListOfMemebers;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\Member;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
@@ -42,6 +41,9 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
      * @var string
      */
     protected string $order= '';
+
+    protected int $numberOfUsers = 0;
+
     /**
      * @var LocalizationUtility
      */
@@ -83,9 +85,10 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         $members = new ListOfMemebers();
         $members->setIsAdmin($GLOBALS['BE_USER']->isAdmin());
         if($GLOBALS['BE_USER']->isAdmin()){
+            $userData = $this->renderUsersData("AND ADMIN = 1 AND disable = 0");
             $users [] = [
                 'groupName' => '',
-                'users' => $this->renderUsersData("AND ADMIN = 1 AND disable = 0")
+                'users' => $userData
             ];
         }
         else{
@@ -99,13 +102,25 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
             }
         }
         $members->setMembers($users);
+        $members->setNumberOfMembers($this->numberOfUsers);
         return $members;
     }
 
+
+
     public function renderUsersData($whereCondition) : array{
-        $data =  BackendUtility::getUserNames('username,realName,email,lastlogin', $whereCondition);
+        $usersUid = [];
+        $data =  BackendUtility::getUserNames('uid, username,realName,email,lastlogin', $whereCondition);
         $users = [];
         foreach ($data as $item){
+            // returns the number of all members - prevent to calculate the same member record multiple time
+            if(!in_array($data['uid'], $usersUid) && $data['uid'] !== $GLOBALS['BE_USER']->user['uid']){
+                $this->numberOfUsers++;
+            }
+            // excluding the current user from the rendering list
+            if($data['uid'] === $GLOBALS['BE_USER']->user['uid']){
+                continue;
+            }
             // create Member Object
             $users[] = $this->memberMappe($item);
         }
@@ -114,6 +129,7 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
 
     public function memberMappe(array $data) : Member{
         $member = new Member();
+        $member->setUid($data['uid']);
         $member->setUsername($data['username']);
         $member->setRealName($data['realName']);
         $member->setEmail($data['email']);

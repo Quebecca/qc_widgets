@@ -29,6 +29,10 @@
                 <source>List of admins</source>
                 <target>La list des administrateurs</target>
             </trans-unit>
+            <trans-unit id="listOfMembers" >
+                <source>List of members</source>
+                <target>La list des membres</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -16,12 +16,36 @@ class ListOfMemebers
     protected array $members = [];
 
     /**
+     * @var int
+     */
+    protected int $numberOfMembers = 0;
+
+    /**
+     * @return int
+     */
+    public function getNumberOfMembers(): int
+    {
+        return $this->numberOfMembers;
+    }
+
+    /**
+     * @param int $numberOfMembers
+     */
+    public function setNumberOfMembers(int $numberOfMembers): void
+    {
+        $this->numberOfMembers = $numberOfMembers;
+    }
+
+
+
+    /**
      * @return bool
      */
     public function getIsAdmin(): bool
     {
         return $this->isAdmin;
     }
+
 
     /**
      * @param bool $isAdmin
