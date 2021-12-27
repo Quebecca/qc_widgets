@@ -13,6 +13,10 @@
                 <source>Real name not provided</source>
                 <target>Nom réel non fourni</target>
             </trans-unit>
+            <trans-unit id="listOfMyTeamsMembers" >
+                <source>List of my groups members</source>
+                <target>La liste des membres de mes groupes</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

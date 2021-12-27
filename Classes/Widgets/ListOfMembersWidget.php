@@ -2,11 +2,12 @@
 namespace Qc\QcWidgets\Widgets;
 
 use Qc\QcWidgets\Widgets\Provider\ListOfMembersProvider;
+use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfMembersWidget implements WidgetInterface
+class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -36,5 +37,13 @@ class ListOfMembersWidget implements WidgetInterface
         $this->view->setTemplate('Widget/ListOfMembersWidget');
         $this->view->assign('data', $data);
         return $this->view->render();
+    }
+
+    public function getCssFiles(): array
+    {
+        return [
+            'EXT:qc_widgets/Resources/Public/Css/listOfMembers.css',
+
+        ];
     }
 }

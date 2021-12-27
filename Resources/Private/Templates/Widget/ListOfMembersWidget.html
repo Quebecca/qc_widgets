@@ -1,17 +1,17 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
-      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
       data-namespace-typo3-fluid="true">
-<br><br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3>List of my team members</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <table class="table">
+    <div class="container">
+        <div class="row">
+            <h2>
+                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMyTeamsMembers"/>
+            </h2>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                    <table class="table table-bordered table-striped mb-0">
                         <thead>
                         <tr>
                             <th scope="col">Username</th>
@@ -21,22 +21,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <f:for each="{data}" as="item">
+                        <f:for each="{data}" as="item">
+                            <tr>
+                                <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
+                            </tr>
+                            <f:for each="{item.members}" as="user">
                                 <tr>
-                                    <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
+                                    <f:for each="{user}" as="details" key="detailsKey">
+                                        <td> {details.username}</td>
+                                        <td> {details.email}</td>
+                                        <td> {details.realName}</td>
+                                        <td> {details.lastLogin}</td>
+                                    </f:for>
                                 </tr>
-                                <f:for each="{item.members}" as="user">
-                                    <tr>
-                                        <f:for each="{user}" as="details" >
-                                            <td> {details.username}</td>
-                                        </f:for>
-                                    </tr>
-                                </f:for>
                             </f:for>
+                        </f:for>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
-<br><br>
+        <br>
+
+    </div>
+<br>
 </html>

@@ -9,6 +9,9 @@
             <trans-unit id="realNameNotProvided" >
                 <source>Real name not provided</source>
             </trans-unit>
+            <trans-unit id="listOfMyTeamsMembers" >
+                <source>List of my groups members</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

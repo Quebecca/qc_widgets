@@ -2,11 +2,30 @@
 
 namespace Qc\QcWidgets\Widgets\Provider\Imp;
 
+
 class Member
 {
     protected string $username;
     protected string $email;
     protected string $realName;
+    protected string $lastLogin;
+
+    /**
+     * @return string
+     */
+    public function getLastLogin(): string
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param string $lastLogin
+     */
+    public function setLastLogin(string $lastLogin): void
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
 
     /**
      * @return string

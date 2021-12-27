@@ -2,6 +2,7 @@
 namespace Qc\QcWidgets\Widgets\Provider\Imp;
 
 use Qc\QcWidgets\Widgets\Provider\ListOfMembersProvider;
+use TYPO3\CMS\Beuser\Domain\Model\Demand;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -142,18 +143,23 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
                     $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
                 );
             }
-            array_push($listOfMembers, [
-                 $item->getUsername(),
-                $item->getEmail(),
-                 $item->getRealName(),
-                $item->getLastLoginDateAndTime()
-            ]);
-            /*$listOfMembers[] = [
+            // with this solution the returned values will be protected, Fluid can't access to them
+            /*
+            $listOfMembers[] = [
                 'username' => $item->getUsername(),
                 'email' => $item->getEmail(),
                 'realName' => $item->getRealName(),
                 'lastlogin' => $item->getLastLoginDateAndTime()
             ];*/
+            $member = new Member();
+            $member->setUsername($item->getUsername());
+            $member->setRealName($item->getRealName());
+            $member->setEmail($item->getEmail());
+            $member->setLastLogin(date_format($item->getLastLoginDateAndTime(), 'Y-m-d H:i:s'));
+
+            $listOfMembers[] = [
+                $member
+            ];
         }
         return $listOfMembers;
     }
