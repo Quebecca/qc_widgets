@@ -32,18 +32,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <f:for each="{data.members}" as="item">
-                        <tr>
-                            <td colspan="4" style="text-align : center; background-color : yellow;">{item.group}</td>
-                        </tr>
-                        <f:for each="{item.members}" as="user">
+                    <f:for each="{data.members}" as="element">
+                        <f:if condition="{data.isAdmin} == false">
                             <tr>
-                                <f:for each="{user}" as="details" key="detailsKey">
-                                    <td> {details.username}</td>
-                                    <td> {details.email}</td>
-                                    <td> {details.realName}</td>
-                                    <td> {details.lastLogin}</td>
-                                </f:for>
+                                <td colspan="4" style="text-align : center; background-color : yellow;">{element.groupName}</td>
+                            </tr>
+                        </f:if>
+                        <f:for each="{element.users}" as="item">
+                            <tr>
+                               <td>{item.username}</td>
+                               <td>{item.email}</td>
+                               <td>{item.realName}</td>
+                               <td>{item.lastlogin}</td>
                             </tr>
                         </f:for>
                     </f:for>

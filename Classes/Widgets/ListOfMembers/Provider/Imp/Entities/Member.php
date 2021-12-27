@@ -1,13 +1,24 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
-
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities;
 
 class Member
 {
+    /**
+     * @var string
+     */
     protected string $username;
+    /**
+     * @var string
+     */
     protected string $email;
+    /**
+     * @var string
+     */
     protected string $realName;
+    /**
+     * @var string
+     */
     protected string $lastLogin;
 
     /**
@@ -56,7 +67,7 @@ class Member
      */
     public function setEmail(string $email): void
     {
-        $this->email = $email;
+       $this->email = $email;
     }
 
     /**

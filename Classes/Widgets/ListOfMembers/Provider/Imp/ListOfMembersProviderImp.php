@@ -1,14 +1,16 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
 
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\GroupOfMember;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\ListOfMemebers;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\Member;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
-use TYPO3\CMS\Beuser\Domain\Model\Demand;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 class ListOfMembersProviderImp implements ListOfMembersProvider
 {
@@ -67,11 +69,6 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         $this->backendUserGroupRepository = $backendUserGroupRepository ?? GeneralUtility::makeInstance(BackendUserGroupRepository::class);
         $this->backendUserRepository = $backendUserRepository ?? GeneralUtility::makeInstance(BackendUserRepository::class);
 
-        //Initialize Repository Backend user
-        /*$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
-        $this->backendUserRepository = GeneralUtility::makeInstance(BackendUserRepository::class, $objectManager);
-        $this->backendUserRepository->injectPersistenceManager($persistenceManager);*/
     }
 
     public function getTable(): string
@@ -80,147 +77,62 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
     }
     // $this->setWorkspace($this->user['workspace_id']);
 
-    public function getItems(): array
+    public function getItems(): ListOfMemebers
     {
-
-/*        // get the uid of the connected user
-        $userUid = $this->getBackendUser()->user['uid'];
-        // get his group uids
-        $queryBuilder1 = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->table);
-        $userGroupUids = $queryBuilder1->select('usergroup')
-            ->from($this->table)
-            ->where(
-                $queryBuilder1->expr()->eq('uid', $queryBuilder1->createNamedParameter($userUid, \PDO::PARAM_INT))
-            )
-            ->execute()
-            ->fetch();
-        // use the groups uids to render other users
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->table);
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->table);
-        return $queryBuilder
-            ->select('username', 'realName', 'email', 'tstamp')
-            ->from($this->table)
-            ->where(
-                $queryBuilder1->expr()->inSet('usergroup', $userGroupUids)
-            )
-            ->setMaxResults($this->limit)
-            ->addOrderBy($this->orderField, $this->order)
-            ->execute()
-            ->fetchAll();
-*/
-        // Methode 1
-        /*$groups = $GLOBALS['BE_USER']->user['usergroup'];
-        $users =  \TYPO3\CMS\Backend\Utility\BackendUtility::getUserNames('username,realName, email,lastlogin', "AND FIND_IN_SET(usergroup, '$groups') AND disable = 0");
-        return $users;*/
-
-        // Methode 2
         $users = [];
-
-        // check if the user is admin, if true we will display the list of admins users
-        if ($GLOBALS['BE_USER']->isAdmin()) {
-            // get the list of admins
-            $admins =  \TYPO3\CMS\Backend\Utility\BackendUtility::getUserNames('username,realName, email,lastlogin', "AND ADMIN = 1 AND disable = 1");
-            $members = [];
-            foreach ($admins as $admin){
-                $member = new Member();
-                $member->setUsername($admin['username']);
-                $member->setRealName($admin['realName']);
-                $member->setEmail($admin['email']);
-                $member->setLastLogin($admin['lastLogin'] ?? '-');
-                // check if the email or realName is an empty value
-                if ($member->getEmail() === '') {
-                    $member->setEmail(
-                        $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
-                    );
-                }
-                if ($member->getRealName() === '') {
-                    $member->setRealName(
-                        $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
-                    );
-                }
-                $members[] = $member;
-            }
-            $users[] = [
-                "group" => '',
-                "members" =>$members
+        $members = new ListOfMemebers();
+        $members->setIsAdmin($GLOBALS['BE_USER']->isAdmin());
+        if($GLOBALS['BE_USER']->isAdmin()){
+            $users [] = [
+                'groupName' => '',
+                'users' => $this->renderUsersData("AND ADMIN = 1 AND disable = 0")
             ];
-
         }
         else{
             $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
-            foreach ($groupsUid as $guid) {
-                $demand = new Demand();
-                $demand->setBackendUserGroup((int)$guid);
-                $groupName = $this->backendUserGroupRepository->findByUid($guid);
-                $members = [];
-                $data = $this->backendUserRepository->findDemanded($demand);
-                foreach ($data as $item){
-                    $member = new Member();
-                    $member->setUsername($item->getUsername());
-                    $member->setRealName($item->getRealName());
-                    $member->setEmail($item->getEmail());
-                    $member->setLastLogin(date_format($item->getLastLoginDateAndTime(), 'Y-m-d H:i:s'));
-                    // check if the email or realName is an empty value
-                    if ($member->getEmail() === '') {
-                        $member->setEmail(
-                            $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
-                        );
-                    }
-                    if ($member->getRealName() === '') {
-                        $member->setRealName(
-                            $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
-                        );
-                    }
-
-                    $members [] = $members;
-                }
-                $users[] = [
-                    "group" => $groupName->getTitle(),
-                    "members" =>$members
+            foreach ($groupsUid as $groupUid){
+                 $groupName = $this->backendUserGroupRepository->findByUid($groupUid);
+                $users [] = [
+                    'groupName' => $groupName->getTitle(),
+                    'users' => $this->renderUsersData("AND usergroup LIKE  '%$groupUid%'  AND disable = 0")
                 ];
             }
         }
-        return [
-            'usersData' => $users,
-            'isAdmin' => $GLOBALS['BE_USER']->isAdmin()
-        ];
+        $members->setMembers($users);
+        return $members;
     }
 
-    public function formattingUserItems( $usersData): array
-    {
-        $listOfMembers = [];
-        foreach ($usersData as $item) {
-            // check for non provided values
-            if ($item->getEmail() === '') {
-                $item->setEmail(
-                    $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
-                );
-            }
-            if ($item->getRealName() === '') {
-                $item->setRealName(
-                    $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
-                );
-            }
-            // with this solution the returned values will be protected, Fluid can't access to them
-            /*
-            $listOfMembers[] = [
-                'username' => $item->getUsername(),
-                'email' => $item->getEmail(),
-                'realName' => $item->getRealName(),
-                'lastlogin' => $item->getLastLoginDateAndTime()
-            ];*/
-            $member = new Member();
-            $member->setUsername($item->getUsername());
-            $member->setRealName($item->getRealName());
-            $member->setEmail($item->getEmail());
-            $member->setLastLogin(date_format($item->getLastLoginDateAndTime(), 'Y-m-d H:i:s'));
-
-            $listOfMembers[] = [
-                $member
-            ];
+    public function renderUsersData($whereCondition) : array{
+        $data =  BackendUtility::getUserNames('username,realName,email,lastlogin', $whereCondition);
+        $users = [];
+        foreach ($data as $item){
+            // create Member Object
+            $users[] = $this->memberMappe($item);
         }
-        return $listOfMembers;
+        return $users;
     }
+
+    public function memberMappe(array $data) : Member{
+        $member = new Member();
+        $member->setUsername($data['username']);
+        $member->setRealName($data['realName']);
+        $member->setEmail($data['email']);
+        $member->setLastLogin(date("Y-m-d H:i:s", $data['lastlogin']));
+
+        // check if the email or realName is an empty value
+        if ($member->getEmail() === '') {
+            $member->setEmail(
+                $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
+            );
+        }
+        if ($member->getRealName() === '') {
+            $member->setRealName(
+                $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
+            );
+        }
+        return $member;
+    }
+
 
     /**
      * @return BackendUserAuthentication
