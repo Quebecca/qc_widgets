@@ -2,8 +2,41 @@
       xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
       data-namespace-typo3-fluid="true">
-        <div class="container">
-            <br><br>
-            <h6>list of the last created pages</h6>
+<div class="widget-content-title">
+    <span>Last created pages</span>
+</div>
+<br>
+<div class="container">
+    <div style="width : 65%; margin-bottom : 1rem; height : 80px;">
+        <div class="d-flex flex-row" >
+            <div class="p-2 " >
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" >
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">Uid</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Creation date</th>
+                            <th scope="col">Update date</th>
+                            <th scope="col">Slug</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <f:for each="{data}" as="item">
+                            <tr>
+                                <td>{item.uid}</td>
+                                <td>{item.title}</td>
+                                <td>{item.crdate}</td>
+                                <td>{item.tstamp}</td>
+                                <td>{item.slug}</td>
+                            </tr>
+                        </f:for>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+    </div>
+
+</div>
 </html>

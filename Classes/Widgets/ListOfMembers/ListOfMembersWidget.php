@@ -3,11 +3,12 @@ namespace Qc\QcWidgets\Widgets\ListOfMembers;
 
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
+use TYPO3\CMS\Dashboard\Widgets\AdditionalJavaScriptInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
+class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface, AdditionalJavaScriptInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -43,6 +44,14 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
     {
         return [
             'EXT:qc_widgets/Resources/Public/Css/listOfMembers.css',
+
+        ];
+    }
+
+    public function getJsFiles(): array
+    {
+        return [
+            'EXT:qc_widgets/Resources/Public/JavaScript/listOfMembers.js',
 
         ];
     }

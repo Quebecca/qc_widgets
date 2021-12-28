@@ -106,9 +106,7 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         return $members;
     }
 
-
-
-    public function renderUsersData($whereCondition) : array{
+    public function renderUsersData($whereCondition) : array {
         $usersUid = [];
         $data =  BackendUtility::getUserNames('uid, username,realName,email,lastlogin', $whereCondition);
         $users = [];

@@ -31,7 +31,9 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface
 
     public function renderWidgetContent(): string
     {
+        $data = $this->dataProvider->getItems();
         $this->view->setTemplate('Widget/ListOfLastCreatedPagesWidget');
+        $this->view->assign('data', $data);
         return $this->view->render();
     }
 }
