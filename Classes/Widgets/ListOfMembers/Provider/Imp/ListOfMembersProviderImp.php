@@ -114,12 +114,8 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         $users = [];
         foreach ($data as $item){
             // returns the number of all members - prevent to calculate the same member record multiple time
-            if(!in_array($data['uid'], $usersUid) && $data['uid'] !== $GLOBALS['BE_USER']->user['uid']){
+            if(!in_array($data['uid'], $usersUid)){
                 $this->numberOfUsers++;
-            }
-            // excluding the current user from the rendering list
-            if($data['uid'] === $GLOBALS['BE_USER']->user['uid']){
-                continue;
             }
             // create Member Object
             $users[] = $this->memberMappe($item);

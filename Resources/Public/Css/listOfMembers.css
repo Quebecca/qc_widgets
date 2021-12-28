@@ -2,10 +2,9 @@
     position: relative;
     height: 350px;
     overflow: auto;
+    color : red;
 }
-.members-table{
-    width : 80px;
-}
+
 .table-wrapper-scroll-y {
     display: block;
 }
