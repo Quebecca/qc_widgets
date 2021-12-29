@@ -13,7 +13,7 @@ services:
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
-      $limit: 7
+      $limit: 25
 
   dashboard.widget.listOfLastCreatedPages:
     class: 'Qc\QcWidgets\Widgets\ListOfLastCreatedPages\ListOfLastCreatedPagesWidget'

@@ -1,70 +1,43 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
 <div class="widget-content-title">
-    <span>List of Members</span>
+    <span>
+       Members of my groups ({data.numberOfMembers})
+    </span>
 </div>
-    <div class="container">
-        <div class="d-flex flex-row">
-            <f:comment>
-                <div class="p-2">
-                    <f:if condition="{data.isAdmin} == true">
-                        <f:then>
-                            <h3>
-                                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfAdmins"/>
-                            </h3>
-                        </f:then>
-                        <f:else>
-                            <h3>
-                                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMyTeamsMembers"/>
-                            </h3>
-                        </f:else>
-                    </f:if>
-                </div>
-            </f:comment>
-        </div>
-        <br>
-        <div style="width : 65%; margin-bottom : 1rem; height : 80px;">
-            <div class="d-flex flex-row" >
-                <div class="p-2 " >
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar" >
-                        <table class="table table-bordered table-striped mb-0">
-                            <thead>
-                            <tr>
-                                <th colspan="4">
-                                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembers" /> ({data.numberOfMembers})
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">RealName</th>
-                                <th scope="col">Last connected</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <f:for each="{data.members}" as="element">
-                                <f:if condition="{data.isAdmin} == false">
-                                    <tr>
-                                        <td colspan="4" style="text-align : center; ">{element.groupName}</td>
-                                    </tr>
-                                </f:if>
-                                <f:for each="{element.users}" as="item">
-                                    <tr>
-                                        <td>{item.username}</td>
-                                        <td>{item.email}</td>
-                                        <td>{item.realName}</td>
-                                        <td>{item.lastlogin}</td>
-                                    </tr>
-                                </f:for>
-                            </f:for>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
+<div class="widget-content-main">
+    <div class="widget-table-wrapper">
+        <table class="widget-table">
+            <thead>
+            <tr>
+                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:userName" /></th>
+                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:email" /></th>
+                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:realName" /></th>
+                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:lastLogin" /></th>
+            </tr>
+            </thead>
+            <tbody>
+            <f:for each="{data.members}" as="element">
+                <f:if condition="{data.isAdmin} == false">
+                    <tr>
+                        <td colspan="4" style="text-align : center; ">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:group" /> <strong>{element.groupName}</strong>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:for each="{element.users}" as="item">
+                    <tr>
+                        <td>{item.username}</td>
+                        <td>{item.email}</td>
+                        <td>{item.realName}</td>
+                        <td>{item.lastlogin}</td>
+                    </tr>
+                </f:for>
+            </f:for>
+            </tbody>
+        </table>
     </div>
-
+</div>
+<br>
 </html>

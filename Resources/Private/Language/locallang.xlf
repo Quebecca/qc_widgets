@@ -9,7 +9,15 @@
             <trans-unit id="qcWidgetsDescription" >
                 <source>Qc Widgets</source>
             </trans-unit>
-
+            <trans-unit id="pageTitle" >
+                <source>Page title</source>
+            </trans-unit>
+            <trans-unit id="creationDate" >
+                <source>Creation date</source>
+            </trans-unit>
+          <trans-unit id="modificationDate" >
+              <source>Last modification date</source>
+          </trans-unit>
 		</body>
 	</file>
 </xliff>

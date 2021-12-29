@@ -1,8 +1,6 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\Imp;
 
-
-
 use Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -55,11 +53,8 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
             }
         }
        $result = $this->renderData($membersUid);
-
         // formatting data
-
         $data = [];
-
         foreach ($result as $item){
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);

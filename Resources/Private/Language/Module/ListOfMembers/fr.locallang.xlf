@@ -5,7 +5,7 @@
 			<authorName>Quebec.ca</authorName>
 		</header>
 		<body>
-		    <trans-unit id="listOfMembers" >
+            <trans-unit id="listOfMembers" >
                 <source>List Of my groups members</source>
                 <target>La liste des membres de mes groupes</target>
             </trans-unit>
@@ -29,9 +29,13 @@
                 <source>List of admins</source>
                 <target>La list des administrateurs</target>
             </trans-unit>
-            <trans-unit id="listOfMembers" >
-                <source>List of members</source>
-                <target>La list des membres</target>
+            <trans-unit id="users" >
+                <source>Users</source>
+                <target>Utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="group" >
+                <source>Group</source>
+                <target>Groupe:</target>
             </trans-unit>
 		</body>
 	</file>

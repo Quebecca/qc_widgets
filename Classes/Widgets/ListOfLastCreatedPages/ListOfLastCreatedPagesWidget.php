@@ -2,11 +2,12 @@
 namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages;
 
 use Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProvider;
+use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfLastCreatedPagesWidget implements WidgetInterface
+class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -35,5 +36,13 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface
         $this->view->setTemplate('Widget/ListOfLastCreatedPagesWidget');
         $this->view->assign('data', $data);
         return $this->view->render();
+    }
+
+    public function getCssFiles(): array
+    {
+        return [
+            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
+
+        ];
     }
 }
