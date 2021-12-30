@@ -57,14 +57,14 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
 
     public function renderData() : array {
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages')->createQueryBuilder();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
          return $queryBuilder
             ->select('uid', 'title', 'crdate', 'tstamp', 'slug')
-            ->from('pages')
+            ->from($this->table)
             ->where(
                 $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))
             )
-            ->orderBy('tstamp', 'DESC')
+            ->orderBy($this->orderField, 'DESC')
             ->setMaxResults($this->limit)
             ->execute()
             ->fetchAll();

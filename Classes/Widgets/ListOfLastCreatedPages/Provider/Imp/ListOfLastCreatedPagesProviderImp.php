@@ -65,14 +65,14 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
     }
 
     public function renderData(array $membersUid) : array {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages')->createQueryBuilder();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
         return $queryBuilder
             ->select('uid', 'title', 'crdate', 'tstamp', 'slug')
-            ->from('pages')
+            ->from($this->table)
             ->where(
                 $queryBuilder->expr()->in('cruser_id', $membersUid)
             )
-            ->orderBy('crdate', 'DESC')
+            ->orderBy($this->orderField, 'DESC')
             ->setMaxResults($this->limit)
             ->execute()
             ->fetchAll();

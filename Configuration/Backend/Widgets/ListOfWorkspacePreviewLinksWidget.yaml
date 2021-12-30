@@ -11,9 +11,9 @@ services:
   dashboard.provider.listOfWorkspacePreviewLinks:
     class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\Imp\ListOfWorkspacePreviewLinksProviderImp'
     arguments:
-      $table: 'be_users'
-      $orderField: 'crdate'
-      $limit: 7
+      $table: 'sys_preview'
+      $orderField: 'endtime'
+      $limit: 5
       $order: 'DESC'
 
   dashboard.widget.listOfWorkspacePreviewLinks:
