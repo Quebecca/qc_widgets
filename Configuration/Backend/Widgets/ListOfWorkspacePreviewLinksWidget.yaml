@@ -1,0 +1,33 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.listOfWorkspacePreviewLinks:
+    class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\Imp\ListOfWorkspacePreviewLinksProviderImp'
+    arguments:
+      $table: 'be_users'
+      $orderField: 'crdate'
+      $limit: 7
+      $order: 'DESC'
+
+  dashboard.widget.listOfWorkspacePreviewLinks:
+    class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\ListOfWorkspacePreviewLinksWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.listOfWorkspacePreviewLinks'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'listOfWorkspacePreviewLinks'
+        groupNames: 'qcWidgets'
+        title: 'list Of Workspace Preview Links'
+        description: 'list Of Workspace Preview Links'
+        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        height: 'medium'
+        width: 'medium'

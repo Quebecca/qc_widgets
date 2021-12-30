@@ -5,6 +5,6 @@ return [
         'description' => 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:qcWidgetsDescription',
         'iconIdentifier' => 'tx-qc_widgets-dashboard-icon',
         'showInWizard' => true,
-        'defaultWidgets' => ['listOfMembers', 'listOfLastModifiedPages', 'listOfLastCreatedPages']
+        'defaultWidgets' => ['listOfMembers', 'listOfLastModifiedPages', 'listOfLastCreatedPages', 'listOfWorkspacePreviewLinks']
     ],
 ];
