@@ -3,21 +3,36 @@
 	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" product-name="qcinforights">
 		<header/>
 		<body>
-            <trans-unit id="qcWidgets" >
-                <source>Qc Widgets</source>
-            </trans-unit>
-            <trans-unit id="qcWidgetsDescription" >
-                <source>Qc Widgets</source>
-            </trans-unit>
-            <trans-unit id="pageTitle" >
-                <source>Page title</source>
-            </trans-unit>
-            <trans-unit id="creationDate" >
-                <source>Creation date</source>
-            </trans-unit>
-          <trans-unit id="modificationDate" >
-              <source>Last modification date</source>
-          </trans-unit>
+        <trans-unit id="qcWidgets" >
+            <source>Qc Widgets</source>
+        </trans-unit>
+        <trans-unit id="qcWidgetsDescription" >
+            <source>Qc Widgets</source>
+        </trans-unit>
+        <trans-unit id="pageTitle" >
+            <source>Title</source>
+        </trans-unit>
+        <trans-unit id="creationDate" >
+            <source>Creation date</source>
+        </trans-unit>
+        <trans-unit id="modificationDate" >
+             <source>Last modification date</source>
+        </trans-unit>
+        <trans-unit id="lastCreatedPageInMyGroup" >
+           <source>Last created pages in my groups</source>
+        </trans-unit>
+        <trans-unit id="myLastPages" >
+           <source>My last pages</source>
+        </trans-unit>
+        <trans-unit id="status" >
+           <source>Status</source>
+        </trans-unit>
+        <trans-unit id="expired" >
+           <source>Expired</source>
+        </trans-unit>
+         <trans-unit id="hidden" >
+             <source>Hidden</source>
+         </trans-unit>
 		</body>
 	</file>
 </xliff>

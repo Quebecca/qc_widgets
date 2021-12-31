@@ -37,6 +37,10 @@
                 <source>Group</source>
                 <target>Groupe:</target>
             </trans-unit>
+            <trans-unit id="membersOfMyGroups" >
+                <source>Members of my groups</source>
+                <target>Les membres de mes groupes</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

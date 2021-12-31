@@ -69,7 +69,6 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     public function getCssFiles(): array
     {
         return [
-            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
 
         ];
     }

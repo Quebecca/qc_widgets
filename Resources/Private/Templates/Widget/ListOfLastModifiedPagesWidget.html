@@ -4,22 +4,20 @@
       data-namespace-typo3-fluid="true">
 <div class="widget-content-title">
   <span>
-    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfLastMoidifiedPages/locallang.xlf:myLastPages" />
+    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:myLastPages" />
   </span>
 </div>
 <div class="widget-content-main">
-  <select name="" id="numberOfItems">
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="20">20</option>
-  </select>
   <div class="widget-table-wrapper">
     <table class="widget-table">
       <thead>
       <tr>
         <th scope="col">Uid</th>
         <th scope="col">
-          <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:title" />
+          <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:pageTitle" />
+        </th>
+        <th scope="col">
+          <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
         </th>
         <th scope="col">
           <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
@@ -39,6 +37,19 @@
             </f:be.link>
           </td>
           <td>{item.title}</td>
+          <td>
+            <f:if condition="{item.expired} == 1">
+                <span class="c-badge c-badge--yellow">
+                   <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
+                </span>
+            </f:if>
+            <f:if condition="{item.hidden} == 1">
+                <span class="c-badge c-badge--red">
+                   <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
+                </span>
+            </f:if>
+
+          </td>
           <td>{item.crdate}</td>
           <td>{item.tstamp}</td>
           <td>{item.slug}</td>

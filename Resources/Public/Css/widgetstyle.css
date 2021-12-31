@@ -1,3 +1,34 @@
 table {
     font-size : 11px;
+    color : red;
+}
+
+.c-badge {
+    background: #000;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    line-height: 0.875em;
+    font-size: 0.875em;
+    border-radius: 0.25em;
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+.c-badge--green {
+    background: #7aa41c;
+}
+.c-badge--red {
+    background: #de4545;
+}
+.c-badge--yellow {
+    background: #dea645;
+}
+
+.u-dashboard-button {
+    padding: 3px 8px;
+    margin-right: 4px;
+}
+.u-space-top {
+    margin-top: 0.25rem;
 }

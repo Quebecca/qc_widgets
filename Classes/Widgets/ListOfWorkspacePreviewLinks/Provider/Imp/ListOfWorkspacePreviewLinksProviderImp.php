@@ -87,12 +87,14 @@ class ListOfWorkspacePreviewLinksProviderImp implements ListOfWorkspacePreviewLi
 
             // formatting date for the sys_preview records
             foreach ($result as $item){
+                $expired = $item['endtime'] !== ''? $item['endtime'] < time() ? 1 : 0 : 0;
                 $previewsData[] = [
-                    //'tstamp' => date("Y-m-d H:i:s", $item['crdate']),
+                    'tstamp' => date("Y-m-d H:i:s", $item['tstamp']),
                     'wsTitle' => $value,
-                    'tstamp' => $item['endtime'],
+                    //'tstamp' => $item['endtime'],
                     'endtime' => date("Y-m-d H:i:s", $item['endtime']),
-                    'keyword' => $item['keyword']
+                    'keyword' => $item['keyword'],
+                    'expired' => $expired
                 ];
             }
             /* $workspacePreviewLink [] = [

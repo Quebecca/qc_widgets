@@ -5,6 +5,7 @@ namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp;
 
 use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvider
@@ -49,6 +50,8 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
         foreach ($result as $item){
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
+            // verify if the page is expired
+            $item['expired']  = $item['endtime'] < time() ? 1 : 0;
             $data[]  = $item;
         }
         return $data;
@@ -58,8 +61,11 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
     public function renderData() : array {
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
+        $queryBuilder
+            ->getRestrictions()
+            ->removeByType(HiddenRestriction::class);
          return $queryBuilder
-            ->select('uid', 'title', 'crdate', 'tstamp', 'slug')
+            ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime')
             ->from($this->table)
             ->where(
                 $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))

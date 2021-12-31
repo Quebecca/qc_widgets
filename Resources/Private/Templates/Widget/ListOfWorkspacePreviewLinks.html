@@ -1,6 +1,37 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
+<style>
+    .c-badge {
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 0.25rem 0.5rem;
+        line-height: 0.875em;
+        font-size: 0.875em;
+        border-radius: 0.25em;
+        display: inline-block;
+        margin-right: 0.25rem;
+    }
+    .c-badge--green {
+        background: #7aa41c;
+    }
+    .c-badge--red {
+        background: #de4545;
+    }
+    .c-badge--yellow {
+        background: #dea645;
+    }
+
+    .u-dashboard-button {
+        padding: 3px 8px;
+        margin-right: 4px;
+    }
+    .u-space-top {
+        margin-top: 0.25rem;
+    }
+</style>
 <div class="widget-content-title">
     <span>
        List of my workspace preview links
@@ -15,6 +46,9 @@
                     <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
                 </th>
                 <th scope="col">
+                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
+                </th>
+                <th scope="col">
                     <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:link" />
                 </th>
                 <th scope="col">
@@ -26,12 +60,19 @@
             </tr>
             </thead>
             <tbody>
-                <f:for each="{data}"  as="element">
+                <f:for each="{data}"  as="item">
                     <tr>
-                        <td>{element.wsTitle}</td>
-                        <td>{element.tstamp}</td>
-                        <td>{element.endtime}</td>
-                        <td>{element.keyword}</td>
+                        <td>{item.wsTitle}</td>
+                        <td>
+                            <f:if condition="{item.expired} == 1">
+                                <span class="c-badge c-badge--yellow">
+                                   <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
+                                </span>
+                            </f:if>
+                        </td>
+                        <td>{item.tstamp}</td>
+                        <td>{item.endtime}</td>
+                        <td>{item.keyword}</td>
                     </tr>
                 </f:for>
             </tbody>

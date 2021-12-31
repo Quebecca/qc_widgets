@@ -59,6 +59,8 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
         foreach ($result as $item){
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
+            // verify if the page is expired
+            $item['expired']  = $item['endtime'] !== '' ? $item['endtime'] < time() ? 1 : 0 : 0;
             $data[]  = $item;
         }
         return $data;
@@ -73,7 +75,7 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
             ->removeByType(HiddenRestriction::class);
 
         return $queryBuilder
-            ->select('uid', 'title', 'crdate', 'tstamp', 'slug')
+            ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime')
             ->from($this->table)
             ->where(
                 $queryBuilder->expr()->in('cruser_id', $membersUid)
