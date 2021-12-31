@@ -1,4 +1,3 @@
-alert('hello world')
 function selectNumberOfItems(){
     var select = document.getElementById('numberOfItems');
     var value = select.options[select.selectedIndex].value;

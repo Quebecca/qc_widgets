@@ -4,6 +4,7 @@ namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\Imp;
 use Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvider
@@ -66,6 +67,11 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
 
     public function renderData(array $membersUid) : array {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
+        // the hidden pages or disabled can't be rendered with query builder restriction
+        $queryBuilder
+            ->getRestrictions()
+            ->removeByType(HiddenRestriction::class);
+
         return $queryBuilder
             ->select('uid', 'title', 'crdate', 'tstamp', 'slug')
             ->from($this->table)

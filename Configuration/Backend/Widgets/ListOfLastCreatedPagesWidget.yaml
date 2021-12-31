@@ -11,7 +11,7 @@ services:
   dashboard.provider.listOfLastCreatedPages:
     class: 'Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\Imp\ListOfLastCreatedPagesProviderImp'
     arguments:
-      $table: 'be_users'
+      $table: 'pages'
       $orderField: 'crdate'
       $limit: 25
 

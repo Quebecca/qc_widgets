@@ -70,34 +70,37 @@ class ListOfWorkspacePreviewLinksProviderImp implements ListOfWorkspacePreviewLi
 
     public function renderData(array $worskpaces) : array {
 
-        $result = [];
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_preview')->createQueryBuilder();
+        $previewsData = [];
         foreach ($worskpaces as $keyData => $value){
             // return the array og the sys_preview record
-            $previewsResult = $queryBuilder
+            $result = $queryBuilder
                 ->select('tstamp','endtime', 'keyword')
-                ->from($this->table)
+                ->from('sys_preview')
                 ->where(
                     $queryBuilder->expr()->like('config', "'%$keyData}'")
                 )
-                ->orderBy($this->orderField, 'DESC')
-                ->setMaxResults($this->limit)
+                ->orderBy('endtime', 'DESC')
+                ->setMaxResults(5)
                 ->execute()
                 ->fetchAll();
 
             // formatting date for the sys_preview records
-            // streaming ??
-            foreach ($previewsResult as $item){
-                $previewsResult['tstamp'] = $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
+            foreach ($result as $item){
+                $previewsData[] = [
+                    //'tstamp' => date("Y-m-d H:i:s", $item['crdate']),
+                    'wsTitle' => $value,
+                    'tstamp' => $item['endtime'],
+                    'endtime' => date("Y-m-d H:i:s", $item['endtime']),
+                    'keyword' => $item['keyword']
+                ];
             }
-
-            $workspacePreviewLink [] = [
-                "wsTitle" => $value,
-                "preview" => $previewsResult
-            ];
-            $result[] = $workspacePreviewLink;
+            /* $workspacePreviewLink [] = [
+                 "wsTitle" => $value,
+                 "preview" => $previewsData
+             ];*/
         }
-        return $result;
+        return $previewsData;
     }
 
 }

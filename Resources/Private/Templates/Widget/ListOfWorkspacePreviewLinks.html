@@ -11,13 +11,29 @@
         <table class="widget-table">
             <thead>
             <tr>
-                <th scope="col">Workspace name</th>
-                <th scope="col">Link</th>
-                <th scope="col">Expiration date</th>
-                <th scope="col">Key</th>
+                <th scope="col">
+                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
+                </th>
+                <th scope="col">
+                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:link" />
+                </th>
+                <th scope="col">
+                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:expirationDate" />
+                </th>
+                <th scope="col">
+                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:keyword" />
+                </th>
             </tr>
             </thead>
             <tbody>
+                <f:for each="{data}"  as="element">
+                    <tr>
+                        <td>{element.wsTitle}</td>
+                        <td>{element.tstamp}</td>
+                        <td>{element.endtime}</td>
+                        <td>{element.keyword}</td>
+                    </tr>
+                </f:for>
             </tbody>
         </table>
     </div>

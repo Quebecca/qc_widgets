@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2021-09-16UTC15:45:380">
+		<header>
+			<authorName>Quebec.ca</authorName>
+		</header>
+		<body>
+           <trans-unit id="workspace">
+               <source>Workspace</source>
+               <target>Espace de travail</target>
+           </trans-unit>
+            <trans-unit id="link">
+               <source>Link (tstamp)</source>
+               <target>Lien (tstamp) ?</target>
+           </trans-unit>
+            <trans-unit id="expirationDate">
+               <source>Expiration date</source>
+               <target>Date d'expiration</target>
+           </trans-unit>
+           <trans-unit id="keyword">
+              <source>Keyword</source>
+              <target>Mot-clé</target>
+           </trans-unit>
+		</body>
+	</file>
+</xliff>
