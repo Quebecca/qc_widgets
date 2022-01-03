@@ -5,11 +5,16 @@ namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp;
 
 use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvider
 {
+    /**
+     * @var string
+     */
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
+
     /**
      * @var string
      */
@@ -25,11 +30,27 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
      */
     protected string $limit = '';
 
-    public function __construct(string $table, string $orderField, string $limit)
+    /**
+     * @var LocalizationUtility
+     */
+    private $localizationUtility;
+
+
+    public function __construct(
+        string $table,
+        string $orderField,
+        string $limit,
+        LocalizationUtility $localizationUtility = null
+    )
     {
+        $this->localizationUtility = $localizationUtility ?? GeneralUtility::makeInstance(LocalizationUtility::class);
         $this->table = $table;
         $this->orderField = $orderField;
         $this->limit = $limit;
+    }
+
+    public function getWidgetTitle() : string {
+        return $this->localizationUtility->translate(Self::LANG_FILE . 'myLastPages');
     }
 
     public function getTable(): string
@@ -51,7 +72,7 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
             // verify if the page is expired
-            $item['expired']  = $item['endtime'] < time() ? 1 : 0;
+            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
             $data[]  = $item;
         }
         return $data;
@@ -63,7 +84,7 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
         $queryBuilder
             ->getRestrictions()
-            ->removeByType(HiddenRestriction::class);
+            ->removeAll();
          return $queryBuilder
             ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime')
             ->from($this->table)

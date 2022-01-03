@@ -9,35 +9,40 @@
 </div>
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
-        <table class="widget-table">
-            <thead>
-            <tr>
-                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:userName" /></th>
-                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:email" /></th>
-                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:realName" /></th>
-                <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:lastLogin" /></th>
-            </tr>
-            </thead>
-            <tbody>
-            <f:for each="{data.members}" as="element">
-                <f:if condition="{data.isAdmin} == false">
-                    <tr>
-                        <td colspan="4" style="text-align : center; ">
-                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:group" /> <strong>{element.groupName}</strong>
-                        </td>
-                    </tr>
-                </f:if>
-                <f:for each="{element.users}" as="item">
-                    <tr>
-                        <td>{item.username}</td>
-                        <td>{item.email}</td>
-                        <td>{item.realName}</td>
-                        <td>{item.lastlogin}</td>
-                    </tr>
+        <f:if condition="{empty} === true">
+            <f:render partial="NoResult"/>
+        </f:if>
+        <f:if condition="{data}">
+            <table class="widget-table">
+                <thead>
+                <tr>
+                    <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:userName" /></th>
+                    <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:email" /></th>
+                    <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:realName" /></th>
+                    <th scope="col"><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang.xlf:lastLogin" /></th>
+                </tr>
+                </thead>
+                <tbody>
+                <f:for each="{data.members}" as="element">
+                    <f:if condition="{data.isAdmin} == false">
+                        <tr>
+                            <td colspan="4" style="text-align : center; ">
+                                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:group" /> <strong>{element.groupName}</strong>
+                            </td>
+                        </tr>
+                    </f:if>
+                    <f:for each="{element.users}" as="item">
+                        <tr>
+                            <td>{item.username}</td>
+                            <td>{item.email}</td>
+                            <td>{item.realName}</td>
+                            <td>{item.lastlogin}</td>
+                        </tr>
+                    </f:for>
                 </f:for>
-            </f:for>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </f:if>
     </div>
 </div>
 <br>

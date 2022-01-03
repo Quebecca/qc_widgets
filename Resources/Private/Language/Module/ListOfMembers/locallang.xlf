@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" product-name="qcinforights">
+	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" >
 		<header/>
 		<body>
-            <trans-unit id="listOfMembers" >
-                <source>List Of my groups members</source>
-            </trans-unit>
             <trans-unit id="listOfMembersDescription" >
                 <source>Displays the list of all members of my groups</source>
             </trans-unit>
@@ -30,6 +27,9 @@
             <trans-unit id="membersOfMyGroups" >
                 <source>Members of my groups</source>
             </trans-unit>
+           <trans-unit id="userHasNeverLoggedIn">
+               <source>User has never logged in</source>
+           </trans-unit>
 		</body>
 	</file>
 </xliff>

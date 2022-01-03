@@ -33,8 +33,16 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-        $this->view->setTemplate('Widget/ListOfLastCreatedPagesWidget');
-        $this->view->assign('data', $data);
+        $widgetTitle = $this->dataProvider->getWidgetTitle();
+        $this->view->setTemplate('Widget/TableOfPagesWidget');
+        $this->view->assign('widgetTitle', $widgetTitle);
+
+        if(!empty($data)){
+            $this->view->assign('data', $data);
+        }
+        else {
+            $this->view->assign('empty', true);
+        }
         return $this->view->render();
     }
 
@@ -42,7 +50,6 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     {
         return [
             'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
-
         ];
     }
 }

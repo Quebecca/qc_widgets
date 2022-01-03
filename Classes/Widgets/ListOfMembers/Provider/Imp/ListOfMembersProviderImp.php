@@ -77,7 +77,6 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
     {
         return $this->table;
     }
-    // $this->setWorkspace($this->user['workspace_id']);
 
     public function getItems(): ListOfMemebers
     {
@@ -127,7 +126,14 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         $member->setUsername($data['username']);
         $member->setRealName($data['realName']);
         $member->setEmail($data['email']);
-        $member->setLastLogin(date("Y-m-d H:i:s", $data['lastlogin']));
+        if($data['lastlogin'] === 0){
+            $member->setLastLogin(
+                 $this->localizationUtility->translate(Self::LANG_FILE . 'userHasNeverLoggedIn')
+            );
+        }
+        else{
+            $member->setLastLogin(date("Y-m-d H:i:s", $data['lastlogin']));
+        }
 
         // check if the email or realName is an empty value
         if ($member->getEmail() === '') {

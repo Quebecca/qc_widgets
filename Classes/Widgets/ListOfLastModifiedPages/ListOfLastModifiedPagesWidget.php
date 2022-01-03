@@ -2,11 +2,7 @@
 
 namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
-use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalJavaScriptInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
@@ -25,11 +21,8 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     /** @var StandaloneView */
     private $view;
 
-    /** @var int */
-    private $numberOfItems;
-
-
     public function __construct(
+
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
         ListOfLastModifiedPagesProvider $dataProvider
@@ -40,22 +33,20 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
         $this->dataProvider = $dataProvider;
     }
 
-    /**
-     * This Function is delete the selected excluded link
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
-    public function setNumberOfItems(ServerRequestInterface $request): ResponseInterface{
-        $urlParam = $request->getQueryParams();
-        $this->numberOfItems = $urlParam['numberOfItems'];
-        return new Response();
-    }
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-        $this->view->setTemplate('Widget/ListOfLastModifiedPagesWidget');
-        $this->view->assign('data', $data);
-        $this->view->assign('numberOfItems', $this->numberOfItems);
+
+        $this->view->setTemplate('Widget/TableOfPagesWidget');
+        $widgetTitle = $this->dataProvider->getWidgetTitle();
+        $this->view->assign('widgetTitle', $widgetTitle);
+
+        if(!empty($data)){
+            $this->view->assign('data', $data);
+        }
+        else {
+            $this->view->assign('empty', true);
+        }
         return $this->view->render();
     }
 

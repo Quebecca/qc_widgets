@@ -4,11 +4,15 @@ namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\Imp;
 use Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvider
 {
+    /**
+     * @var string
+     */
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
     /**
      * @var string
      */
@@ -24,11 +28,25 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
      */
     protected string $limit = '';
 
-    public function __construct(string $table, string $orderField, string $limit)
-    {
+    /**
+     * @var LocalizationUtility
+     */
+    private $localizationUtility;
+
+    public function __construct(
+        string $table,
+        string $orderField,
+        string $limit,
+        LocalizationUtility $localizationUtility = null
+    ){
+        $this->localizationUtility = $localizationUtility ?? GeneralUtility::makeInstance(LocalizationUtility::class);
         $this->table = $table;
         $this->orderField = $orderField;
         $this->limit = $limit;
+    }
+
+    public function getWidgetTitle() : string {
+        return $this->localizationUtility->translate(Self::LANG_FILE . 'lastCreatedPageInMyGroup');
     }
 
     public function getTable(): string
@@ -54,13 +72,14 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
             }
         }
        $result = $this->renderData($membersUid);
-        // formatting data
+
+        // formatting data for date value
         $data = [];
         foreach ($result as $item){
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
             // verify if the page is expired
-            $item['expired']  = $item['endtime'] !== '' ? $item['endtime'] < time() ? 1 : 0 : 0;
+            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
             $data[]  = $item;
         }
         return $data;
@@ -72,7 +91,7 @@ class ListOfLastCreatedPagesProviderImp implements ListOfLastCreatedPagesProvide
         // the hidden pages or disabled can't be rendered with query builder restriction
         $queryBuilder
             ->getRestrictions()
-            ->removeByType(HiddenRestriction::class);
+            ->removeAll();
 
         return $queryBuilder
             ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime')

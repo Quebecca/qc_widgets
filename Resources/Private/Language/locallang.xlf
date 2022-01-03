@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z" product-name="qcinforights">
+	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z">
 		<header/>
 		<body>
         <trans-unit id="qcWidgets" >
@@ -11,6 +11,12 @@
         </trans-unit>
         <trans-unit id="pageTitle" >
             <source>Title</source>
+        </trans-unit>
+        <trans-unit id="listOfMembers" >
+            <source>List Of my groups members</source>
+        </trans-unit>
+        <trans-unit id="listOfMyWorkspaceLinks">
+            <source>List of my workspace preview links</source>
         </trans-unit>
         <trans-unit id="creationDate" >
             <source>Creation date</source>
@@ -33,6 +39,13 @@
          <trans-unit id="hidden" >
              <source>Hidden</source>
          </trans-unit>
+          <trans-unit id="visible" >
+              <source>Visible</source>
+          </trans-unit>
+        <trans-unit id="noResult" >
+            <source>No result returned</source>
+        </trans-unit>
+
 		</body>
 	</file>
 </xliff>

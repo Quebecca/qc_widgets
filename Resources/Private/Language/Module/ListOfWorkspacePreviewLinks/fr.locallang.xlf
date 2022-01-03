@@ -9,18 +9,15 @@
                <source>Workspace</source>
                <target>Espace de travail</target>
            </trans-unit>
-            <trans-unit id="link">
-               <source>Link (tstamp)</source>
-               <target>Lien (tstamp) ?</target>
-           </trans-unit>
             <trans-unit id="expirationDate">
                <source>Expiration date</source>
                <target>Date d'expiration</target>
            </trans-unit>
-           <trans-unit id="keyword">
+           <trans-unit id="key">
               <source>Keyword</source>
-              <target>Mot-clé</target>
+              <target>Clé</target>
            </trans-unit>
+
 		</body>
 	</file>
 </xliff>

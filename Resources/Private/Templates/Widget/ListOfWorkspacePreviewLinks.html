@@ -34,32 +34,36 @@
 </style>
 <div class="widget-content-title">
     <span>
-       List of my workspace preview links
+        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:listOfMyWorkspaceLinks" />
     </span>
 </div>
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
-        <table class="widget-table">
-            <thead>
-            <tr>
-                <th scope="col">
-                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
-                </th>
-                <th scope="col">
-                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
-                </th>
-                <th scope="col">
-                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:link" />
-                </th>
-                <th scope="col">
-                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:expirationDate" />
-                </th>
-                <th scope="col">
-                    <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:keyword" />
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+        <f:if condition="{empty} === true">
+            <f:render partial="NoResult"/>
+        </f:if>
+        <f:if condition="{data}">
+            <table class="widget-table">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
+                    </th>
+                    <th scope="col">
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
+                    </th>
+                    <th scope="col">
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
+                    </th>
+                    <th scope="col">
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:expirationDate" />
+                    </th>
+                    <th scope="col">
+                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:key" />
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
                 <f:for each="{data}"  as="item">
                     <tr>
                         <td>{item.wsTitle}</td>
@@ -75,8 +79,9 @@
                         <td>{item.keyword}</td>
                     </tr>
                 </f:for>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </f:if>
     </div>
 </div>
 <br>

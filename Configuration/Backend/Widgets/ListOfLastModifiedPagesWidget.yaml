@@ -12,7 +12,7 @@ services:
     class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp\ListOfLastModifiedPagesProviderImp'
     arguments:
       $table: 'pages'
-      $orderField: 'crdate'
+      $orderField: 'tstamp'
       $limit: 25
 
   dashboard.widget.listOfLastModifiedPages:
