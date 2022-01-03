@@ -13,7 +13,7 @@ services:
     arguments:
       $table: 'sys_preview'
       $orderField: 'endtime'
-      $limit: 5
+      $limit: 25
       $orderType: 'DESC'
 
   dashboard.widget.listOfWorkspacePreviewLinks:

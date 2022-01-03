@@ -7,7 +7,7 @@
             <source>Qc Widgets</source>
         </trans-unit>
         <trans-unit id="qcWidgetsDescription" >
-            <source>Qc Widgets</source>
+            <source>Set of widget provided by Qc Widgets, to display a bunch of tables</source>
         </trans-unit>
         <trans-unit id="pageTitle" >
             <source>Title</source>

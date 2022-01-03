@@ -13,7 +13,7 @@ services:
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
-      $limit: 7
+      $limit: 25
       $orderType: 'DESC'
 
   dashboard.widget.listOfMembers:
@@ -26,7 +26,7 @@ services:
         name: dashboard.widget
         identifier: 'listOfMembers'
         groupNames: 'qcWidgets'
-        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembers'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:listOfMembers'
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembersDescription'
         iconIdentifier: 'tx-qc_widgets-extension-icon'
         height: 'medium'
