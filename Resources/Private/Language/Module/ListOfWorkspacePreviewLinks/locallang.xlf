@@ -12,7 +12,9 @@
             <trans-unit id="key">
                 <source>Key</source>
             </trans-unit>
-
+            <trans-unit id="listOfMyWorkspaceLinks">
+                <source>List of my workspace preview links</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

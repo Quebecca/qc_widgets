@@ -1,6 +1,6 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities;
 
 class Member
 {

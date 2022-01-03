@@ -1,17 +1,16 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider;
 
-use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\ListOfMemebers;
-use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities\Member;
-use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\ListOfMemebers;
+use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\Member;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-class ListOfMembersProviderImp implements ListOfMembersProvider
+class ListOfMembersProviderImp extends Provider
 {
     /**
      * @var string
@@ -22,62 +21,33 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
      * @var BackendUserRepository
      */
     protected $backendUserRepository;
-    /**
-     * @var string
-     */
-    protected string $table = '';
 
-    /**
-     * @var string
-     */
-    protected string $orderField = '';
-
-    /**
-     * @var string
-     */
-    protected string $limit = '';
-
-    /**
-     * @var string
-     */
-    protected string $order= '';
-
-    protected int $numberOfUsers = 0;
-
-    /**
-     * @var LocalizationUtility
-     */
-    private $localizationUtility;
     /**
      * @var BackendUserGroupRepository
      */
     private $backendUserGroupRepository;
 
+    /**
+     * @var int
+     */
+    private int $numberOfUsers = 0;
+
     public function __construct(
         string $table,
         string $orderField,
-        string $limit,
-        string $order,
-        LocalizationUtility $localizationUtility = null,
+        int $limit,
+        string $orderType,
         BackendUserRepository  $backendUserRepository = null
     )
     {
-        $this->table = $table;
-        $this->orderField = $orderField;
-        $this->limit = $limit;
-        $this->order = $order;
-        $this->localizationUtility = $localizationUtility ?? GeneralUtility::makeInstance(LocalizationUtility::class);
-
+        parent::__construct($table,$orderField,$limit,$orderType);
         $this->backendUserGroupRepository = $backendUserGroupRepository ?? GeneralUtility::makeInstance(BackendUserGroupRepository::class);
         $this->backendUserRepository = $backendUserRepository ?? GeneralUtility::makeInstance(BackendUserRepository::class);
-
     }
 
-    public function getTable(): string
-    {
-        return $this->table;
-    }
-
+    /**
+     * @return ListOfMemebers
+     */
     public function getItems(): ListOfMemebers
     {
         $users = [];
@@ -105,6 +75,10 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         return $members;
     }
 
+    /**
+     * @param $whereCondition
+     * @return array
+     */
     public function renderUsersData($whereCondition) : array {
         $usersUid = [];
         $data =  BackendUtility::getUserNames('uid, username,realName,email,lastlogin', $whereCondition);
@@ -120,6 +94,10 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
         return $users;
     }
 
+    /**
+     * @param array $data
+     * @return Member
+     */
     public function memberMappe(array $data) : Member{
         $member = new Member();
         $member->setUid($data['uid']);
@@ -156,5 +134,13 @@ class ListOfMembersProviderImp implements ListOfMembersProvider
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
+    }
+
+    /**
+     * This function return the widget title
+     * @return string
+     */
+    public function getWidgetTitle() : string {
+        return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyTeamsMembers');
     }
 }

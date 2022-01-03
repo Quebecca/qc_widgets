@@ -1,78 +1,53 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider;
 
-use Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\ListOfWorkspacePreviewLinksProvider;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
-class ListOfWorkspacePreviewLinksProviderImp implements ListOfWorkspacePreviewLinksProvider
+class ListOfWorkspacePreviewLinksProviderImp extends Provider
 {
     /**
      * @var string
      */
-    protected string $table = '';
-
-    /**
-     * @var string
-     */
-    protected string $orderField = '';
-
-    /**
-     * @var string
-     */
-    protected string $limit = '';
-
-    /**
-     * @var string
-     */
-    protected string $order= '';
-
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:';
 
     public function __construct(
         string $table,
         string $orderField,
-        string $limit,
-        string $order
+        int $limit,
+        string $orderType
     )
     {
-        $this->table = $table;
-        $this->orderField = $orderField;
-        $this->limit = $limit;
-        $this->order = $order;
+        parent::__construct($table,$orderField,$limit,$orderType);
+        $tsConfigLimit = intval($this->userTS['ListOfWorkspaceProviderLinksLimit']);
+        if($tsConfigLimit && $tsConfigLimit > 0){
+            $this->limit = $tsConfigLimit;
+        }
     }
 
-    public function getTable(): string
-    {
-        return $this->table;
-    }
-
+    /**
+     * @return array
+     */
     public function getItems(): array
     {
-        // get the allowed workspcaes Uid
+        // get the allowed workspaces Uid
         $wsService = new WorkspaceService();
         // Doc
         $workspaces = $wsService->getAvailableWorkspaces();
-        // render the workspace name and  title
-        /*
-        [
-            "WS Title" => "My WS",
-            "preview" => [
-                         "link" => "tstamp",
-                         "endTime" => "21-12-2022",
-                         "keyword  ?" => "lsdsdgjbkljgbekrjgberkj"
-                ]
-        ]
-        */
         return $this->renderData($workspaces);
-
     }
 
-    public function renderData(array $worskpaces) : array {
+    /**
+     * @param array $workspaces
+     * @return array
+     */
+    public function renderData(array $workspaces) : array {
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_preview')->createQueryBuilder();
         $previewsData = [];
-        foreach ($worskpaces as $keyData => $value){
+        foreach ($workspaces as $keyData => $value){
             // return the array og the sys_preview record
             $result = $queryBuilder
                 ->select('tstamp','endtime', 'keyword')
@@ -81,7 +56,7 @@ class ListOfWorkspacePreviewLinksProviderImp implements ListOfWorkspacePreviewLi
                     $queryBuilder->expr()->like('config', "'%$keyData}'")
                 )
                 ->orderBy('endtime', 'DESC')
-                ->setMaxResults(5)
+                ->setMaxResults($this->limit)
                 ->execute()
                 ->fetchAll();
 
@@ -97,12 +72,15 @@ class ListOfWorkspacePreviewLinksProviderImp implements ListOfWorkspacePreviewLi
                     'expired' => $expired
                 ];
             }
-            /* $workspacePreviewLink [] = [
-                 "wsTitle" => $value,
-                 "preview" => $previewsData
-             ];*/
         }
         return $previewsData;
     }
 
+    /**
+     * This function return the widget title
+     * @return string
+     */
+    public function getWidgetTitle() : string {
+        return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyWorkspaceLinks');
+    }
 }

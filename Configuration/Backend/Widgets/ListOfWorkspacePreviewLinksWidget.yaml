@@ -9,12 +9,12 @@ services:
     resource: '../Classes/*'
 
   dashboard.provider.listOfWorkspacePreviewLinks:
-    class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\Imp\ListOfWorkspacePreviewLinksProviderImp'
+    class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\ListOfWorkspacePreviewLinksProviderImp'
     arguments:
       $table: 'sys_preview'
       $orderField: 'endtime'
       $limit: 5
-      $order: 'DESC'
+      $orderType: 'DESC'
 
   dashboard.widget.listOfWorkspacePreviewLinks:
     class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\ListOfWorkspacePreviewLinksWidget'

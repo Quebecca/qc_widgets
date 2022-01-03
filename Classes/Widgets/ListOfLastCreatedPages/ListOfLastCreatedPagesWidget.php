@@ -1,7 +1,7 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages;
 
-use Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProvider;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
@@ -12,7 +12,7 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfLastCreatedPagesProvider
+     * @var Provider
      */
     protected $dataProvider;
 
@@ -22,7 +22,7 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfLastCreatedPagesProvider $dataProvider
+        Provider $dataProvider
     )
     {
         $this->configuration = $configuration;
@@ -30,6 +30,9 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
         $this->dataProvider = $dataProvider;
     }
 
+    /**
+     * @return string
+     */
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();

@@ -1,63 +1,44 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp;
+namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider;
 
 
-use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvider
+class ListOfLastModifiedPagesProviderImp extends Provider
 {
     /**
      * @var string
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
 
-    /**
-     * @var string
-     */
-    protected string $table = '';
-
-    /**
-     * @var string
-     */
-    protected string $orderField = '';
-
-    /**
-     * @var string
-     */
-    protected string $limit = '';
-
-    /**
-     * @var LocalizationUtility
-     */
-    private $localizationUtility;
-
-
     public function __construct(
         string $table,
         string $orderField,
-        string $limit,
-        LocalizationUtility $localizationUtility = null
+        int $limit,
+        string $orderType
     )
     {
-        $this->localizationUtility = $localizationUtility ?? GeneralUtility::makeInstance(LocalizationUtility::class);
-        $this->table = $table;
-        $this->orderField = $orderField;
-        $this->limit = $limit;
+        parent::__construct($table,$orderField,$limit,$orderType);
+        // control the limit value, if the user has already specified a value for limiting the results
+        $tsConfigLimit = intval($this->userTS['listOfLastModifiedPagesLimit']);
+        if($tsConfigLimit && $tsConfigLimit > 0){
+            $this->limit = $tsConfigLimit;
+        }
     }
 
+    /**
+     * @return string
+     */
     public function getWidgetTitle() : string {
         return $this->localizationUtility->translate(Self::LANG_FILE . 'myLastPages');
     }
 
-    public function getTable(): string
-    {
-        return $this->table;
-    }
-
+    /**
+     * @return array
+     */
     public function getItems(): array
     {
         /*
@@ -79,6 +60,10 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
 
     }
 
+    /**
+     * this function return the query for pages records
+     * @return array
+     */
     public function renderData() : array {
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
@@ -92,7 +77,7 @@ class ListOfLastModifiedPagesProviderImp implements ListOfLastModifiedPagesProvi
                 $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))
             )
             ->orderBy($this->orderField, 'DESC')
-            ->setMaxResults($this->limit)
+            ->setMaxResults(intval($this->limit))
             ->execute()
             ->fetchAll();
 

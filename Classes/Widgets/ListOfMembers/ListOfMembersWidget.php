@@ -1,13 +1,8 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfMembers;
 
-use Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProvider;
-use TYPO3\CMS\Core\Pagination\ArrayPaginator;
-use TYPO3\CMS\Core\Pagination\PaginationInterface;
-use TYPO3\CMS\Core\Pagination\SimplePagination;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalJavaScriptInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -17,7 +12,7 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfMembersProvider
+     * @var Provider
      */
     protected $dataProvider;
 
@@ -27,7 +22,7 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfMembersProvider $dataProvider
+        Provider $dataProvider
     )
     {
         $this->configuration = $configuration;
@@ -35,10 +30,15 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
         $this->dataProvider = $dataProvider;
     }
 
+    /**
+     * @return string
+     */
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
+        $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/ListOfMembersWidget');
+        $this->view->assign('widgetTitle', $widgetTitle);
         if(!empty($data)){
             $this->view->assign('data', $data);
         }

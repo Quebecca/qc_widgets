@@ -9,10 +9,11 @@ services:
     resource: '../Classes/*'
 
   dashboard.provider.listOfLastModifiedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\Imp\ListOfLastModifiedPagesProviderImp'
+    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProviderImp'
     arguments:
       $table: 'pages'
       $orderField: 'tstamp'
+      $orderType: 'DESC'
       $limit: 25
 
   dashboard.widget.listOfLastModifiedPages:

@@ -8,6 +8,9 @@ call_user_func(static function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
         "@import 'EXT:qc_widgets/Configuration/TSconfig/User/options.tsconfig'"
     );
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+        "@import 'EXT:qc_widgets/Configuration/TSconfig/pageconfig.tsconfig'"
+    );
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
         "@import 'EXT:qc_widgets/Configuration/TypoScript/setup.typoscript'"
     );

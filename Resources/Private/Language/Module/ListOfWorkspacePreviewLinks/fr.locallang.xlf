@@ -17,7 +17,10 @@
               <source>Keyword</source>
               <target>Clé</target>
            </trans-unit>
-
+            <trans-unit id="listOfMyWorkspaceLinks">
+              <source>List of my workspace preview links</source>
+              <target>Liste de mes liens d'aperçu de l'espace de travail</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

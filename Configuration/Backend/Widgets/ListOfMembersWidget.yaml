@@ -9,12 +9,12 @@ services:
     resource: '../Classes/*'
 
   dashboard.provider.listOfMembers:
-    class: 'Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\ListOfMembersProviderImp'
+    class: 'Qc\QcWidgets\Widgets\ListOfMembers\Provider\ListOfMembersProviderImp'
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
       $limit: 7
-      $order: 'DESC'
+      $orderType: 'DESC'
 
   dashboard.widget.listOfMembers:
     class: 'Qc\QcWidgets\Widgets\ListOfMembers\ListOfMembersWidget'

@@ -2,19 +2,18 @@
 
 namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages;
 
-use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProvider;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalJavaScriptInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface, AdditionalJavaScriptInterface
+class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfLastModifiedPagesProvider
+     * @var Provider
      */
     protected $dataProvider;
 
@@ -25,7 +24,7 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
 
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfLastModifiedPagesProvider $dataProvider
+        Provider $dataProvider
     )
     {
         $this->configuration = $configuration;
@@ -33,6 +32,9 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
         $this->dataProvider = $dataProvider;
     }
 
+    /**
+     * @return string
+     */
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
@@ -50,12 +52,6 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
         return $this->view->render();
     }
 
-    public function getJsFiles(): array
-    {
-        return [
-            'EXT:qc_widgets/Resources/Public/JavaScript/listOfLastModifiedPages.js',
-        ];
-    }
 
     public function getCssFiles(): array
     {

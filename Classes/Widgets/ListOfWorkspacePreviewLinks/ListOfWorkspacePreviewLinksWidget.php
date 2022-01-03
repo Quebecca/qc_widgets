@@ -2,7 +2,7 @@
 namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks;
 
 
-use Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider\ListOfWorkspacePreviewLinksProvider;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -12,7 +12,7 @@ class ListOfWorkspacePreviewLinksWidget implements WidgetInterface
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfWorkspacePreviewLinksProvider
+     * @var Provider
      */
     protected $dataProvider;
 
@@ -22,7 +22,7 @@ class ListOfWorkspacePreviewLinksWidget implements WidgetInterface
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfWorkspacePreviewLinksProvider $dataProvider
+        Provider $dataProvider
     )
     {
         $this->configuration = $configuration;
@@ -30,10 +30,15 @@ class ListOfWorkspacePreviewLinksWidget implements WidgetInterface
         $this->dataProvider = $dataProvider;
     }
 
+    /**
+     * @return string
+     */
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
+        $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/ListOfWorkspacePreviewLinks');
+        $this->view->assign('widgetTitle', $widgetTitle);
         if(!empty($data)){
             $this->view->assign('data', $data);
         }

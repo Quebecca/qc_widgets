@@ -1,5 +1,4 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
 <style>
     .c-badge {
@@ -34,7 +33,7 @@
 </style>
 <div class="widget-content-title">
     <span>
-        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:listOfMyWorkspaceLinks" />
+        {widgetTitle}
     </span>
 </div>
 <div class="widget-content-main">
@@ -69,9 +68,17 @@
                         <td>{item.wsTitle}</td>
                         <td>
                             <f:if condition="{item.expired} == 1">
-                                <span class="c-badge c-badge--yellow">
-                                   <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
-                                </span>
+                                <f:then>
+                                    <span class="c-badge c-badge--yellow">
+                                       <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
+                                    </span>
+                                </f:then>
+                                <f:else>
+                                    <span class="c-badge c-badge--green">
+                                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:visible" />
+                                    </span>
+                                </f:else>
+
                             </f:if>
                         </td>
                         <td>{item.tstamp}</td>

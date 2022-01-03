@@ -1,6 +1,6 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Imp\Entities;
+namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities;
 
 class ListOfMemebers
 {
@@ -36,8 +36,6 @@ class ListOfMemebers
         $this->numberOfMembers = $numberOfMembers;
     }
 
-
-
     /**
      * @return bool
      */
@@ -45,7 +43,6 @@ class ListOfMemebers
     {
         return $this->isAdmin;
     }
-
 
     /**
      * @param bool $isAdmin

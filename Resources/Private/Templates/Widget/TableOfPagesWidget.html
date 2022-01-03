@@ -3,9 +3,6 @@
 <div class="widget-content-title">
     <span>
         {widgetTitle}
-       <f:comment>
-           <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroup" />
-       </f:comment>
     </span>
 </div>
 <div class="widget-content-main">
@@ -49,14 +46,14 @@
                             </f:if>
                             <f:if condition="{item.hidden} == 1">
                                 <f:then>
-                                <span class="c-badge c-badge--red">
-                                   <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
-                                </span>
+                                    <span class="c-badge c-badge--red">
+                                       <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
+                                    </span>
                                 </f:then>
                                 <f:else>
-                                <span class="c-badge c-badge--green">
-                               <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:visible" />
-                            </span>
+                                    <span class="c-badge c-badge--green">
+                                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:visible" />
+                                    </span>
                                 </f:else>
                             </f:if>
                         </td>

@@ -21,10 +21,6 @@
                 <source>List Of my groups members</source>
                 <target>La liste des membres de mes groupes</target>
             </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinks">
-              <source>List of my workspace preview links</source>
-              <target>Liste de mes liens d'aperçu de l'espace de travail</target>
-            </trans-unit>
             <trans-unit id="creationDate" >
                <source>Creation date</source>
                <target>Date de création</target>
