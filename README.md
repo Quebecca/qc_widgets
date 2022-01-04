@@ -1,16 +1,74 @@
 Qc Widgets
 ==============================================================
+*La [version française](#documentation-qc-widget) de la documentation suit le texte anglais*
 
-This extension provide a set of widget, that can be used to display a bunch of tables,
-the extension comes with four widgets.
-the extension support a three tsconfig options that can be used to specify the number of records, that will be displayed in each widget.
+## About
+This extension provides a set of widgets, each widget allows to display a table that serves to display details
+related to the current user.
+To control the amount displayed by widgets of this extension, it supports three tsconfig options.
+The extension comes with four widgets :
 
-## List of My Groups Members
-this widget is used to display a table of members for each group,the current user is member in.
-## List of last created Pages
-this widget provides a table of the latest created pages by the members of the current logged user groups.
-## List of the last modified Pages 
-this widget is used to display the table of the latest modified pages, the table also has a column that indicates
-the status of each pages showed
+## List of my groups members 
+This widget is used to display details of users who belong to the same groups as the logged in user, 
+if the current user is an administrator in this case the widget will display the list of administrators in the system.
+
+## Last created Pages in my groups
+This widget allows to display the list of the last pages created by the members who belong to the same groups as the user, 
+the widget will display by default the last 25 pages created, by a click on the UID of a page displayed, the user will be redirected to the page module.
+To control the amount displayed by this widget, the following tsconfig attribute can be used:
+    `listOfLastCreatedPagesLimit = 0`
+
+if the value entered is less than or equal to 0, the default value is '25'.
+
+## My last modified pages
+This widget allows to display the list of the last pages modified by the current user, 
+the details of the pages displayed in this widget is similar to the details displayed by the widget `List of last created pages by my group’s members`
+To control the amount displayed by this widget, the following tsconfig attribute can be used:
+    `listOfLastModifiedPagesLimit = 0`
+
+if the value entered is less than or equal to 0, the default value is '25'.
+
+
 ## List of my workspace preview links
-this widget 
+This widget is used to display the list of the last 25 preview links created by members who belong to the same groups as the current user.
+To control the amount displayed by this widget, the following tsconfig attribute can be used:
+    `ListOfWorkspaceProviderLinksLimit = 0`
+
+if the value entered is less than or equal to 0, the default value is '25'.
+
+-----------
+[Version française]
+# Documentation Qc Widgets
+
+## À propos
+Cette extension fournit un ensemble de widgets, chaque widget permet d’afficher une table qui sert à afficher des détails liés à l’utilisateur actuel connecté.
+Pour contrôler la quantité affichée par les widgets de cette extension, cette dernière supporte trois options tsconfig, qui servent à limiter la quantité affichée.   
+
+### La liste des membres de mes groupes
+Ce widget sert à afficher les détails des utilisateurs qui appartient aux mêmes groupes que l’utilisateur connecté, 
+si l’utilisateur actuel est un administrateur dans ce cas le widget va afficher la liste des administrateurs dans le système. 
+
+### Les derniers pages créées par mes groupes
+Ce widget permet d’afficher la liste des dernières pages crées par les membres qui appartient aux mêmes groups que l’utilisateur, 
+le widget va afficher par défaut les dernières 25 pages crées, par une clique sur le UID d’une page affichée, 
+l’utilisateur sera redirigé vers le module page.
+Pour contrôler la quantité affichée par ce widget, l’attribue tsconfig suivant peut être utilisé :
+    `listOfLastCreatedPagesLimit = 0`
+
+Si la valeur saisi est inférieur ou égale 0, la valeur par défaut est ‘25’.
+
+### Mes dernières pages modifiées
+Ce widget permet d’afficher la liste des dernières pages modifiées par l’utilisateur actuel, 
+les détails des pages affichées dans ce widget est similaire aux détails afficher
+par le widget `List of last created pages by my group’s members`
+Pour contrôler la quantité affichée par ce widget, l’attribue tsconfig suivant peut être utilisé :
+    `listOfLastModifiedPagesLimit = 0`
+
+Si la valeur saisi est inférieur ou égale 0, la valeur par défaut est ‘25’.
+
+### La liste de mes liens d'aprerçu de l'espace de travail
+Ce widget sert à afficher la liste des derniers 25 liens d’aperçu crées par les membres qui appartient aux mêmes groupes que l’utilisateur actuel.
+Pour contrôler la quantité affichée par ce widget, l’attribue tsconfig suivant peut être utilisé :
+    `ListOfWorkspaceProviderLinksLimit = 0`
+
+Si la valeur saisi est inférieur ou égale 0, la valeur par défaut est ‘25’.

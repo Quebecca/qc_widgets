@@ -1,8 +1,6 @@
 {
     "name": "quebecca/qc-widgets",
     "type": "typo3-cms-extension",
-    "description": "Qc Widgets",
-    "homepage": "https://quebec.ca",
     "license": ["GPL-2.0-or-later"],
     "keywords": ["TYPO3 CMS"],
     "require": {

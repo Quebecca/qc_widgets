@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'listOfLastModifiedPages'
         groupNames: 'qcWidgets'
-        title: 'List of my last modified pages'
-        description: 'List of my last modified pages widget description'
-        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:myLastModifiedPages'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:myLastModifiedPagesDescription'
+        iconIdentifier: 'tx-qc_widgets-modifiedPages-icon'
         height: 'medium'
         width: 'medium'

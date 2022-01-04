@@ -18,7 +18,6 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'Quebecca\\QcWidgets\\' => 'Classes',
         ],
     ],
     'state' => 'stable',
@@ -26,7 +25,5 @@ $EM_CONF[$_EXTKEY] = [
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
     'author' => 'quebec.ca',
-    'author_email' => 'quebec@mce.ca',
-    'author_company' => 'Quebec.ca',
     'version' => '1.0.0',
 ];

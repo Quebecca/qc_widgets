@@ -141,6 +141,10 @@ class ListOfMembersProviderImp extends Provider
      * @return string
      */
     public function getWidgetTitle() : string {
+        // check if the current user is admin
+        if($GLOBALS['BE_USER']->isAdmin()){
+            return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfAdminsMembers');
+        }
         return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyTeamsMembers');
     }
 }

@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'listOfLastCreatedPages'
         groupNames: 'qcWidgets'
-        title: 'List of my last created pages'
-        description: 'List of my last created pages widget description'
-        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroup'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroupDescription'
+        iconIdentifier: 'tx-qc_widgets-createdPages-icon'
         height: 'medium'
         width: 'medium'

@@ -11,14 +11,14 @@
             </trans-unit>
             <trans-unit id="qcWidgetsDescription" >
                 <source>Set of widget provided by Qc Widgets, to display a bunch of tables</source>
-                <target>Ensemble de widget fourni par Qc Widgets, pour afficher un tas de tableaux</target>
+                <target>Ensemble de widget fourni par Qc Widgets, pour afficher un ensemble de tables</target>
             </trans-unit>
             <trans-unit id="pageTitle" >
                <source>Title</source>
                <target>Titre</target>
             </trans-unit>
             <trans-unit id="listOfMembers" >
-                <source>List Of my groups members</source>
+                <source>List of my groups members</source>
                 <target>La liste des membres de mes groupes</target>
             </trans-unit>
             <trans-unit id="creationDate" >
@@ -31,7 +31,19 @@
             </trans-unit>
             <trans-unit id="lastCreatedPageInMyGroup" >
                <source>Last created pages in my groups</source>
-               <target>Dernières pages créées dans mes groupes</target>
+               <target>Les dernières pages créées par mes groupes</target>
+            </trans-unit>
+            <trans-unit id="lastCreatedPageInMyGroupDescription" >
+               <source>Displays the list latest created pages by my groups members</source>
+               <target>Affiche la liste des dernières pages créées par les memberes de mes groupes</target>
+            </trans-unit>
+            <trans-unit id="myLastModifiedPages" >
+                  <source>My last modified pages</source>
+                  <target>Mes dernières pages modifiées</target>
+            </trans-unit>
+            <trans-unit id="myLastModifiedPagesDescription" >
+                  <source>Displays my last modified pages</source>
+                  <target>Affiche la liste de mes dernières pages modifiées</target>
             </trans-unit>
             <trans-unit id="myLastPages" >
                  <source>My last pages</source>
@@ -55,7 +67,7 @@
            </trans-unit>
            <trans-unit id="noResult" >
                <source>No result returned</source>
-               <target>No résultat retourné</target>
+               <target>Non résultat retourné</target>
            </trans-unit>
 		</body>
 	</file>

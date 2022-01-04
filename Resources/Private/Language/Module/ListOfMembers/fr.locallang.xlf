@@ -21,6 +21,10 @@
                 <source>List of my groups members</source>
                 <target>La liste des membres de mes groupes</target>
             </trans-unit>
+            <trans-unit id="listOfAdminsMembers" >
+                <source>List of Admins</source>
+                <target>La liste des administrateurs</target>
+            </trans-unit>
             <trans-unit id="listOfAdmins" >
                 <source>List of admins</source>
                 <target>La list des administrateurs</target>
@@ -39,7 +43,7 @@
             </trans-unit>
            <trans-unit id="userHasNeverLoggedIn">
                <source>User has never logged in</source>
-               <target>L'utilisateur n'a jamais se connecter</target>
+               <target>L'utilisateur ne s'est jamais connecté</target>
            </trans-unit>
 		</body>
 	</file>

@@ -13,7 +13,7 @@
             <source>Title</source>
         </trans-unit>
         <trans-unit id="listOfMembers" >
-            <source>List Of my groups members</source>
+            <source>List of my groups members</source>
         </trans-unit>
 
         <trans-unit id="creationDate" >
@@ -24,6 +24,15 @@
         </trans-unit>
         <trans-unit id="lastCreatedPageInMyGroup" >
            <source>Last created pages in my groups</source>
+        </trans-unit>
+        <trans-unit id="myLastModifiedPages" >
+           <source>My last modified pages</source>
+        </trans-unit>
+        <trans-unit id="myLastModifiedPagesDescription" >
+              <source>Displays my last modified pages</source>
+        </trans-unit>
+        <trans-unit id="lastCreatedPageInMyGroupDescription" >
+           <source>Displays the list latest created pages by my groups members</source>
         </trans-unit>
         <trans-unit id="myLastPages" >
            <source>My last pages</source>

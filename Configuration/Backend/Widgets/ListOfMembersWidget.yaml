@@ -28,6 +28,6 @@ services:
         groupNames: 'qcWidgets'
         title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:listOfMembers'
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembersDescription'
-        iconIdentifier: 'tx-qc_widgets-extension-icon'
+        iconIdentifier: 'tx-qc_widgets-members-icon'
         height: 'medium'
         width: 'medium'
