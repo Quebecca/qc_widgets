@@ -9,18 +9,26 @@ use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 class ListOfWorkspacePreviewLinksProviderImp extends Provider
 {
     /**
+     * Overriding the LONG_FILE attribute
      * @var string
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:';
+
+    /**
+     * @var WorkspaceService
+     */
+    protected WorkspaceService $workspaceService;
 
     public function __construct(
         string $table,
         string $orderField,
         int $limit,
-        string $orderType
+        string $orderType,
+        WorkspaceService $workspaceService = null
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
+        $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         $tsConfigLimit = intval($this->userTS['ListOfWorkspaceProviderLinksLimit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
@@ -33,9 +41,8 @@ class ListOfWorkspacePreviewLinksProviderImp extends Provider
     public function getItems(): array
     {
         // get the allowed workspaces Uid
-        $wsService = new WorkspaceService();
-        // Doc
-        $workspaces = $wsService->getAvailableWorkspaces();
+        // retrieves the available workspaces from the database and checks whether and they're available to the current BE user
+        $workspaces = $this->workspaceService->getAvailableWorkspaces();
         return $this->renderData($workspaces);
     }
 
@@ -44,11 +51,10 @@ class ListOfWorkspacePreviewLinksProviderImp extends Provider
      * @return array
      */
     public function renderData(array $workspaces) : array {
-
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_preview')->createQueryBuilder();
         $previewsData = [];
         foreach ($workspaces as $keyData => $value){
-            // return the array og the sys_preview record
+            // return the array og the sys_preview records
             $result = $queryBuilder
                 ->select('tstamp','endtime', 'keyword')
                 ->from('sys_preview')
@@ -77,7 +83,7 @@ class ListOfWorkspacePreviewLinksProviderImp extends Provider
     }
 
     /**
-     * This function return the widget title
+     * This function returns the widget title
      * @return string
      */
     public function getWidgetTitle() : string {

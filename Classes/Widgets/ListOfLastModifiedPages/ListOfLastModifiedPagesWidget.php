@@ -42,13 +42,7 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
         $this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->assign('widgetTitle', $widgetTitle);
-
-        if(!empty($data)){
-            $this->view->assign('data', $data);
-        }
-        else {
-            $this->view->assign('empty', true);
-        }
+        $this->view->assign('data', $data);
         return $this->view->render();
     }
 
@@ -56,7 +50,7 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     public function getCssFiles(): array
     {
         return [
-
+            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
         ];
     }
 }

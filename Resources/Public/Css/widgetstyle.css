@@ -1,6 +1,8 @@
 table {
     font-size : 11px;
-    color : red;
+}
+.group-name {
+    text-align : center;
 }
 
 .c-badge {

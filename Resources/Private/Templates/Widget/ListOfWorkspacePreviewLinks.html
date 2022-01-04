@@ -1,36 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
-<style>
-    .c-badge {
-        background: #000;
-        color: #fff;
-        text-transform: uppercase;
-        font-weight: 700;
-        padding: 0.25rem 0.5rem;
-        line-height: 0.875em;
-        font-size: 0.875em;
-        border-radius: 0.25em;
-        display: inline-block;
-        margin-right: 0.25rem;
-    }
-    .c-badge--green {
-        background: #7aa41c;
-    }
-    .c-badge--red {
-        background: #de4545;
-    }
-    .c-badge--yellow {
-        background: #dea645;
-    }
 
-    .u-dashboard-button {
-        padding: 3px 8px;
-        margin-right: 4px;
-    }
-    .u-space-top {
-        margin-top: 0.25rem;
-    }
-</style>
 <div class="widget-content-title">
     <span>
         {widgetTitle}
@@ -38,56 +8,58 @@
 </div>
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
-        <f:if condition="{empty} === true">
-            <f:render partial="NoResult"/>
-        </f:if>
-        <f:if condition="{data}">
-            <table class="widget-table">
-                <thead>
-                <tr>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:expirationDate" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:key" />
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <f:for each="{data}"  as="item">
+        <f:if condition="{data.0}">
+            <f:then>
+                <table class="widget-table">
+                    <thead>
                     <tr>
-                        <td>{item.wsTitle}</td>
-                        <td>
-                            <f:if condition="{item.expired} == 1">
-                                <f:then>
+                        <th scope="col">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:workspace" />
+                        </th>
+                        <th scope="col">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
+                        </th>
+                        <th scope="col">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
+                        </th>
+                        <th scope="col">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:expirationDate" />
+                        </th>
+                        <th scope="col">
+                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:key" />
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{data}"  as="item">
+                        <tr>
+                            <td>{item.wsTitle}</td>
+                            <td>
+                                <f:if condition="{item.expired} == 1">
+                                    <f:then>
                                     <span class="c-badge c-badge--yellow">
                                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
                                     </span>
-                                </f:then>
-                                <f:else>
+                                    </f:then>
+                                    <f:else>
                                     <span class="c-badge c-badge--green">
                                         <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:visible" />
                                     </span>
-                                </f:else>
+                                    </f:else>
 
-                            </f:if>
-                        </td>
-                        <td>{item.tstamp}</td>
-                        <td>{item.endtime}</td>
-                        <td>{item.keyword}</td>
-                    </tr>
-                </f:for>
-                </tbody>
-            </table>
+                                </f:if>
+                            </td>
+                            <td>{item.tstamp}</td>
+                            <td>{item.endtime}</td>
+                            <td>{item.keyword}</td>
+                        </tr>
+                    </f:for>
+                    </tbody>
+                </table>
+            </f:then>
+            <f:else>
+                <f:render partial="NoResult"/>
+            </f:else>
         </f:if>
     </div>
 </div>

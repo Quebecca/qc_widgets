@@ -42,8 +42,6 @@ abstract class Provider
      */
     protected $userTS;
 
-
-
     public function __construct(
         string $table,
         string $orderField,
@@ -60,23 +58,13 @@ abstract class Provider
     }
 
     /**
-     * this function return the specified values from the tsconfig
+     * this function returns the specified values from the tsconfig
      */
     protected function initializeTsConfig(){
         /*Initialize the TsConfing mod of the current Backend user */
         $this->userTS = $this->getBackendUser()->getTSConfig()['mod.']['qcwidgets.'];
     }
 
-    /*
-     * this function return the widget title
-     * @return string
-     */
-    public abstract function getWidgetTitle() : string;
-
-    /*
-     * this function return the query result from the provider implementation
-     */
-    public abstract function getItems();
 
     /**
      * @return BackendUserAuthentication
@@ -85,4 +73,16 @@ abstract class Provider
     {
         return $GLOBALS['BE_USER'];
     }
+
+    /*
+     * this function returns the widget title
+     * @return string
+     */
+    public abstract function getWidgetTitle() : string;
+
+    /*
+     * This function returns the array of pages records after rendering results from the database
+     */
+    public abstract function getItems();
+
 }

@@ -61,7 +61,7 @@ class ListOfLastModifiedPagesProviderImp extends Provider
     }
 
     /**
-     * this function return the query for pages records
+     * this function returns the query for pages records
      * @return array
      */
     public function renderData() : array {

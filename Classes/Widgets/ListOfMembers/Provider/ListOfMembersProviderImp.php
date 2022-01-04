@@ -5,7 +5,6 @@ use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\ListOfMemebers;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\Member;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -13,6 +12,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 class ListOfMembersProviderImp extends Provider
 {
     /**
+     * Overriding the LONG_FILE attribute
      * @var string
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:';
@@ -54,6 +54,7 @@ class ListOfMembersProviderImp extends Provider
         $members = new ListOfMemebers();
         $members->setIsAdmin($GLOBALS['BE_USER']->isAdmin());
         if($GLOBALS['BE_USER']->isAdmin()){
+            // if the current user is an admin, we return the list of admins
             $userData = $this->renderUsersData("AND ADMIN = 1 AND disable = 0");
             $users [] = [
                 'groupName' => '',
@@ -61,6 +62,7 @@ class ListOfMembersProviderImp extends Provider
             ];
         }
         else{
+            // if the current user is not an admin, we return the users in the same groups as the current user
             $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
             foreach ($groupsUid as $groupUid){
                  $groupName = $this->backendUserGroupRepository->findByUid($groupUid);
@@ -127,17 +129,7 @@ class ListOfMembersProviderImp extends Provider
         return $member;
     }
 
-
     /**
-     * @return BackendUserAuthentication
-     */
-    protected function getBackendUser(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
-    }
-
-    /**
-     * This function return the widget title
      * @return string
      */
     public function getWidgetTitle() : string {

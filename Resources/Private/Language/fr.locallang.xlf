@@ -11,7 +11,7 @@
             </trans-unit>
             <trans-unit id="qcWidgetsDescription" >
                 <source>Set of widget provided by Qc Widgets, to display a bunch of tables</source>
-                <target>Ensemble de widget fourni par Qc Widgets, pour afficher un ensemble de tables</target>
+                <target>Ensemble de widgets fournis par Qc Widgets, pour afficher un ensemble de tables</target>
             </trans-unit>
             <trans-unit id="pageTitle" >
                <source>Title</source>

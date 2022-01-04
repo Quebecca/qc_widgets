@@ -39,13 +39,7 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/ListOfMembersWidget');
         $this->view->assign('widgetTitle', $widgetTitle);
-        if(!empty($data)){
-            $this->view->assign('data', $data);
-        }
-        else {
-            $this->view->assign('empty', true);
-        }
-       // $this->view->assign('data',$data);
+        $this->view->assign('data', $data);
         return $this->view->render();
     }
 

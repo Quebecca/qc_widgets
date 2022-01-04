@@ -39,16 +39,13 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/TableOfPagesWidget');
         $this->view->assign('widgetTitle', $widgetTitle);
-
-        if(!empty($data)){
-            $this->view->assign('data', $data);
-        }
-        else {
-            $this->view->assign('empty', true);
-        }
+        $this->view->assign('data', $data);
         return $this->view->render();
     }
 
+    /**
+     * @return string[]
+     */
     public function getCssFiles(): array
     {
         return [

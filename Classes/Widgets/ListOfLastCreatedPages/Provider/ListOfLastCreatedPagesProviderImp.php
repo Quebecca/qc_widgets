@@ -24,7 +24,6 @@ class ListOfLastCreatedPagesProviderImp extends Provider
     }
 
     /**
-     * This function return the widget title
      * @return string
      */
     public function getWidgetTitle() : string {
@@ -32,7 +31,6 @@ class ListOfLastCreatedPagesProviderImp extends Provider
     }
 
     /**
-     * This function return the array of pages records
      *
      * @return array
      */
@@ -43,9 +41,10 @@ class ListOfLastCreatedPagesProviderImp extends Provider
         $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
         // get uid of members
         foreach ($groupsUid as $groupUid){
-            // Returns an array with be_users records of all user NOT DELETED sorted by their username
+            // Returns an array with UID records of all user NOT DELETED sorted by their username
             $data =  BackendUtility::getUserNames('uid', "AND usergroup LIKE  '%$groupUid%'  AND disable = 0");
             foreach($data as $key => $val){
+                // if a user is present in two groups, we will have duplicated user uids
                 // prevent the duplicated users uid
                 if(!in_array($key, $membersUid)){
                     $membersUid[] = $key;
@@ -70,7 +69,7 @@ class ListOfLastCreatedPagesProviderImp extends Provider
     }
 
     /**
-     * this function return the query for pages records
+     * this function returns the query results
      * @param array $membersUid
      * @return array
      */
