@@ -4,7 +4,12 @@ table {
 .group-name {
     text-align : center;
 }
-
+.no-result-alert{
+    margin-left : 2rem;
+    margin-right : 2rem;
+    margin-top : 10rem;
+    text-align : center;
+}
 .c-badge {
     background: #000;
     color: #fff;
