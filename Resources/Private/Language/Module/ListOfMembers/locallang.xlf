@@ -13,10 +13,10 @@
                 <source>Real name not provided</source>
             </trans-unit>
             <trans-unit id="listOfMyTeamsMembers" >
-                <source>List of my groups members</source>
+                <source>Members of my groups</source>
             </trans-unit>
             <trans-unit id="listOfAdminsMembers" >
-                <source>List of Admins</source>
+                <source>List of administrators</source>
             </trans-unit>
             <trans-unit id="listOfAdmins" >
                 <source>List of admins</source>

@@ -18,8 +18,8 @@
               <target>Clé</target>
            </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinks">
-              <source>List of my workspace preview links</source>
-              <target>La liste de mes liens d'aperçu de l'espace de travail</target>
+              <source>List of workspace previews</source>
+              <target>List des aperçus d'espace de travail</target>
             </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinksDescription">
                 <source>Displays the list of the workspace preview links my groups members</source>

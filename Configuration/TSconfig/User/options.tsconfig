@@ -1,1 +1,1 @@
-options.dashboard.dashboardPresetsForNewUsers = listOfMembers, listOfLastModifiedPages, listOfLastCreatedPages, listOfWorkspacePreviewLinks
+options.dashboard.dashboardPresetsForNewUsers = qcWidgets

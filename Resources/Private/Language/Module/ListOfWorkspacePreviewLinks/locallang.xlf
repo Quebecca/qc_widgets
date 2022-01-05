@@ -13,7 +13,7 @@
                 <source>Key</source>
             </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinks">
-                <source>List of my workspace preview links</source>
+                <source>List of workspace previews</source>
             </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinksDescription">
                 <source>Displays the list of the workspace preview links my groups members</source>

@@ -1,12 +1,10 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider;
 
-use Qc\QcWidgets\Widgets\Provider;
+use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class ListOfLastCreatedPagesProviderImp extends Provider
+class ListOfLastCreatedPagesProviderImp extends ListOfPagesProvider
 {
     public function __construct(
         string $table,
@@ -16,18 +14,12 @@ class ListOfLastCreatedPagesProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit, $orderType);
+        $this->widgetTitle = 'lastCreatedPageInMyGroup';
         $tsConfigLimit = intval($this->userTS['listOfLastCreatedPagesLimit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }
 
-    }
-
-    /**
-     * @return string
-     */
-    public function getWidgetTitle() : string {
-        return $this->localizationUtility->translate(Self::LANG_FILE . 'lastCreatedPageInMyGroup');
     }
 
     /**
@@ -51,44 +43,13 @@ class ListOfLastCreatedPagesProviderImp extends Provider
                 }
             }
         }
+        // return results
+        $queryBuilder = $this->generateQueryBuilder($this->table);
+        $constraints = [
+            $queryBuilder->expr()->in('cruser_id', $membersUid)
+        ];
+        $result = $this->renderData($queryBuilder,$constraints);
+        return $this->dataMap($result);
 
-        // return the data from the database
-        $result = $this->renderData($membersUid);
-
-        // formatting data for date values
-        $data = [];
-        foreach ($result as $item){
-            $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
-            $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
-            // verify if the page is expired
-            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
-            $data[]  = $item;
-        }
-        return $data;
-
-    }
-
-    /**
-     * this function returns the query results
-     * @param array $membersUid
-     * @return array
-     */
-    public function renderData(array $membersUid) : array {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table)->createQueryBuilder();
-        // the hidden pages or disabled can't be rendered with query builder restrictions
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll();
-
-        return $queryBuilder
-            ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime')
-            ->from($this->table)
-            ->where(
-                $queryBuilder->expr()->in('cruser_id', $membersUid)
-            )
-            ->orderBy($this->orderField, 'DESC')
-            ->setMaxResults($this->limit)
-            ->execute()
-            ->fetchAll();
     }
 }

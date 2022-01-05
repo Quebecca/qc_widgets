@@ -2,15 +2,14 @@
 namespace Qc\QcWidgets\Widgets;
 
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 abstract class Provider
 {
-    /**
-     * @var string
-     */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
+
 
     /**
      * @var string
@@ -38,6 +37,11 @@ abstract class Provider
     protected $localizationUtility;
 
     /**
+     * @var string
+     */
+    protected string $widgetTitle = '';
+
+    /**
      * @var mixed
      */
     protected $userTS;
@@ -63,6 +67,19 @@ abstract class Provider
     protected function initializeTsConfig(){
         /*Initialize the TsConfing mod of the current Backend user */
         $this->userTS = $this->getBackendUser()->getTSConfig()['mod.']['qcwidgets.'];
+    }
+
+    /**
+     * @param string $table
+     * @return QueryBuilder
+     */
+    protected function generateQueryBuilder(string $table): QueryBuilder
+    {
+        /**
+         * @var ConnectionPool $connectionPool
+         */
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        return $connectionPool->getQueryBuilderForTable($table);
     }
 
 

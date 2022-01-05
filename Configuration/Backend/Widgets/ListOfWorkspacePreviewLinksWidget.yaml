@@ -13,8 +13,8 @@ services:
     arguments:
       $table: 'sys_preview'
       $orderField: 'endtime'
-      $limit: 25
       $orderType: 'DESC'
+      $limit: 25
 
   dashboard.widget.listOfWorkspacePreviewLinks:
     class: 'Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\ListOfWorkspacePreviewLinksWidget'

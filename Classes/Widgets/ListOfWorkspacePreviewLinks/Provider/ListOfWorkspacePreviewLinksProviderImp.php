@@ -2,7 +2,6 @@
 namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider;
 
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
@@ -51,17 +50,17 @@ class ListOfWorkspacePreviewLinksProviderImp extends Provider
      * @return array
      */
     public function renderData(array $workspaces) : array {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_preview')->createQueryBuilder();
         $previewsData = [];
+        $queryBuilder = $this->generateQueryBuilder($this->table);
         foreach ($workspaces as $keyData => $value){
             // return the array og the sys_preview records
             $result = $queryBuilder
                 ->select('tstamp','endtime', 'keyword')
-                ->from('sys_preview')
+                ->from($this->table)
                 ->where(
                     $queryBuilder->expr()->like('config', "'%$keyData}'")
                 )
-                ->orderBy('endtime', 'DESC')
+                ->orderBy($this->orderField, $this->orderType)
                 ->setMaxResults($this->limit)
                 ->execute()
                 ->fetchAll();

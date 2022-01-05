@@ -36,26 +36,31 @@
                                     {item.uid}
                                 </f:be.link>
                             </td>
-                            <td>
-                                <f:if condition="{item.expired} == 1">
-                            <span class="c-badge c-badge--yellow">
-                               <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:expired" />
-                            </span>
-                                </f:if>
-                                <f:if condition="{item.hidden} == 1">
-                                    <f:then>
-                                    <span class="c-badge c-badge--red">
-                                       <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
-                                    </span>
-                                    </f:then>
-                                    <f:else>
-                                    <span class="c-badge c-badge--green">
-                                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:visible" />
-                                    </span>
-                                    </f:else>
-                                </f:if>
-                            </td>
                             <td>{item.title}</td>
+                            <td>
+                                <div class="pages-status">
+                                    <f:if condition="{item.expired} == 1" >
+                                        <span>
+                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg" width="18" title="{item.expiredMessage}"/>
+                                        </span>
+                                    </f:if>
+                                    <f:if condition="{item.available} == 0" >
+                                        <span>
+                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg" width="18" title="{item.availableMessage}"/>
+                                        </span>
+                                    </f:if>
+                                    <f:if condition="{item.hidden} == 1">
+                                        <span>
+                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-hidden.svg" width="18" title="{item.hiddenMessage}"/>
+                                        </span>
+                                        <f:comment>
+                                           <span class="c-badge c-badge--red">
+                                           <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
+                                            </span>
+                                        </f:comment>
+                                    </f:if>
+                                </div>
+                            </td>
                             <td>{item.crdate}</td>
                             <td>{item.tstamp}</td>
                             <td>{item.slug}</td>

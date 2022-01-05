@@ -23,7 +23,7 @@
              <source>Last modification date</source>
         </trans-unit>
         <trans-unit id="lastCreatedPageInMyGroup" >
-           <source>Last created pages in my groups</source>
+           <source>Last pages created in my groups</source>
         </trans-unit>
         <trans-unit id="myLastModifiedPages" >
            <source>My last modified pages</source>
@@ -46,13 +46,21 @@
          <trans-unit id="hidden" >
              <source>Hidden</source>
          </trans-unit>
-          <trans-unit id="visible" >
-              <source>Visible</source>
+          <trans-unit id="actif" >
+              <source>Actif</source>
           </trans-unit>
         <trans-unit id="noResult" >
-            <source>No result returned</source>
+            <source>No result</source>
         </trans-unit>
-
+        <trans-unit id="stop" >
+            <source>Stop</source>
+        </trans-unit>
+        <trans-unit id="start" >
+            <source>Start</source>
+        </trans-unit>
+        <trans-unit id="days" >
+            <source>Days</source>
+        </trans-unit>
 		</body>
 	</file>
 </xliff>

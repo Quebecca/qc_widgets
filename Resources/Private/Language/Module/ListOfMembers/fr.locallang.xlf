@@ -18,12 +18,12 @@
                 <target>Nom réel non fourni</target>
             </trans-unit>
             <trans-unit id="listOfMyTeamsMembers" >
-                <source>List of my groups members</source>
-                <target>La liste des membres de mes groupes</target>
+                <source>Members of my groups</source>
+                <target>Membres de mes groupes</target>
             </trans-unit>
             <trans-unit id="listOfAdminsMembers" >
-                <source>List of Admins</source>
-                <target>La liste des administrateurs</target>
+                <source>List of administrators</source>
+                <target>Liste des administrateurs</target>
             </trans-unit>
             <trans-unit id="listOfAdmins" >
                 <source>List of admins</source>

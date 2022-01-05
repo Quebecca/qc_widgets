@@ -67,7 +67,7 @@ class ListOfMembersProviderImp extends Provider
             foreach ($groupsUid as $groupUid){
                  $groupName = $this->backendUserGroupRepository->findByUid($groupUid);
                 $users [] = [
-                    'groupName' => $groupName->getTitle(),
+                    'groupName' => $groupName !== null ? $groupName->getTitle() : '',
                     'users' => $this->renderUsersData("AND usergroup LIKE  '%$groupUid%'  AND disable = 0")
                 ];
             }
@@ -114,22 +114,11 @@ class ListOfMembersProviderImp extends Provider
         else{
             $member->setLastLogin(date("Y-m-d H:i:s", $data['lastlogin']));
         }
-
-        // check if the email or realName is an empty value
-        if ($member->getEmail() === '') {
-            $member->setEmail(
-                $this->localizationUtility->translate(Self::LANG_FILE . 'emailNotProvided')
-            );
-        }
-        if ($member->getRealName() === '') {
-            $member->setRealName(
-                $this->localizationUtility->translate(Self::LANG_FILE . 'realNameNotProvided')
-            );
-        }
         return $member;
     }
 
     /**
+     * Overriding getWidgetTitle
      * @return string
      */
     public function getWidgetTitle() : string {

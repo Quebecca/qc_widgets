@@ -9,7 +9,15 @@ table {
     margin-right : 2rem;
     margin-top : 10rem;
     text-align : center;
+    background-color : #f2f1f1;
 }
+.pages-status {
+    display : inline-flex;
+}
+.pages-status span {
+    margin-right : 0.5rem;
+}
+
 .c-badge {
     background: #000;
     color: #fff;
