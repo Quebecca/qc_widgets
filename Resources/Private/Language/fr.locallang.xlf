@@ -78,8 +78,8 @@
                <target>Lancement</target>
            </trans-unit>
            <trans-unit id="days" >
-               <source>Days</source>
-               <target>Jours</target>
+               <source>days</source>
+               <target>jours</target>
            </trans-unit>
 		</body>
 	</file>

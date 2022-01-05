@@ -59,7 +59,7 @@
             <source>Start</source>
         </trans-unit>
         <trans-unit id="days" >
-            <source>Days</source>
+            <source>days</source>
         </trans-unit>
 		</body>
 	</file>

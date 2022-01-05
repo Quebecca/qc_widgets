@@ -3,6 +3,7 @@
 namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages;
 
 use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProviderImp;
+use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
@@ -13,7 +14,7 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     /** @var WidgetConfigurationInterface */
     private $configuration;
     /**
-     * @var ListOfLastModifiedPagesProviderImp
+     * @var Provider
      */
     protected $dataProvider;
 
@@ -24,7 +25,7 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
 
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        ListOfLastModifiedPagesProviderImp $dataProvider
+        Provider $dataProvider
     )
     {
         $this->configuration = $configuration;

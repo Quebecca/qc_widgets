@@ -37,11 +37,9 @@ class ListOfLastModifiedPagesProviderImp extends ListOfPagesProvider
          * The method TYPO3\CMS\Backend\Utility\BackendUtility::getRecordsByField() has been deprecated and should not be used any longer.
          * https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/8.7/Deprecation-79122-DeprecateBackendUtilitygetRecordsByField.html
          */
-        // Query builder
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $constraints = [
             $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))
-
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
