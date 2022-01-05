@@ -1,17 +1,17 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks\Provider;
+namespace Qc\QcWidgets\Widgets\WorkspacePreviews\Provider;
 
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
-class ListOfWorkspacePreviewLinksProviderImp extends Provider
+class WorkspacePreviewProviderImp extends Provider
 {
     /**
      * Overriding the LONG_FILE attribute
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfWorkspacePreviewLinks/locallang.xlf:';
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:';
 
     /**
      * @var WorkspaceService

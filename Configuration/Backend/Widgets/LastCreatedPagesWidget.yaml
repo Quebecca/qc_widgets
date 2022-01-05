@@ -8,23 +8,23 @@ services:
   Qc\QcWidgets\:
     resource: '../Classes/*'
 
-  dashboard.provider.listOfLastCreatedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider\ListOfLastCreatedPagesProviderImp'
+  dashboard.provider.lastCreatedPages:
+    class: 'Qc\QcWidgets\Widgets\LastCreatedPages\Provider\LastCreatedPagesProviderImp'
     arguments:
       $table: 'pages'
       $orderField: 'crdate'
       $orderType: 'DESC'
       $limit: 25
 
-  dashboard.widget.listOfLastCreatedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastCreatedPages\ListOfLastCreatedPagesWidget'
+  dashboard.widget.lastCreatedPages:
+    class: 'Qc\QcWidgets\Widgets\LastCreatedPages\LastCreatedPagesWidget'
     arguments:
-      $dataProvider: '@dashboard.provider.listOfLastCreatedPages'
+      $dataProvider: '@dashboard.provider.lastCreatedPages'
       $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget
-        identifier: 'listOfLastCreatedPages'
+        identifier: 'lastCreatedPages'
         groupNames: 'qcWidgets'
         title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroup'
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroupDescription'

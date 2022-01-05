@@ -1,5 +1,5 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfWorkspacePreviewLinks;
+namespace Qc\QcWidgets\Widgets\WorkspacePreviews;
 
 
 use Qc\QcWidgets\Widgets\Provider;
@@ -8,7 +8,7 @@ use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfWorkspacePreviewLinksWidget implements WidgetInterface, AdditionalCssInterface
+class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -38,7 +38,7 @@ class ListOfWorkspacePreviewLinksWidget implements WidgetInterface, AdditionalCs
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/ListOfWorkspacePreviewLinks');
+        $this->view->setTemplate('Widget/WorkspacePreviews');
         $this->view->assign('widgetTitle', $widgetTitle);
         $this->view->assign('data',$data);
         return $this->view->render();

@@ -1,5 +1,6 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages;
+
+namespace Qc\QcWidgets\Widgets\LastModifiedPages;
 
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
@@ -7,7 +8,7 @@ use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInterface
+class LastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -20,6 +21,7 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     private $view;
 
     public function __construct(
+
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
         Provider $dataProvider
@@ -36,16 +38,15 @@ class ListOfLastCreatedPagesWidget implements WidgetInterface, AdditionalCssInte
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-        $widgetTitle = $this->dataProvider->getWidgetTitle();
+
         $this->view->setTemplate('Widget/TableOfPagesWidget');
+        $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->assign('widgetTitle', $widgetTitle);
         $this->view->assign('data', $data);
         return $this->view->render();
     }
 
-    /**
-     * @return string[]
-     */
+
     public function getCssFiles(): array
     {
         return [

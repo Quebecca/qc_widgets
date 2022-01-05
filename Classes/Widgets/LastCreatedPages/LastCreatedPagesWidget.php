@@ -1,15 +1,13 @@
 <?php
+namespace Qc\QcWidgets\Widgets\LastCreatedPages;
 
-namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages;
-
-use Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProviderImp;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface
+class LastCreatedPagesWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -22,7 +20,6 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     private $view;
 
     public function __construct(
-
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
         Provider $dataProvider
@@ -39,15 +36,16 @@ class ListOfLastModifiedPagesWidget implements WidgetInterface, AdditionalCssInt
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-
-        $this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
+        $this->view->setTemplate('Widget/TableOfPagesWidget');
         $this->view->assign('widgetTitle', $widgetTitle);
         $this->view->assign('data', $data);
         return $this->view->render();
     }
 
-
+    /**
+     * @return string[]
+     */
     public function getCssFiles(): array
     {
         return [

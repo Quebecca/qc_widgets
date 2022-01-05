@@ -1,11 +1,11 @@
 <?php
 
-namespace Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider;
+namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 
 
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 
-class ListOfLastModifiedPagesProviderImp extends ListOfPagesProvider
+class LastModifiedPagesProviderImp extends ListOfPagesProvider
 {
     /**
      * @var string

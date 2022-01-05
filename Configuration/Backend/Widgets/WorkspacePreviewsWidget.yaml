@@ -1,0 +1,33 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.workspacePreviews:
+    class: 'Qc\QcWidgets\Widgets\WorkspacePreviews\Provider\WorkspacePreviewProviderImp'
+    arguments:
+      $table: 'sys_preview'
+      $orderField: 'endtime'
+      $orderType: 'DESC'
+      $limit: 25
+
+  dashboard.widget.workspacePreviews:
+    class: 'Qc\QcWidgets\Widgets\WorkspacePreviews\WorkspacePreviewsWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.workspacePreviews'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'workspacePreviews'
+        groupNames: 'qcWidgets'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:listOfMyWorkspaceLinks'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:listOfMyWorkspaceLinksDescription'
+        iconIdentifier: 'tx-qc_widgets-workspace-icon'
+        height: 'medium'
+        width: 'medium'

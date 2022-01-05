@@ -1,5 +1,5 @@
 imports:
   - { resource: Backend/Widgets/ListOfMembersWidget.yaml }
-  - { resource: Backend/Widgets/ListOfLastModifiedPagesWidget.yaml }
-  - { resource: Backend/Widgets/ListOfLastCreatedPagesWidget.yaml }
-  - { resource: Backend/Widgets/ListOfWorkspacePreviewLinksWidget.yaml }
+  - { resource: Backend/Widgets/LastModifiedPagesWidget.yaml }
+  - { resource: Backend/Widgets/LastCreatedPagesWidget.yaml }
+  - { resource: Backend/Widgets/WorkspacePreviewsWidget.yaml }

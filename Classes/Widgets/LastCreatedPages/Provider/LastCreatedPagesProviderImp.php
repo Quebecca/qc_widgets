@@ -1,10 +1,10 @@
 <?php
-namespace Qc\QcWidgets\Widgets\ListOfLastCreatedPages\Provider;
+namespace Qc\QcWidgets\Widgets\LastCreatedPages\Provider;
 
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-class ListOfLastCreatedPagesProviderImp extends ListOfPagesProvider
+class LastCreatedPagesProviderImp extends ListOfPagesProvider
 {
     public function __construct(
         string $table,

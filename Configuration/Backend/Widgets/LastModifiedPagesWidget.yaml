@@ -8,23 +8,23 @@ services:
   Qc\QcWidgets\:
     resource: '../Classes/*'
 
-  dashboard.provider.listOfLastModifiedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\Provider\ListOfLastModifiedPagesProviderImp'
+  dashboard.provider.lastModifiedPages:
+    class: 'Qc\QcWidgets\Widgets\LastModifiedPages\Provider\LastModifiedPagesProviderImp'
     arguments:
       $table: 'pages'
       $orderField: 'tstamp'
       $orderType: 'DESC'
       $limit: 25
 
-  dashboard.widget.listOfLastModifiedPages:
-    class: 'Qc\QcWidgets\Widgets\ListOfLastModifiedPages\ListOfLastModifiedPagesWidget'
+  dashboard.widget.lastModifiedPages:
+    class: 'Qc\QcWidgets\Widgets\LastModifiedPages\LastModifiedPagesWidget'
     arguments:
-      $dataProvider: '@dashboard.provider.listOfLastModifiedPages'
+      $dataProvider: '@dashboard.provider.lastModifiedPages'
       $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget
-        identifier: 'listOfLastModifiedPages'
+        identifier: 'lastModifiedPages'
         groupNames: 'qcWidgets'
         title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:myLastModifiedPages'
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:myLastModifiedPagesDescription'
