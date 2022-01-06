@@ -3,3 +3,4 @@ imports:
   - { resource: Backend/Widgets/LastModifiedPagesWidget.yaml }
   - { resource: Backend/Widgets/LastCreatedPagesWidget.yaml }
   - { resource: Backend/Widgets/WorkspacePreviewsWidget.yaml }
+  - { resource: Backend/Widgets/PagesWithoutModificationWidget.yaml }

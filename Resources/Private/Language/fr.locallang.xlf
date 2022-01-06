@@ -41,6 +41,10 @@
                   <source>My last modified pages</source>
                   <target>Mes dernières pages modifiées</target>
             </trans-unit>
+            <trans-unit id="pagesWitouhtModification" >
+               <source>Pages without modification since </source>
+               <target>Pages sans modification depuis</target>
+            </trans-unit>
             <trans-unit id="myLastModifiedPagesDescription" >
                   <source>Displays my last modified pages</source>
                   <target>Affiche la liste de mes dernières pages modifiées</target>
@@ -80,6 +84,10 @@
            <trans-unit id="days" >
                <source>days</source>
                <target>jours</target>
+           </trans-unit>
+           <trans-unit id="months" >
+               <source>Months</source>
+               <target>Mois</target>
            </trans-unit>
 		</body>
 	</file>

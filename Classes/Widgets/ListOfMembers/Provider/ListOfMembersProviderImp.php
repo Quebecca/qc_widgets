@@ -41,6 +41,13 @@ class ListOfMembersProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
+        // check if the current user is admin
+        if($GLOBALS['BE_USER']->isAdmin()){
+            $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfAdminsMembers'));
+        }
+        else{
+            $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyTeamsMembers'));
+        }
         $this->backendUserGroupRepository = $backendUserGroupRepository ?? GeneralUtility::makeInstance(BackendUserGroupRepository::class);
         $this->backendUserRepository = $backendUserRepository ?? GeneralUtility::makeInstance(BackendUserRepository::class);
     }
@@ -115,17 +122,5 @@ class ListOfMembersProviderImp extends Provider
             $member->setLastLogin(date("Y-m-d H:i:s", $data['lastlogin']));
         }
         return $member;
-    }
-
-    /**
-     * Overriding getWidgetTitle
-     * @return string
-     */
-    public function getWidgetTitle() : string {
-        // check if the current user is admin
-        if($GLOBALS['BE_USER']->isAdmin()){
-            return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfAdminsMembers');
-        }
-        return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyTeamsMembers');
     }
 }

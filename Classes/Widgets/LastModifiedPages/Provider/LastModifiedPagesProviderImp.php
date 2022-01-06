@@ -20,9 +20,9 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        $this->widgetTitle = 'myLastPages';
+        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'myLastPages'));
         // control the limit value, if the user has already specified a value for limiting the results
-        $tsConfigLimit = intval($this->userTS['listOfLastModifiedPagesLimit']);
+        $tsConfigLimit = intval($this->userTS['qcWidgets.']['lastModifiedPages.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }

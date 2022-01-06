@@ -1,0 +1,33 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Qc\QcWidgets\:
+    resource: '../Classes/*'
+
+  dashboard.provider.pagesWithoutModification:
+    class: 'Qc\QcWidgets\Widgets\PagesWithoutModification\Provider\PagesWithoutModificationProviderImp'
+    arguments:
+      $table: 'pages'
+      $orderField: 'crdate'
+      $orderType: 'DESC'
+      $limit: 25
+
+  dashboard.widget.pagesWithoutModification:
+    class: 'Qc\QcWidgets\Widgets\PagesWithoutModification\PagesWithoutModificationWidget'
+    arguments:
+      $dataProvider: '@dashboard.provider.pagesWithoutModification'
+      $view: '@dashboard.views.widget'
+    tags:
+      -
+        name: dashboard.widget
+        identifier: 'pagesWithoutModification'
+        groupNames: 'qcWidgets'
+        title: 'Pages without modification'
+        description: 'Pages without modification description....'
+        iconIdentifier: 'tx-qc_widgets-createdPages-icon'
+        height: 'medium'
+        width: 'medium'

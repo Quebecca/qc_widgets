@@ -14,8 +14,8 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit, $orderType);
-        $this->widgetTitle = 'lastCreatedPageInMyGroup';
-        $tsConfigLimit = intval($this->userTS['listOfLastCreatedPagesLimit']);
+        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'lastCreatedPageInMyGroup'));
+        $tsConfigLimit = intval($this->userTS['qcWidgets.']['lastCreatedPages.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }
@@ -52,4 +52,6 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
         return $this->dataMap($result);
 
     }
+
+
 }

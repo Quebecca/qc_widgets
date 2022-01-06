@@ -28,6 +28,9 @@
         <trans-unit id="myLastModifiedPages" >
            <source>My last modified pages</source>
         </trans-unit>
+        <trans-unit id="pagesWitouhtModification" >
+           <source>Pages without modification since </source>
+        </trans-unit>
         <trans-unit id="myLastModifiedPagesDescription" >
               <source>Displays my last modified pages</source>
         </trans-unit>
@@ -60,6 +63,9 @@
         </trans-unit>
         <trans-unit id="days" >
             <source>days</source>
+        </trans-unit>
+        <trans-unit id="months" >
+            <source>Months</source>
         </trans-unit>
 		</body>
 	</file>

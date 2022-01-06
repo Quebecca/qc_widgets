@@ -29,7 +29,6 @@ abstract class ListOfPagesProvider extends Provider
             ->setMaxResults($this->limit)
             ->execute()
             ->fetchAll();
-
     }
 
     /**
@@ -59,13 +58,5 @@ abstract class ListOfPagesProvider extends Provider
             $data[]  = $item;
         }
         return $data;
-    }
-
-    /*
-     * this function returns the widget title
-     * @return string
-     */
-    public function getWidgetTitle() : string {
-        return $this->localizationUtility->translate(Self::LANG_FILE . $this->widgetTitle);
     }
 }

@@ -27,8 +27,9 @@ class WorkspacePreviewProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
+        $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyWorkspaceLinks'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
-        $tsConfigLimit = intval($this->userTS['ListOfWorkspaceProviderLinksLimit']);
+        $tsConfigLimit = intval($this->userTS['qcWidgets.']['workspaceProviderLinks.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }
@@ -81,11 +82,4 @@ class WorkspacePreviewProviderImp extends Provider
         return $previewsData;
     }
 
-    /**
-     * This function returns the widget title
-     * @return string
-     */
-    public function getWidgetTitle() : string {
-        return $this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyWorkspaceLinks');
-    }
 }

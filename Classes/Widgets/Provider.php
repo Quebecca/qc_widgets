@@ -9,8 +9,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 abstract class Provider
 {
-
-
     /**
      * @var string
      */
@@ -66,7 +64,7 @@ abstract class Provider
      */
     protected function initializeTsConfig(){
         /*Initialize the TsConfing mod of the current Backend user */
-        $this->userTS = $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.'];
+        $this->userTS = $this->getBackendUser()->getTSConfig()['mod.'];
     }
 
     /**
@@ -82,7 +80,6 @@ abstract class Provider
         return $connectionPool->getQueryBuilderForTable($table);
     }
 
-
     /**
      * @return BackendUserAuthentication
      */
@@ -95,7 +92,17 @@ abstract class Provider
      * this function returns the widget title
      * @return string
      */
-    public abstract function getWidgetTitle() : string;
+    public function getWidgetTitle() : string {
+        return $this->widgetTitle;
+    }
+
+    /**
+     * @param string $widgetTitle
+     */
+    public function setWidgetTitle(string $widgetTitle){
+        $this->widgetTitle = $widgetTitle;
+    }
+
 
     /*
      * This function returns the array of pages records after rendering results from the database

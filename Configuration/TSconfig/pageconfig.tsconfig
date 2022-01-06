@@ -1,11 +1,20 @@
 mod{
     qcWidgets{
         //This settings is to allow the user to select the number of records to show in the widgets
-        listOfLastCreatedPagesLimit  = 0
-        listOfLastModifiedPagesLimit   = 0
-        ListOfWorkspaceProviderLinksLimit = 0
+        lastCreatedPages{
+            limit = 0
+        }
+        lastModifiedPages{
+            limit = 0
+        }
+        workspaceProviderLinks{
+            limit = 0
+        }
+        pagesWithoutModification{
+            limit = 0
+            numberOfMonths = 5
+        }
     }
-
 }
 
 
