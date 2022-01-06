@@ -26,7 +26,7 @@ abstract class ListOfPagesProvider extends Provider
                 ...$constraints
             )
             ->orderBy($this->orderField, $this->orderType)
-            ->setMaxResults(intval($this->limit))
+            ->setMaxResults($this->limit)
             ->execute()
             ->fetchAll();
 

@@ -13,8 +13,8 @@ services:
     arguments:
       $table: 'be_users'
       $orderField: 'crdate'
-      $limit: 25
       $orderType: 'DESC'
+      $limit: 25
 
   dashboard.widget.listOfMembers:
     class: 'Qc\QcWidgets\Widgets\ListOfMembers\ListOfMembersWidget'

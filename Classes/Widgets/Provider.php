@@ -66,7 +66,7 @@ abstract class Provider
      */
     protected function initializeTsConfig(){
         /*Initialize the TsConfing mod of the current Backend user */
-        $this->userTS = $this->getBackendUser()->getTSConfig()['mod.']['qcwidgets.'];
+        $this->userTS = $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.'];
     }
 
     /**

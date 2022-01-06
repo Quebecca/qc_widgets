@@ -1,5 +1,5 @@
 mod{
-    qcwidgets{
+    qcWidgets{
         //This settings is to allow the user to select the number of records to show in the widgets
         listOfLastCreatedPagesLimit  = 0
         listOfLastModifiedPagesLimit   = 0
