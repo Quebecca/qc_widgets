@@ -12,7 +12,7 @@ mod{
         }
         pagesWithoutModification{
             limit = 0
-            numberOfMonths = 5
+            numberOfMonths = 3
         }
     }
 }

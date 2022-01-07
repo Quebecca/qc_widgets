@@ -5,6 +5,10 @@
 			<authorName>Quebec.ca</authorName>
 		</header>
 		<body>
+            <trans-unit id="listOfMembers">
+                <source>List of my groups members</source>
+                <target>La liste des membres de mes groupes</target>
+            </trans-unit>
             <trans-unit id="listOfMembersDescription" >
                 <source>Displays the list of all members of my groups</source>
                 <target>Affiche la liste des membres de mes groupes</target>

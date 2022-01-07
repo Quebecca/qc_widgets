@@ -5,26 +5,18 @@
 			<authorName>Quebec.ca</authorName>
 		</header>
 		<body>
-           <trans-unit id="workspace">
-               <source>Workspace</source>
-               <target>Espace de travail</target>
-           </trans-unit>
-            <trans-unit id="expirationDate">
-               <source>Expiration date</source>
-               <target>Date d'expiration</target>
-           </trans-unit>
-           <trans-unit id="key">
-              <source>Keyword</source>
-              <target>Clé</target>
-           </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinks">
-              <source>List of workspace previews</source>
-              <target>List des aperçus d'espace de travail</target>
+            <trans-unit id="myLastModifiedPages" >
+                  <source>My last modified pages</source>
+                  <target>Mes dernières pages modifiées</target>
             </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinksDescription">
-                <source>Displays the list of the workspace preview links my groups members</source>
-                <target>Affiche la liste de mes liens d'aperçu de l'espace de travail créés par les membres de mes groupes</target>
+            <trans-unit id="myLastModifiedPagesDescription" >
+                  <source>Displays my last modified pages</source>
+                  <target>Affiche la liste de mes dernières pages modifiées</target>
             </trans-unit>
+            <trans-unit id="myLastPages" >
+                 <source>My last pages</source>
+                 <target>Mes dernières pages</target>
+             </trans-unit>
 		</body>
 	</file>
 </xliff>

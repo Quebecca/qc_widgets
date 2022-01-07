@@ -12,7 +12,7 @@ services:
     class: 'Qc\QcWidgets\Widgets\PagesWithoutModification\Provider\PagesWithoutModificationProviderImp'
     arguments:
       $table: 'pages'
-      $orderField: 'crdate'
+      $orderField: 'tstamp'
       $orderType: 'DESC'
       $limit: 25
 
@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'pagesWithoutModification'
         groupNames: 'qcWidgets'
-        title: 'Pages without modification'
-        description: 'Pages without modification description....'
+        title:  'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:pagesWithoutModification'
+        description:  'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:pagesWithoutModificationDescription'
         iconIdentifier: 'tx-qc_widgets-createdPages-icon'
         height: 'medium'
         width: 'medium'

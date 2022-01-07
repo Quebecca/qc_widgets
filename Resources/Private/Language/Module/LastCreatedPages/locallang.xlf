@@ -3,21 +3,13 @@
 	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z">
 		<header/>
 		<body>
-            <trans-unit id="workspace">
-                <source>Workspace</source>
-            </trans-unit>
-             <trans-unit id="expirationDate">
-                <source>Expiration date</source>
-            </trans-unit>
-            <trans-unit id="key">
-                <source>Key</source>
-            </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinks">
-                <source>List of workspace previews</source>
-            </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinksDescription">
-                <source>Displays the list of the workspace preview links my groups members</source>
-            </trans-unit>
+         <trans-unit id="lastCreatedPageInMyGroup" >
+             <source>Last pages created in my groups</source>
+          </trans-unit>
+
+          <trans-unit id="lastCreatedPageInMyGroupDescription" >
+             <source>Displays the list latest created pages by my groups members</source>
+          </trans-unit>
 		</body>
 	</file>
 </xliff>

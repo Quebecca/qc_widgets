@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'lastCreatedPages'
         groupNames: 'qcWidgets'
-        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroup'
-        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:lastCreatedPageInMyGroupDescription'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:lastCreatedPageInMyGroup'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:lastCreatedPageInMyGroupDescription'
         iconIdentifier: 'tx-qc_widgets-createdPages-icon'
         height: 'medium'
         width: 'medium'

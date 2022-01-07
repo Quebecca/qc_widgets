@@ -6,6 +6,11 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 class LastCreatedPagesProviderImp extends ListOfPagesProvider
 {
+    /**
+     * @var string
+     */
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:';
+
     public function __construct(
         string $table,
         string $orderField,

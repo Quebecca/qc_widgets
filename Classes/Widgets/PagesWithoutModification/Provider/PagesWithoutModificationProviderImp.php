@@ -10,7 +10,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
     /**
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:';
 
     /**
      * @var int
@@ -35,7 +35,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         if($numberofMonthsTs && $numberofMonthsTs > 0){
             $this->numberOfMonths = $numberofMonthsTs;
         }
-        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'pagesWitouhtModification') . ' ' . strval($this->numberOfMonths) . ' ' . $this->localizationUtility->translate(SELF::LANG_FILE.'months'));
+        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'pagesWitouhtModificationFor') . ' ' . strval($this->numberOfMonths) . ' ' . $this->localizationUtility->translate(SELF::LANG_FILE.'months'));
 
     }
 
@@ -44,12 +44,21 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
      */
     public function getItems(): array
     {
-        $sinceDate =  time() - $this->numberOfMonths * (30*24*60*60) ;
+        $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $constraints  = [
             $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'])),
-            $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate)),
-            $queryBuilder->expr()->gt('tstamp',0),
+            $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate)),
+                    $queryBuilder->expr()->gt('tstamp',0),
+                ),
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate)),
+                    $queryBuilder->expr()->eq('tstamp',0),
+                ),
+            ),
+
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);

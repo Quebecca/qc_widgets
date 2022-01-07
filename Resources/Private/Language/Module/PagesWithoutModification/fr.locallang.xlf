@@ -5,26 +5,22 @@
 			<authorName>Quebec.ca</authorName>
 		</header>
 		<body>
-           <trans-unit id="workspace">
-               <source>Workspace</source>
-               <target>Espace de travail</target>
-           </trans-unit>
-            <trans-unit id="expirationDate">
-               <source>Expiration date</source>
-               <target>Date d'expiration</target>
-           </trans-unit>
-           <trans-unit id="key">
-              <source>Keyword</source>
-              <target>Clé</target>
-           </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinks">
-              <source>List of workspace previews</source>
-              <target>List des aperçus d'espace de travail</target>
+            <trans-unit id="pagesWithoutModification" >
+                 <source>Pages without modification</source>
+                <target>Les pages sans modification</target>
             </trans-unit>
-            <trans-unit id="listOfMyWorkspaceLinksDescription">
-                <source>Displays the list of the workspace preview links my groups members</source>
-                <target>Affiche la liste de mes liens d'aperçu de l'espace de travail créés par les membres de mes groupes</target>
+            <trans-unit id="pagesWithoutModificationDescription" >
+                <source>Displays the list of pages without modification for a specified number of months</source>
+               <target>Affiche la liste des pages sans modification depuis un nombore de mois spécifié</target>
             </trans-unit>
+            <trans-unit id="pagesWitouhtModificationFor" >
+               <source>Pages without modification in the last </source>
+               <target>Pages sans modification depuis</target>
+            </trans-unit>
+           <trans-unit id="months" >
+               <source>months</source>
+               <target>mois et plus</target>
+           </trans-unit>
 		</body>
 	</file>
 </xliff>
