@@ -14,6 +14,9 @@ mod{
             limit = 0
             numberOfMonths = 3
         }
+        recentlyModifiedContent{
+            limit = 0
+        }
     }
 }
 

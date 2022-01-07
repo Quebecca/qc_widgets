@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2021-09-16UTC15:45:380">
+		<header>
+			<authorName>Quebec.ca</authorName>
+		</header>
+		<body>
+          <trans-unit id="recentlyModifiedContent" >
+              <source>Recently modified content</source>
+              <target>Contenu récemment modifié</target>
+           </trans-unit>
+           <trans-unit id="recentlyModifiedContentDescription" >
+               <source>Displays the list latest modified content</source>
+              <target>Affiche la liste des derniers contenus modifiés</target>
+           </trans-unit>
+		</body>
+	</file>
+</xliff>

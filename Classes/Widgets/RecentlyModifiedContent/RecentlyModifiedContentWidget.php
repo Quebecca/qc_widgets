@@ -1,5 +1,5 @@
 <?php
-namespace Qc\QcWidgets\Widgets\WorkspacePreviews;
+namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent;
 
 
 use Qc\QcWidgets\Widgets\Provider;
@@ -8,7 +8,7 @@ use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
+class RecentlyModifiedContentWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -38,7 +38,7 @@ class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/WorkspacePreviewsWidget');
+        $this->view->setTemplate('Widget/RecentlyModifiedContentWidget');
         $this->view->assign('widgetTitle', $widgetTitle);
         $this->view->assign('data',$data);
         return $this->view->render();

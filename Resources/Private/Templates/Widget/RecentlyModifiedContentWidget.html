@@ -1,0 +1,47 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<div class="widget-content-title">
+    <span>
+        {widgetTitle}
+    </span>
+</div>
+<div class="widget-content-main">
+    <f:if condition="{data.0}">
+        <f:then>
+            <table class="widget-table">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        Type
+                    </th>
+                    <th scope="col">
+                        Content ID
+                    </th>
+                    <th scope="col">
+                        Page ID
+                    </th>
+                    <th scope="col">
+                        Last modification
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <f:for each="{data}"  as="item">
+                    <tr>
+                        <td>{item.cType}</td>
+                        <td>{item.uid}</td>
+                        <td>{item.pid}</td>
+                        <td>{item.tstamp}</td>
+                    </tr>
+                </f:for>
+                </tbody>
+            </table>
+        </f:then>
+        <f:else>
+            <f:render partial="NoResult"/>
+        </f:else>
+    </f:if>
+</div>
+<br>
+</html>
