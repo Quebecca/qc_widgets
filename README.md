@@ -3,10 +3,19 @@ Qc Widgets
 *La [version française](#documentation-qc-widget) de la documentation suit le texte anglais*
 
 ## About
-This extension provides a set of widgets, each widget allows to display a table that serves to display details
-related to the current user.
-To control the amount displayed by widgets of this extension, it supports three tsconfig options.
-The extension comes with four widgets :
+This extension provides a set of widgets for the TYPO3 Backend. Each widget display lists of records related to the current logged in user.
+The amount of records to display can be changed in User or Group TSconfig. The list of widgets is:
+
+- List of *my* group members
+- Last created Pages in *my* groups
+- Pages that haven't been touched for X months
+- My last modified pages
+- My last modified content elements
+- List of my workspace preview links
+
+As usual, you can select which widgets are available to editors by managing the BE group rights to each of the widgets.
+
+## Details about the provided widgets :
 
 ## List of my groups members 
 This widget is used to display details of users who belong to the same groups as the logged in user, 
