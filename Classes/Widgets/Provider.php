@@ -109,10 +109,40 @@ abstract class Provider
         $this->widgetTitle = $widgetTitle;
     }
 
-
     /*
      * This function returns the array of records after rendering results from the database
      */
     public abstract function getItems();
+
+    /**
+     * @param $startTime
+     * @param $endTime
+     */
+    public function getItemStatus($startTime, $endTime){
+        $status = [];
+         // expired, not available, available
+
+        if($endTime !== 0 && $endTime < time()){
+            $numberOfDays = round((time() - $endTime) / (60*60*24));
+            return  [
+                'status' => 'expired',
+                'statusMessage' => $this->localizationUtility->translate(Self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $endTime)
+                    . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )"
+            ];
+
+        }
+        else if($startTime !== 0 && $startTime > time()) {
+            $numberOfDays = round(($startTime - time()) / (60 * 60 * 24));
+            return [
+                'status' => 'notAvailable',
+                'statusMessage' => $this->localizationUtility->translate(Self::QC_LANG_FILE . 'start') . ' ' . date('d-m-y', $startTime)
+                    . " ( $numberOfDays " . $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days') . " )"
+            ];
+        }
+        return [
+            'status' => 'available',
+            'statusMessage' => ''
+        ];
+    }
 
 }

@@ -38,18 +38,9 @@ abstract class ListOfPagesProvider extends Provider
         foreach ($result as $item){
             $item['crdate'] = date("Y-m-d H:i:s", $item['crdate']);
             $item['tstamp'] = date("Y-m-d H:i:s", $item['tstamp']);
-            // verify if the page is expired
-            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
-            if($item['expired'] == 1){
-                $numberOfDays = round((time() - $item['endtime']) / (60*60*24));
-                $item['expiredMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $item['endtime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
-            }
-            // verify if the page is not available yet
-            $item['available'] = $item['starttime'] !== 0 ? $item['starttime'] < time() ? 1 : 0 : 1;
-            if($item['available'] == 0){
-                $numberOfDays = round(($item['starttime'] - time()) / (60*60*24));
-                $item['availableMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'start') . ' '. date('d-m-y', $item['starttime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
-            }
+            $status = $this->getItemStatus($item['starttime'], $item['endtime']);
+            $item['status'] = $status['status'];
+            $item['statusMessage'] = $status['statusMessage'];
             if($item['hidden'] == 1){
                 $item['hiddenMessage'] = $this->localizationUtility->translate(Self::QC_LANG_FILE . 'hidden');
             }

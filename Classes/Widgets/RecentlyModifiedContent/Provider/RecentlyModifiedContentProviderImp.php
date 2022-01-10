@@ -68,20 +68,9 @@ class RecentlyModifiedContentProviderImp extends Provider
                     $item['bodytext'] = substr($item['bodytext'],0, 50) . '...';
                 }
             }
-
-            $item['available'] = $item['starttime'] !== 0 ? $item['starttime'] < time() ? 1 : 0 : 1;
-
-            if( $item['available'] == 0){
-                $numberOfDays = round(($item['starttime'] - time()) / (60*60*24));
-                $item['availableMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'start') . ' '. date('d-m-y', $item['endtime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
-            }
-
-            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
-            if($item['expired'] == 1){
-                $numberOfDays = round((time() - $item['endtime']) / (60*60*24));
-                $item['expiredMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $item['endtime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
-            }
-
+            $status = $this->getItemStatus($item['starttime'], $item['endtime']);
+            $item['status'] = $status['status'];
+            $item['statusMessage'] = $status['statusMessage'];
             $result [] = [
                 'uid' => $item['uid'],
                 'cType' => $item['cType'],
@@ -90,10 +79,8 @@ class RecentlyModifiedContentProviderImp extends Provider
                 'header' => $item['header'],
                 'bodytext' => $item['bodytext'],
                 'tstamp' =>  date("Y-m-d H:i:s", $item['tstamp']),
-                'expired' => $item['expired'],
-                'available' => $item['available'],
-                'availableMessage' => $item['availableMessage'],
-                'expiredMessage' => $item['expiredMessage']
+                'status' => $item['status'],
+                'statusMessage' => $item['statusMessage']
             ];
         }
         return $result;
