@@ -5,7 +5,7 @@
  */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Qc widgets',
-    'description' => 'Qc Widgets',
+    'description' => 'Qc Widgets provides a bunch of useful widgets',
     'category' => 'templates',
     'constraints' => [
         'depends' => [
