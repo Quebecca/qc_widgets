@@ -5,60 +5,58 @@
 			<authorName>Quebec.ca</authorName>
 		</header>
 		<body>
-		    <trans-unit id="qcWidgetsTitle" >
-                <source>Qc Widgets</source>
-                <target>Qc Widgets</target>
-            </trans-unit>
-            <trans-unit id="qcWidgetsDescription" >
-                <source>Set of widget provided by Qc Widgets, to display a bunch of tables</source>
-                <target>Ensemble de widgets fournis par Qc Widgets, pour afficher un ensemble de tables</target>
-            </trans-unit>
-            <trans-unit id="pageTitle" >
-               <source>Title</source>
-               <target>Titre</target>
-            </trans-unit>
-            <trans-unit id="creationDate" >
-               <source>Creation date</source>
-               <target>Date de création</target>
-            </trans-unit>
-            <trans-unit id="modificationDate" >
-              <source>Last modification date</source>
-              <target>Date de la dernière modification</target>
-            </trans-unit>
-             <trans-unit id="status" >
-                  <source>Status</source>
-                  <target>Statut</target>
-             </trans-unit>
-             <trans-unit id="expired" >
-                <source>Expired</source>
-                <target>Expirée</target>
-             </trans-unit>
-             <trans-unit id="hidden" >
-                 <source>Hidden</source>
-                 <target>Cachée</target>
-             </trans-unit>
-           <trans-unit id="actif" >
-               <source>Actif</source>
-                <target>Actif</target>
-           </trans-unit>
-           <trans-unit id="noResult" >
-               <source>No result</source>
-               <target>Aucun résultat</target>
-           </trans-unit>
-           <trans-unit id="stop" >
-               <source>Stop</source>
-               <target>Arrêt</target>
-           </trans-unit>
-           <trans-unit id="start" >
-               <source>Start</source>
-               <target>Lancement</target>
-           </trans-unit>
-           <trans-unit id="days" >
-               <source>days</source>
-               <target>jours</target>
-           </trans-unit>
-
-
+        <trans-unit id="qcWidgetsTitle" >
+            <source>Qc Widgets</source>
+            <target>Qc Widgets</target>
+        </trans-unit>
+        <trans-unit id="qcWidgetsDescription" >
+            <source>Set of widget provided by Qc Widgets, to display a bunch of tables</source>
+            <target>Ensemble de widgets fournis par Qc Widgets, pour afficher un ensemble de tables</target>
+        </trans-unit>
+        <trans-unit id="pageTitle" >
+            <source>Title</source>
+            <target>Titre</target>
+        </trans-unit>
+        <trans-unit id="creationDate" >
+            <source>Creation date</source>
+            <target>Date de création</target>
+        </trans-unit>
+        <trans-unit id="modificationDate" >
+            <source>Last modification date</source>
+            <target>Date de la dernière modification</target>
+        </trans-unit>
+        <trans-unit id="status" >
+            <source>Status</source>
+            <target>Statut</target>
+        </trans-unit>
+        <trans-unit id="expired" >
+            <source>Expired</source>
+            <target>Expirée</target>
+        </trans-unit>
+        <trans-unit id="hidden" >
+            <source>Hidden</source>
+            <target>Cachée</target>
+        </trans-unit>
+        <trans-unit id="actif" >
+            <source>Actif</source>
+            <target>Actif</target>
+        </trans-unit>
+        <trans-unit id="noResult" >
+            <source>No result</source>
+            <target>Aucun résultat</target>
+        </trans-unit>
+        <trans-unit id="stop" >
+            <source>Stop</source>
+            <target>Arrêt</target>
+        </trans-unit>
+        <trans-unit id="start" >
+            <source>Start</source>
+            <target>Lancement</target>
+        </trans-unit>
+        <trans-unit id="days" >
+            <source>days</source>
+            <target>jours</target>
+        </trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -12,7 +12,6 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 class ListOfMembersProviderImp extends Provider
 {
     /**
-     * Overriding the LONG_FILE attribute
      * @var string
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:';
@@ -98,7 +97,7 @@ class ListOfMembersProviderImp extends Provider
                 $this->numberOfUsers++;
             }
             // create Member Object
-            $users[] = $this->memberMappe($item);
+            $users[] = $this->memberMap($item);
         }
         return $users;
     }
@@ -107,7 +106,7 @@ class ListOfMembersProviderImp extends Provider
      * @param array $data
      * @return Member
      */
-    public function memberMappe(array $data) : Member{
+    public function memberMap(array $data) : Member{
         $member = new Member();
         $member->setUid($data['uid']);
         $member->setUsername($data['username']);

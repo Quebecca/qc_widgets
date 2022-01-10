@@ -3,12 +3,20 @@
 	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z">
 		<header/>
 		<body>
-         <trans-unit id="recentlyModifiedContent" >
+          <trans-unit id="recentlyModifiedContent" >
              <source>Recently modified content</source>
           </trans-unit>
-
           <trans-unit id="recentlyModifiedContentDescription" >
-             <source>Displays the list latest modified content</source>
+             <source>Displays the list latest modified content by the user</source>
+          </trans-unit>
+          <trans-unit id="type" >
+              <source>Type</source>
+          </trans-unit>
+          <trans-unit id="contentUID" >
+              <source>Content Uid</source>
+          </trans-unit>
+          <trans-unit id="pageUID" >
+              <source>Page Uid</source>
           </trans-unit>
 		</body>
 	</file>

@@ -28,6 +28,6 @@ services:
         groupNames: 'qcWidgets'
         title:  'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:pagesWithoutModification'
         description:  'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:pagesWithoutModificationDescription'
-        iconIdentifier: 'tx-qc_widgets-createdPages-icon'
+        iconIdentifier: 'tx-qc_widgets-pagesWithoutModification-icon'
         height: 'medium'
         width: 'medium'

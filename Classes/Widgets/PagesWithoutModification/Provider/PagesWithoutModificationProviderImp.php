@@ -25,7 +25,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        // control the limit value, if the user has already specified a value for limiting the results
+        // get the limit value from the tsconfig
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['pagesWithoutModification.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
@@ -44,8 +44,10 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
      */
     public function getItems(): array
     {
+        // convert the number of months to seconds
         $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
+        // if the tstamp is equal '0', we render the tt_contents created before the specified date
         $constraints  = [
             $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'])),
             $queryBuilder->expr()->orX(

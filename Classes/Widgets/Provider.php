@@ -89,7 +89,6 @@ abstract class Provider
     }
 
     /*
-     * this function returns the widget title
      * @return string
      */
     public function getWidgetTitle() : string {
@@ -105,7 +104,7 @@ abstract class Provider
 
 
     /*
-     * This function returns the array of pages records after rendering results from the database
+     * This function returns the array of records after rendering results from the database
      */
     public abstract function getItems();
 

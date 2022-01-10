@@ -13,6 +13,8 @@ abstract class ListOfPagesProvider extends Provider
 
     /**
      * this function returns the query for pages records
+     * @param QueryBuilder $queryBuilder
+     * @param array $constraints
      * @return array
      */
     public function renderData(QueryBuilder  $queryBuilder, array $constraints) : array {
@@ -32,6 +34,7 @@ abstract class ListOfPagesProvider extends Provider
     }
 
     /**
+     * This function returns the formatted items
      * @param array $result
      * @return array
      */

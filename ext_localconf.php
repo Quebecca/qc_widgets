@@ -15,7 +15,7 @@ call_user_func(static function () {
         "@import 'EXT:qc_widgets/Configuration/TypoScript/setup.typoscript'"
     );
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    foreach (['extension', 'dashboard', 'extensions', 'members', 'createdPages', 'modifiedPages', 'workspace'] as $icon) {
+    foreach (['extension', 'dashboard', 'extensions', 'members', 'createdPages', 'modifiedPages', 'workspace', 'recentlyModifiedContent', 'pagesWithoutModification'] as $icon) {
         $iconRegistry->registerIcon(
             'tx-qc_widgets-' . $icon . '-icon',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,

@@ -8,7 +8,6 @@ use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 class WorkspacePreviewProviderImp extends Provider
 {
     /**
-     * Overriding the LONG_FILE attribute
      * @var string
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:';
@@ -30,6 +29,7 @@ class WorkspacePreviewProviderImp extends Provider
         $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyWorkspaceLinks'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['workspaceProviderLinks.']['limit']);
+        // get the limit value from the tsconfig
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }

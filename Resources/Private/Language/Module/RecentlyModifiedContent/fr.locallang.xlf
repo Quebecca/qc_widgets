@@ -10,8 +10,20 @@
               <target>Contenu récemment modifié</target>
            </trans-unit>
            <trans-unit id="recentlyModifiedContentDescription" >
-               <source>Displays the list latest modified content</source>
-              <target>Affiche la liste des derniers contenus modifiés</target>
+               <source>Displays the list latest modified content by the user</source>
+              <target>Affiche la liste des derniers contenus modifiés par l'utilisateur</target>
+           </trans-unit>
+           <trans-unit id="type" >
+               <source>Type</source>
+               <target>Type</target>
+           </trans-unit>
+           <trans-unit id="contentUID" >
+               <source>Content Uid</source>
+               <target>Uid de contenu</target>
+           </trans-unit>
+           <trans-unit id="pageUID" >
+               <source>Page Uid</source>
+               <target>Uid de la page</target>
            </trans-unit>
 		</body>
 	</file>

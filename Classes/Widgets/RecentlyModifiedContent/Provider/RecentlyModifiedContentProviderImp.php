@@ -2,10 +2,6 @@
 namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent\Provider;
 
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
-use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
-use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
@@ -33,6 +29,7 @@ class RecentlyModifiedContentProviderImp extends Provider
         parent::__construct($table,$orderField,$limit,$orderType);
         $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'recentlyModifiedContent'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
+        // get the limit value from the tsconfig
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['recentlyModifiedContent.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
@@ -44,7 +41,25 @@ class RecentlyModifiedContentProviderImp extends Provider
      */
     public function getItems(): array
     {
-        return $this->renderData();
+        $data =  $this->renderData();
+        return $this->dataMap($data);
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function dataMap(array $data){
+        $result = [];
+        foreach ($data as $item){
+            $result [] = [
+                'uid' => $item['uid'],
+                'cType' => $item['cType'],
+                'pid' => $item['pid'],
+                'tstamp' => date('d/m/y',$item['tstamp'])
+            ];
+        }
+        return $result;
     }
 
 
