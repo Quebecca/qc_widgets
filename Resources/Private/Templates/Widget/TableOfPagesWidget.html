@@ -36,7 +36,11 @@
                                     {item.uid}
                                 </f:be.link>
                             </td>
-                            <td>{item.title}</td>
+                            <td>
+                                <f:be.link  route="web_layout" parameters="{id: item.uid}">
+                                    {item.title}
+                                </f:be.link>
+                            </td>
                             <td>
                                 <div class="pages-status">
                                     <f:if condition="{item.expired} == 1" >

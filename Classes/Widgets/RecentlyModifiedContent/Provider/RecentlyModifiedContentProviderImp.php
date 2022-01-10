@@ -2,6 +2,7 @@
 namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent\Provider;
 
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
@@ -13,10 +14,16 @@ class RecentlyModifiedContentProviderImp extends Provider
      */
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:';
 
+
     /**
      * @var WorkspaceService
      */
     protected WorkspaceService $workspaceService;
+
+    /**
+     * @var PageRepository
+     */
+    protected $pagesRepository;
 
     public function __construct(
         string $table,
@@ -27,6 +34,7 @@ class RecentlyModifiedContentProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
+        $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PageRepository::class);
         $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'recentlyModifiedContent'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         // get the limit value from the tsconfig
@@ -52,11 +60,40 @@ class RecentlyModifiedContentProviderImp extends Provider
     public function dataMap(array $data){
         $result = [];
         foreach ($data as $item){
+            if($item['header'] === ''){
+                if(strlen($item['bodytext']) < 50 ){
+                    $item['bodytext'] = substr($item['bodytext'],0, 50);
+                }
+                else{
+                    $item['bodytext'] = substr($item['bodytext'],0, 50) . '...';
+                }
+            }
+
+            $item['available'] = $item['starttime'] !== 0 ? $item['starttime'] < time() ? 1 : 0 : 1;
+
+            if( $item['available'] == 0){
+                $numberOfDays = round(($item['starttime'] - time()) / (60*60*24));
+                $item['availableMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'start') . ' '. date('d-m-y', $item['endtime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
+            }
+
+            $item['expired']  = $item['endtime'] !== 0 ? $item['endtime'] < time() ? 1 : 0 : 0;
+            if($item['expired'] == 1){
+                $numberOfDays = round((time() - $item['endtime']) / (60*60*24));
+                $item['expiredMessage'] =  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $item['endtime']) . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )";
+            }
+
             $result [] = [
                 'uid' => $item['uid'],
                 'cType' => $item['cType'],
                 'pid' => $item['pid'],
-                'tstamp' => date('d/m/y',$item['tstamp'])
+                'pageTitle' => $this->pagesRepository->getPage($item['pid'])['title'],
+                'header' => $item['header'],
+                'bodytext' => $item['bodytext'],
+                'tstamp' =>  date("Y-m-d H:i:s", $item['tstamp']),
+                'expired' => $item['expired'],
+                'available' => $item['available'],
+                'availableMessage' => $item['availableMessage'],
+                'expiredMessage' => $item['expiredMessage']
             ];
         }
         return $result;
@@ -73,7 +110,7 @@ class RecentlyModifiedContentProviderImp extends Provider
             ->getRestrictions()
             ->removeAll();
         $result = $queryBuilder
-            ->select('uid', 'cType', 'pid', 'tstamp')
+            ->select('uid', 'cType', 'pid', 'starttime', 'endtime', 'header', 'bodytext',  'tstamp')
             ->from('tt_content')
             ->orderBy('tstamp', 'DESC')
             ->setMaxResults(8)

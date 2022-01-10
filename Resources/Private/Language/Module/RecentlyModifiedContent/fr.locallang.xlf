@@ -21,9 +21,9 @@
                <source>Content Uid</source>
                <target>Uid de contenu</target>
            </trans-unit>
-           <trans-unit id="pageUID" >
-               <source>Page Uid</source>
-               <target>Uid de la page</target>
+           <trans-unit id="pageTitle" >
+               <source>Page title</source>
+               <target>Titre de la page</target>
            </trans-unit>
 		</body>
 	</file>

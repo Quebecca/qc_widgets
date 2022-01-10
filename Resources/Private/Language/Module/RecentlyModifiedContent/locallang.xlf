@@ -15,8 +15,8 @@
           <trans-unit id="contentUID" >
               <source>Content Uid</source>
           </trans-unit>
-          <trans-unit id="pageUID" >
-              <source>Page Uid</source>
+          <trans-unit id="pageTitle" >
+              <source>Page Title</source>
           </trans-unit>
 		</body>
 	</file>

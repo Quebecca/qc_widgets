@@ -9,6 +9,13 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 abstract class Provider
 {
+
+    /**
+     * Overriding the LONG_FILE attribute
+     * @var string
+     */
+    const QC_LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
+    
     /**
      * @var string
      */

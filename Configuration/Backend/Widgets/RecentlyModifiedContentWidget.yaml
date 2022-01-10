@@ -30,4 +30,4 @@ services:
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:recentlyModifiedContentDescription'
         iconIdentifier: 'tx-qc_widgets-recentlyModifiedContent-icon'
         height: 'medium'
-        width: 'medium'
+        width: 'large'
