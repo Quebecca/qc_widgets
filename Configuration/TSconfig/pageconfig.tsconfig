@@ -17,6 +17,9 @@ mod{
         recentlyModifiedContent{
             limit = 0
         }
+        listOfmembers{
+            dontLookintoSubgroups = 0
+        }
     }
 }
 

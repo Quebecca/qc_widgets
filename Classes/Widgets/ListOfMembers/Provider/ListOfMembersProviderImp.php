@@ -59,6 +59,7 @@ class ListOfMembersProviderImp extends Provider
         $users = [];
         $members = new ListOfMemebers();
         $members->setIsAdmin($GLOBALS['BE_USER']->isAdmin());
+
         if($GLOBALS['BE_USER']->isAdmin()){
             // if the current user is an admin, we return the list of admins
             $userData = $this->renderUsersData("AND ADMIN = 1 AND disable = 0");
@@ -68,19 +69,53 @@ class ListOfMembersProviderImp extends Provider
             ];
         }
         else{
+            $queryBuilder =  $this->generateQueryBuilder('be_users');
             // if the current user is not an admin, we return the users in the same groups as the current user
             $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
+            $dontLookintoSubgroups = intval($this->userTS['qcWidgets.']['listOfmembers.']['dontLookintoSubgroups']);
+            if($dontLookintoSubgroups == 1) {
+                $subgroups = [] ;
+                foreach ($groupsUid as $groupUid) {
+                    $subgroups  = $this->getSubGroupsUid($groupUid);
+                }
+                $groupsUid = array_merge($subgroups, $groupsUid);
+            }
+
             foreach ($groupsUid as $groupUid){
-                 $groupName = $this->backendUserGroupRepository->findByUid($groupUid);
+                $groupName = $this->backendUserGroupRepository->findByUid($groupUid);
                 $users [] = [
                     'groupName' => $groupName !== null ? $groupName->getTitle() : '',
-                    'users' => $this->renderUsersData("AND usergroup LIKE  '%$groupUid%'  AND disable = 0")
+                   // 'users' => $this->renderUsersData("AND FIND_IN_SET('$groupUid', usergroup)  AND disable = 0")
+                    'users' => $this->renderUsersData( 'AND '.
+                        $queryBuilder->expr()
+                            ->andX(
+                                $queryBuilder->expr()->inSet( 'usergroup',$groupUid),
+                                $queryBuilder->expr()->eq('disable',0)
+                            )
+                    )
                 ];
             }
         }
         $members->setMembers($users);
         $members->setNumberOfMembers($this->numberOfUsers);
         return $members;
+    }
+
+    /**
+     * @param $groupUid
+     * @return false|string[]
+     */
+    public function getSubGroupsUid($groupUid){
+        $queryBuilder =  $this->generateQueryBuilder('be_groups');
+        $result =   $queryBuilder
+            ->select('subgroup')
+            ->from('be_groups')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid)),
+            )
+            ->execute()
+            ->fetchOne();
+        return explode(',', $result);
     }
 
     /**

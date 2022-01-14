@@ -17,7 +17,7 @@ abstract class ListOfPagesProvider extends Provider
             ->getRestrictions()
             ->removeAll();
         return $queryBuilder
-            ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime', 'starttime')
+            ->select('uid', 'title', 'crdate', 'tstamp', 'slug', 'hidden', 'endtime', 'starttime', 'doktype')
             ->from($this->table)
             ->where(
                 ...$constraints
