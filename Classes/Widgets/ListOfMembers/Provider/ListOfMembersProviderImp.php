@@ -73,7 +73,7 @@ class ListOfMembersProviderImp extends Provider
             // if the current user is not an admin, we return the users in the same groups as the current user
             $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
             $dontLookintoSubgroups = intval($this->userTS['qcWidgets.']['listOfmembers.']['dontLookintoSubgroups']);
-            if($dontLookintoSubgroups == 1) {
+            if($dontLookintoSubgroups == 0) {
                 $subgroups = [] ;
                 foreach ($groupsUid as $groupUid) {
                     $subgroups  = $this->getSubGroupsUid($groupUid);

@@ -18,7 +18,7 @@ mod{
             limit = 0
         }
         listOfmembers{
-            dontLookintoSubgroups = 0
+            dontLookintoSubgroups = 1
         }
     }
 }
