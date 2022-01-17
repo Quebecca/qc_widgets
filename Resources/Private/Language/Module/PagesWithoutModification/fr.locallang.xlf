@@ -11,7 +11,7 @@
             </trans-unit>
             <trans-unit id="pagesWithoutModificationDescription" >
                 <source>Displays the list of pages without modification for a specified number of months</source>
-               <target>Affiche la liste des pages sans modification depuis un nombore de mois spécifié</target>
+               <target>Affiche la liste des pages sans modification depuis un nombre de mois spécifié</target>
             </trans-unit>
             <trans-unit id="pagesWitouhtModificationFor" >
                <source>Pages without modification in the last </source>

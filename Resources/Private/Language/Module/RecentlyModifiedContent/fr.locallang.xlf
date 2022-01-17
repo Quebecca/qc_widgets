@@ -7,7 +7,7 @@
 		<body>
           <trans-unit id="recentlyModifiedContent" >
               <source>Recently modified content</source>
-              <target>Contenu récemment modifié</target>
+              <target>Contenus récemment modifiés</target>
            </trans-unit>
            <trans-unit id="recentlyModifiedContentDescription" >
                <source>Displays the list latest modified content by the user</source>

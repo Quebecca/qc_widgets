@@ -11,7 +11,7 @@
            </trans-unit>
            <trans-unit id="lastCreatedPageInMyGroupDescription" >
               <source>Displays the list latest created pages by my groups members</source>
-              <target>Affiche la liste des dernières pages créées par les memberes de mes groupes</target>
+              <target>Affiche la liste des dernières pages créées par les membres de mes groupes</target>
            </trans-unit>
 		</body>
 	</file>

@@ -19,11 +19,11 @@
            </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinks">
               <source>List of workspace previews</source>
-              <target>List des aperçus d'espace de travail</target>
+              <target>Liste des aperçus d'espace de travail</target>
             </trans-unit>
             <trans-unit id="listOfMyWorkspaceLinksDescription">
                 <source>Displays the list of the workspace preview links my groups members</source>
-                <target>Affiche la liste de mes liens d'aperçu de l'espace de travail créés par les membres de mes groupes</target>
+                <target>Affiche la liste de mes liens d'aperçu d'espace de travail créés par les membres de mes groupes</target>
             </trans-unit>
 		</body>
 	</file>
