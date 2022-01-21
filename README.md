@@ -13,6 +13,8 @@ The amount of records to display (default 25) can be changed in User or Group TS
 - My last modified content elements
 - List of my Workspace preview links
 
+Screenshot of 4 of the widgets
+
 ![Four of the widgets](Documentation/Images/qc-widgets.png)
 
 All the pages widget share the same information: uid, Title, Status, Creation date, Last modification date and Slug. A click on the UID or Title of the page will redirect to the Page Module, on the clicked page.
