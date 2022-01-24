@@ -27,8 +27,8 @@
          <trans-unit id="hidden" >
              <source>Hidden</source>
          </trans-unit>
-          <trans-unit id="actif" >
-              <source>Actif</source>
+          <trans-unit id="active" >
+              <source>Active</source>
           </trans-unit>
         <trans-unit id="noResult" >
             <source>No result</source>

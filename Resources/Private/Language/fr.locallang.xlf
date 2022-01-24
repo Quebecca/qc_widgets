@@ -37,8 +37,8 @@
             <source>Hidden</source>
             <target>Cachée</target>
         </trans-unit>
-        <trans-unit id="actif" >
-            <source>Actif</source>
+        <trans-unit id="active" >
+            <source>Active</source>
             <target>Actif</target>
         </trans-unit>
         <trans-unit id="noResult" >
