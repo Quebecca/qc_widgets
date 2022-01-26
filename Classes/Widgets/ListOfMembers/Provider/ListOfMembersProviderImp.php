@@ -1,6 +1,7 @@
 <?php
 namespace Qc\QcWidgets\Widgets\ListOfMembers\Provider;
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\ListOfMemebers;
 use Qc\QcWidgets\Widgets\ListOfMembers\Provider\Entities\Member;
 use Qc\QcWidgets\Widgets\Provider;
@@ -42,17 +43,19 @@ class ListOfMembersProviderImp extends Provider
         parent::__construct($table,$orderField,$limit,$orderType);
         // check if the current user is admin
         if($GLOBALS['BE_USER']->isAdmin()){
-            $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfAdminsMembers'));
+            $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'listOfAdminsMembers'));
         }
         else{
-            $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyTeamsMembers'));
+            $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'listOfMyTeamsMembers'));
         }
         $this->backendUserGroupRepository = $backendUserGroupRepository ?? GeneralUtility::makeInstance(BackendUserGroupRepository::class);
         $this->backendUserRepository = $backendUserRepository ?? GeneralUtility::makeInstance(BackendUserRepository::class);
     }
 
     /**
+     * This function returns the array of records after rendering results from the database
      * @return ListOfMemebers
+     * @throws Exception
      */
     public function getItems(): ListOfMemebers
     {
@@ -102,8 +105,10 @@ class ListOfMembersProviderImp extends Provider
     }
 
     /**
+     * This function return the subgroups of a group
      * @param $groupUid
      * @return false|string[]
+     * @throws Exception
      */
     public function getSubGroupsUid($groupUid){
         $queryBuilder =  $this->generateQueryBuilder('be_groups');
@@ -111,7 +116,7 @@ class ListOfMembersProviderImp extends Provider
             ->select('subgroup')
             ->from('be_groups')
             ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid)),
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid, \PDO::PARAM_INT)),
             )
             ->execute()
             ->fetchOne();
@@ -149,7 +154,7 @@ class ListOfMembersProviderImp extends Provider
         $member->setEmail($data['email']);
         if($data['lastlogin'] === 0){
             $member->setLastLogin(
-                 $this->localizationUtility->translate(Self::LANG_FILE . 'userHasNeverLoggedIn')
+                 $this->localizationUtility->translate(self::LANG_FILE . 'userHasNeverLoggedIn')
             );
         }
         else{

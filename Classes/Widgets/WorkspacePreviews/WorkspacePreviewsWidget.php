@@ -32,6 +32,7 @@ class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
     }
 
     /**
+     * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
@@ -39,8 +40,10 @@ class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/WorkspacePreviewsWidget');
-        $this->view->assign('widgetTitle', $widgetTitle);
-        $this->view->assign('data',$data);
+        $this->view->assignMultiple([
+            'widgetTitle' => $widgetTitle,
+            'data' => $data
+        ]);
         return $this->view->render();
     }
 

@@ -114,11 +114,15 @@ abstract class Provider
      */
     public abstract function getItems();
 
+
     /**
+     * This function returns the status of the stored element
      * @param $startTime
      * @param $endTime
+     * @return string[]
      */
-    public function getItemStatus($startTime, $endTime){
+    public function getItemStatus($startTime, $endTime): array
+    {
         $status = [];
          // expired, not available, available
 
@@ -126,8 +130,8 @@ abstract class Provider
             $numberOfDays = round((time() - $endTime) / (60*60*24));
             return  [
                 'status' => 'expired',
-                'statusMessage' => $this->localizationUtility->translate(Self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $endTime)
-                    . " ( $numberOfDays ".  $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days'). " )"
+                'statusMessage' => $this->localizationUtility->translate(self::QC_LANG_FILE . 'stop') . ' '. date('d-m-y', $endTime)
+                    . " ( $numberOfDays ".  $this->localizationUtility->translate(self::QC_LANG_FILE . 'days'). " )"
             ];
 
         }
@@ -135,8 +139,8 @@ abstract class Provider
             $numberOfDays = round(($startTime - time()) / (60 * 60 * 24));
             return [
                 'status' => 'notAvailable',
-                'statusMessage' => $this->localizationUtility->translate(Self::QC_LANG_FILE . 'start') . ' ' . date('d-m-y', $startTime)
-                    . " ( $numberOfDays " . $this->localizationUtility->translate(Self::QC_LANG_FILE . 'days') . " )"
+                'statusMessage' => $this->localizationUtility->translate(self::QC_LANG_FILE . 'start') . ' ' . date('d-m-y', $startTime)
+                    . " ( $numberOfDays " . $this->localizationUtility->translate(self::QC_LANG_FILE . 'days') . " )"
             ];
         }
         return [

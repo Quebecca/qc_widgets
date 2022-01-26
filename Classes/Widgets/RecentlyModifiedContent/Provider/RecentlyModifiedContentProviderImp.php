@@ -1,6 +1,7 @@
 <?php
 namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent\Provider;
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -35,7 +36,7 @@ class RecentlyModifiedContentProviderImp extends Provider
     {
         parent::__construct($table,$orderField,$limit,$orderType);
         $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PageRepository::class);
-        $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'recentlyModifiedContent'));
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'recentlyModifiedContent'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         // get the limit value from the tsconfig
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['recentlyModifiedContent.']['limit']);
@@ -45,7 +46,9 @@ class RecentlyModifiedContentProviderImp extends Provider
     }
 
     /**
+     * This function returns the array of records after rendering results from the database
      * @return array
+     * @throws Exception
      */
     public function getItems(): array
     {
@@ -54,6 +57,7 @@ class RecentlyModifiedContentProviderImp extends Provider
     }
 
     /**
+     * This function is used to map the rendering data from the database, and add controls on these values
      * @param array $data
      * @return array
      */
@@ -88,25 +92,25 @@ class RecentlyModifiedContentProviderImp extends Provider
 
 
     /**
+     * This function returns the database records
      * @return array
-     *
+     * @throws Exception
      */
     public function renderData() : array {
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
-        $result = $queryBuilder
+        return $queryBuilder
             ->select('uid', 'cType', 'pid', 'starttime', 'endtime', 'header', 'bodytext',  'tstamp')
             ->from('tt_content')
             ->orderBy('tstamp', 'DESC')
             ->setMaxResults(8)
             ->where(
-                $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))
+                $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
             )
             ->execute()
-            ->fetchAll();
-        return $result;
+            ->fetchAllAssociative();
     }
 
 }

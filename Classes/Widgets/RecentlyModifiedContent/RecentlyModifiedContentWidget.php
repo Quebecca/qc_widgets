@@ -32,6 +32,7 @@ class RecentlyModifiedContentWidget implements WidgetInterface, AdditionalCssInt
     }
 
     /**
+     * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
@@ -39,8 +40,10 @@ class RecentlyModifiedContentWidget implements WidgetInterface, AdditionalCssInt
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/RecentlyModifiedContentWidget');
-        $this->view->assign('widgetTitle', $widgetTitle);
-        $this->view->assign('data',$data);
+        $this->view->assignMultiple([
+            'widgetTitle' => $widgetTitle,
+            'data' => $data
+        ]);
         return $this->view->render();
     }
 

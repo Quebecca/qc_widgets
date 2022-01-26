@@ -7,12 +7,6 @@
 </div>
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
-        <f:comment>
-            <f:if condition="{empty} === true">
-                <f:render partial="NoResult"/>
-            </f:if>
-        </f:comment>
-
         <f:if condition="{data}">
             <f:then>
                 <table class="widget-table">
@@ -27,7 +21,7 @@
                     <tbody>
                     <f:for each="{data.members}" as="element">
                         <f:if condition="{element.users.0}">
-                            <f:if condition="{data.isAdmin} == false">
+                            <f:if condition="!{data.isAdmin}">
                                 <tr>
                                     <td colspan="4" class="group-name">
                                         <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:group" /> <strong>{element.groupName}</strong>

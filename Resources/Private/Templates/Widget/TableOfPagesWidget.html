@@ -43,25 +43,20 @@
                             </td>
                             <td>
                                 <div class="pages-status">
-                                    <f:if condition="{item.status} == expired" >
+                                    <f:if condition="{item.status} == 'expired'" >
                                         <span>
                                             <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg" width="18" title="{item.statusMessage}"/>
                                         </span>
                                     </f:if>
-                                    <f:if condition="{item.status} == notAvailable" >
+                                    <f:if condition="{item.status} == 'notAvailable'" >
                                         <span>
                                             <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg" width="18" title="{item.statusMessage}"/>
                                         </span>
                                     </f:if>
-                                    <f:if condition="{item.hidden} == 1">
+                                    <f:if condition="{item.hidden}">
                                         <span>
                                             <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-hidden.svg" width="18" title="{item.hiddenMessage}"/>
                                         </span>
-                                        <f:comment>
-                                           <span class="c-badge c-badge--red">
-                                           <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:hidden" />
-                                            </span>
-                                        </f:comment>
                                     </f:if>
                                 </div>
                             </td>

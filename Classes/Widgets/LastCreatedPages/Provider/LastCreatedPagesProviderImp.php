@@ -1,6 +1,7 @@
 <?php
 namespace Qc\QcWidgets\Widgets\LastCreatedPages\Provider;
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
@@ -19,17 +20,17 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit, $orderType);
-        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'lastCreatedPageInMyGroup'));
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'lastCreatedPageInMyGroup'));
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['lastCreatedPages.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
             $this->limit = $tsConfigLimit;
         }
-
     }
 
     /**
-     *
+     * This function returns the array of records after rendering results from the database
      * @return array
+     * @throws Exception
      */
     public function getItems(): array
     {

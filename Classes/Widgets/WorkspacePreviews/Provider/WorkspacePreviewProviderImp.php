@@ -1,6 +1,7 @@
 <?php
 namespace Qc\QcWidgets\Widgets\WorkspacePreviews\Provider;
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
@@ -26,7 +27,7 @@ class WorkspacePreviewProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        $this->setWidgetTitle($this->localizationUtility->translate(Self::LANG_FILE . 'listOfMyWorkspaceLinks'));
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'listOfMyWorkspaceLinks'));
         $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['workspaceProviderLinks.']['limit']);
         // get the limit value from the tsconfig
@@ -36,7 +37,9 @@ class WorkspacePreviewProviderImp extends Provider
     }
 
     /**
+     * This function returns the array of records after rendering results from the database
      * @return array
+     * @throws Exception
      */
     public function getItems(): array
     {
@@ -47,8 +50,10 @@ class WorkspacePreviewProviderImp extends Provider
     }
 
     /**
+     * This function is used to return the data from the database
      * @param array $workspaces
      * @return array
+     * @throws Exception
      */
     public function renderData(array $workspaces) : array {
         $previewsData = [];
@@ -64,8 +69,7 @@ class WorkspacePreviewProviderImp extends Provider
                 ->orderBy($this->orderField, $this->orderType)
                 ->setMaxResults($this->limit)
                 ->execute()
-                ->fetchAll();
-
+                ->fetchAllAssociative();
             // formatting date for the sys_preview records
             foreach ($result as $item){
                 $expired = $item['endtime'] !== ''? $item['endtime'] < time() ? 1 : 0 : 0;

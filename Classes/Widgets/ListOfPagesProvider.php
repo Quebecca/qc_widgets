@@ -2,6 +2,7 @@
 
 namespace Qc\QcWidgets\Widgets;
 
+use Doctrine\DBAL\Driver\Exception;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 
 abstract class ListOfPagesProvider extends Provider
@@ -11,6 +12,7 @@ abstract class ListOfPagesProvider extends Provider
      * @param QueryBuilder $queryBuilder
      * @param array $constraints
      * @return array
+     * @throws Exception
      */
     public function renderData(QueryBuilder  $queryBuilder, array $constraints) : array {
         $queryBuilder
@@ -25,7 +27,7 @@ abstract class ListOfPagesProvider extends Provider
             ->orderBy($this->orderField, $this->orderType)
             ->setMaxResults($this->limit)
             ->execute()
-            ->fetchAll();
+            ->fetchAllAssociative();
     }
 
     /**
@@ -42,7 +44,7 @@ abstract class ListOfPagesProvider extends Provider
             $item['status'] = $status['status'];
             $item['statusMessage'] = $status['statusMessage'];
             if($item['hidden'] == 1){
-                $item['hiddenMessage'] = $this->localizationUtility->translate(Self::QC_LANG_FILE . 'hidden');
+                $item['hiddenMessage'] = $this->localizationUtility->translate(self::QC_LANG_FILE . 'hidden');
             }
             $data[]  = $item;
         }

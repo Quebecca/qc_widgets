@@ -31,6 +31,7 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
     }
 
     /**
+     * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
@@ -38,8 +39,10 @@ class ListOfMembersWidget implements WidgetInterface, AdditionalCssInterface
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->setTemplate('Widget/ListOfMembersWidget');
-        $this->view->assign('widgetTitle', $widgetTitle);
-        $this->view->assign('data', $data);
+        $this->view->assignMultiple([
+            'widgetTitle' => $widgetTitle,
+            'data' => $data
+        ]);
         return $this->view->render();
     }
 

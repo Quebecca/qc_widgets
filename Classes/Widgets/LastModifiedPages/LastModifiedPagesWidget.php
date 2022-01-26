@@ -33,6 +33,7 @@ class LastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface
     }
 
     /**
+     * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
@@ -41,8 +42,10 @@ class LastModifiedPagesWidget implements WidgetInterface, AdditionalCssInterface
 
         $this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->assign('widgetTitle', $widgetTitle);
-        $this->view->assign('data', $data);
+        $this->view->assignMultiple([
+            'widgetTitle' => $widgetTitle,
+            'data' => $data
+        ]);
         return $this->view->render();
     }
 

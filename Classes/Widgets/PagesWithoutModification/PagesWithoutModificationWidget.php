@@ -33,6 +33,7 @@ class PagesWithoutModificationWidget implements WidgetInterface, AdditionalCssIn
     }
 
     /**
+     * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
@@ -41,8 +42,10 @@ class PagesWithoutModificationWidget implements WidgetInterface, AdditionalCssIn
 
         $this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->assign('widgetTitle', $widgetTitle);
-        $this->view->assign('data', $data);
+        $this->view->assignMultiple([
+            'widgetTitle' => $widgetTitle,
+            'data' => $data
+        ]);
         return $this->view->render();
     }
 

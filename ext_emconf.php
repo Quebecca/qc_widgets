@@ -6,7 +6,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Qc widgets',
     'description' => 'Qc Widgets provides a bunch of useful widgets',
-    'category' => 'templates',
+    'category' => 'module',
     'constraints' => [
         'depends' => [
             'typo3' => '10.4.0-10.4.99',

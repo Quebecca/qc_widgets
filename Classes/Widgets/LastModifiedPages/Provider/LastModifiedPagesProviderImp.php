@@ -3,6 +3,7 @@
 namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 
 class LastModifiedPagesProviderImp extends ListOfPagesProvider
@@ -20,7 +21,7 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'myLastPages'));
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'myLastPages'));
         // control the limit value, if the user has already specified a value for limiting the results
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['lastModifiedPages.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
@@ -29,17 +30,15 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     }
 
     /**
+     * This function returns the array of records after rendering results from the database
      * @return array
+     * @throws Exception
      */
     public function getItems(): array
     {
-        /*
-         * The method TYPO3\CMS\Backend\Utility\BackendUtility::getRecordsByField() has been deprecated and should not be used any longer.
-         * https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/8.7/Deprecation-79122-DeprecateBackendUtilitygetRecordsByField.html
-         */
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $constraints = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid']))
+            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);

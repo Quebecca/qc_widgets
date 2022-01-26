@@ -3,6 +3,7 @@
 namespace Qc\QcWidgets\Widgets\PagesWithoutModification\Provider;
 
 
+use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 
 class PagesWithoutModificationProviderImp extends ListOfPagesProvider
@@ -35,12 +36,14 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         if($numberofMonthsTs && $numberofMonthsTs > 0){
             $this->numberOfMonths = $numberofMonthsTs;
         }
-        $this->setWidgetTitle($this->localizationUtility->translate(SELF::LANG_FILE.'pagesWitouhtModificationFor') . ' ' . strval($this->numberOfMonths) . ' ' . $this->localizationUtility->translate(SELF::LANG_FILE.'months'));
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'pagesWitouhtModificationFor') . ' ' . strval($this->numberOfMonths) . ' ' . $this->localizationUtility->translate(self::LANG_FILE.'months'));
 
     }
 
     /**
+     * This function returns the array of records after rendering results from the database
      * @return array
+     * @throws Exception
      */
     public function getItems(): array
     {
@@ -49,14 +52,14 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         $queryBuilder = $this->generateQueryBuilder($this->table);
         // if the tstamp is equal '0', we render the tt_contents created before the specified date
         $constraints  = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'])),
+            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
             $queryBuilder->expr()->orX(
                 $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate)),
+                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
                     $queryBuilder->expr()->gt('tstamp',0),
                 ),
                 $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate)),
+                    $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
                     $queryBuilder->expr()->eq('tstamp',0),
                 ),
             ),
