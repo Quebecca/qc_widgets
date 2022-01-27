@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <div class="widget-content-title">
     <span>
         {widgetTitle}
@@ -11,67 +10,75 @@
             <f:then>
                 <table class="widget-table">
                     <thead>
-                    <tr>
-                        <th scope="col">Uid</th>
-                        <th scope="col">
-                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:pageTitle" />
-                        </th>
-                        <th scope="col">
-                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
-                        </th>
-                        <th scope="col">
-                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
-                        </th>
-                        <th scope="col">
-                            <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:modificationDate" />
-                        </th>
-                        <th scope="col">Slug</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Uid</th>
+                            <th scope="col">
+                                <f:translate
+                                    key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:pageTitle" />
+                            </th>
+                            <th scope="col">
+                                <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:status" />
+                            </th>
+                            <th scope="col">
+                                <f:translate
+                                    key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:creationDate" />
+                            </th>
+                            <th scope="col">
+                                <f:translate
+                                    key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:modificationDate" />
+                            </th>
+                            <th scope="col">Slug</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <f:for each="{data}" as="item">
-                        <tr>
-                            <td>
-                                <f:be.link route="web_layout" parameters="{id: item.uid}">
-                                    {item.uid}
-                                </f:be.link>
-                            </td>
-                            <td>
-                                <f:be.link  route="web_layout" parameters="{id: item.uid}">
-                                    {item.title}
-                                </f:be.link>
-                            </td>
-                            <td>
-                                <div class="pages-status">
-                                    <f:if condition="{item.status} == 'expired'" >
-                                        <span>
-                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg" width="18" title="{item.statusMessage}"/>
-                                        </span>
-                                    </f:if>
-                                    <f:if condition="{item.status} == 'notAvailable'" >
-                                        <span>
-                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg" width="18" title="{item.statusMessage}"/>
-                                        </span>
-                                    </f:if>
-                                    <f:if condition="{item.hidden}">
-                                        <span>
-                                            <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-hidden.svg" width="18" title="{item.hiddenMessage}"/>
-                                        </span>
-                                    </f:if>
-                                </div>
-                            </td>
-                            <td>{item.crdate}</td>
-                            <td>{item.tstamp}</td>
-                            <td>{item.slug}</td>
-                        </tr>
-                    </f:for>
+                        <f:for each="{data}" as="item">
+                            <tr>
+                                <td>
+                                    <f:be.link route="web_layout" parameters="{id: item.uid}">
+                                        {item.uid}
+                                    </f:be.link>
+                                </td>
+                                <td>
+                                    <f:be.link route="web_layout" parameters="{id: item.uid}">
+                                        {item.title}
+                                    </f:be.link>
+                                </td>
+                                <td>
+                                    <div class="pages-status">
+                                        <f:if condition="{item.status} == 'expired'">
+                                            <span>
+                                                <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg"
+                                                    width="18" title="{item.statusMessage}" />
+                                            </span>
+                                        </f:if>
+                                        <f:if condition="{item.status} == 'notAvailable'">
+                                            <span>
+                                                <f:image
+                                                    src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg"
+                                                    width="18" title="{item.statusMessage}" />
+                                            </span>
+                                        </f:if>
+                                        <f:if condition="{item.hidden}">
+                                            <span>
+                                                <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-hidden.svg"
+                                                    width="18" title="{item.hiddenMessage}" />
+                                            </span>
+                                        </f:if>
+                                    </div>
+                                </td>
+                                <td>{item.crdate}</td>
+                                <td>{item.tstamp}</td>
+                                <td>{item.slug}</td>
+                            </tr>
+                        </f:for>
                     </tbody>
                 </table>
             </f:then>
             <f:else>
-                <f:render partial="NoResult"/>
+                <f:render partial="NoResult" />
             </f:else>
         </f:if>
     </div>
 </div>
+
 </html>

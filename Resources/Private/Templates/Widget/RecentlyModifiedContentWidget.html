@@ -1,6 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <div class="widget-content-title">
     <span>
@@ -12,76 +11,84 @@
         <f:then>
             <table class="widget-table">
                 <thead>
-                <tr>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:contentUID" />
-                    </th>
+                    <tr>
+                        <th scope="col">
+                            <f:translate
+                                key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:contentUID" />
+                        </th>
 
-                    <th scope="col">
-                        Header/Extract
-                    </th>
-                    <th scope="col">
-                        Status
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:type" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:modificationDate" />
-                    </th>
-                    <th scope="col">
-                        <f:translate key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:pageTitle" />
-                    </th>
-                </tr>
+                        <th scope="col">
+                            Header/Extract
+                        </th>
+                        <th scope="col">
+                            Status
+                        </th>
+                        <th scope="col">
+                            <f:translate
+                                key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:type" />
+                        </th>
+                        <th scope="col">
+                            <f:translate
+                                key="LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:modificationDate" />
+                        </th>
+                        <th scope="col">
+                            <f:translate
+                                key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:pageTitle" />
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                <f:for each="{data}"  as="item">
-                    <tr>
-                        <td>
-                            <be:link.editRecord uid="{item.uid}" table="tt_content" returnUrl="{f:be.uri(route: 'dashboard')}">
-                                {item.uid}
-                            </be:link.editRecord>
-                        </td>
-                        <td>
-                            <f:if condition="{item.header} === ''">
-                                <f:then>
-                                    <f:format.stripTags >
-                                        {item.bodytext}
-                                    </f:format.stripTags>
-                                </f:then>
-                                <f:else>
-                                    {item.header}
-                                </f:else>
-                            </f:if>
-                        </td>
-                        <td>
-                            <f:if condition="{item.status} == 'expired'" >
-                                <span>
-                                    <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg" width="18" title="{item.statusMessage}"/>
-                                </span>
-                            </f:if>
-                            <f:if condition="{item.status} == 'notAvailable'" >
-                                <span>
-                                    <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg" width="18" title="{item.statusMessage}"/>
-                                </span>
-                            </f:if>
-                        </td>
-                        <td>{item.cType}</td>
-                        <td>{item.tstamp}</td>
-                        <td>
-                            <f:be.link  route="web_layout" parameters="{id: item.pid}">
-                                {item.pageTitle}
-                            </f:be.link>
-                        </td>
-                    </tr>
-                </f:for>
+                    <f:for each="{data}" as="item">
+                        <tr>
+                            <td>
+                                <be:link.editRecord uid="{item.uid}" table="tt_content"
+                                    returnUrl="{f:be.uri(route: 'dashboard')}">
+                                    {item.uid}
+                                </be:link.editRecord>
+                            </td>
+                            <td>
+                                <f:if condition="{item.header} === ''">
+                                    <f:then>
+                                        <f:format.stripTags>
+                                            {item.bodytext}
+                                        </f:format.stripTags>
+                                    </f:then>
+                                    <f:else>
+                                        {item.header}
+                                    </f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="{item.status} == 'expired'">
+                                    <span>
+                                        <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-endtime.svg"
+                                            width="18" title="{item.statusMessage}" />
+                                    </span>
+                                </f:if>
+                                <f:if condition="{item.status} == 'notAvailable'">
+                                    <span>
+                                        <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-scheduled.svg"
+                                            width="18" title="{item.statusMessage}" />
+                                    </span>
+                                </f:if>
+                            </td>
+                            <td>{item.cType}</td>
+                            <td>{item.tstamp}</td>
+                            <td>
+                                <f:be.link route="web_layout" parameters="{id: item.pid}">
+                                    {item.pageTitle}
+                                </f:be.link>
+                            </td>
+                        </tr>
+                    </f:for>
                 </tbody>
             </table>
         </f:then>
         <f:else>
-            <f:render partial="NoResult"/>
+            <f:render partial="NoResult" />
         </f:else>
     </f:if>
 </div>
 <br>
+
 </html>
