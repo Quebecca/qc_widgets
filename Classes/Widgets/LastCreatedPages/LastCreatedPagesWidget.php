@@ -3,7 +3,7 @@
 
 /***
  *
- * This file is part of Qc Widgets.
+ * This file is part of Qc Widgets project.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
