@@ -25,6 +25,10 @@
                <source>Page title</source>
                <target>Titre de la page</target>
            </trans-unit>
+          <trans-unit id="headerExtract" >
+             <source>Header/Extract</source>
+             <target>Entête/Extrait</target>
+          </trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -18,6 +18,9 @@
           <trans-unit id="pageTitle" >
               <source>Page Title</source>
           </trans-unit>
+          <trans-unit id="headerExtract" >
+              <source>Header/Extract</source>
+          </trans-unit>
 		</body>
 	</file>
 </xliff>
