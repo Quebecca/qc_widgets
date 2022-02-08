@@ -15,6 +15,7 @@ namespace Qc\QcWidgets\Widgets\WorkspacePreviews\Provider;
 
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
@@ -55,10 +56,14 @@ class WorkspacePreviewProviderImp extends Provider
      */
     public function getItems(): array
     {
-        // get the allowed workspaces Uid
-        // retrieves the available workspaces from the database and checks whether and they're available to the current BE user
-        $workspaces = $this->workspaceService->getAvailableWorkspaces();
-        return $this->renderData($workspaces);
+        if(ExtensionManagementUtility::isLoaded('workspaces')){
+            // get the allowed workspaces Uid
+            // retrieves the available workspaces from the database and checks whether and they're available to the current BE user
+            $workspaces = $this->workspaceService->getAvailableWorkspaces();
+            return $this->renderData($workspaces);
+        }
+        return [];
+
     }
 
     /**
@@ -76,7 +81,10 @@ class WorkspacePreviewProviderImp extends Provider
                 ->select('tstamp','endtime', 'keyword')
                 ->from($this->table)
                 ->where(
-                    $queryBuilder->expr()->like('config', "'%$keyData}'")
+                    $queryBuilder->expr()->like(
+                        'config',
+                        $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($keyData) . '}')
+                    )
                 )
                 ->orderBy($this->orderField, $this->orderType)
                 ->setMaxResults($this->limit)
