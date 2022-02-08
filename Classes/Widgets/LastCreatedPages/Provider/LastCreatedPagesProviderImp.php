@@ -12,6 +12,7 @@
  ***/
 namespace Qc\QcWidgets\Widgets\LastCreatedPages\Provider;
 
+use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -62,9 +63,12 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
         }
         // return results
         $queryBuilder = $this->generateQueryBuilder($this->table);
-        $constraints = [
-            $queryBuilder->expr()->in('cruser_id', $membersUid)
-        ];
+        $constraints = [];
+        if(!empty($membersUid)){
+            $constraints = [
+                $queryBuilder->expr()->in('cruser_id', $queryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY))
+            ];
+        }
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
 
