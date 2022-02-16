@@ -5,7 +5,7 @@
  */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Qc widgets',
-    'description' => 'Qc Widgets provides a bunch of useful widgets',
+    'description' => 'Many widgets with info about pages and tt_content modifications, related to groups or current user and also a list of Workspace preview links.',
     'category' => 'module',
     'constraints' => [
         'depends' => [
