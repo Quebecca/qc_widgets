@@ -7,7 +7,7 @@
         "typo3/cms-core": "^10.4 || ^11.5.0",
         "typo3/cms-rte-ckeditor": "^10.4 || ^11.5.0",
         "typo3/cms-fluid-styled-content": "^10.4 || ^11.5.0",
-        "workspaces" : "^11.5.99"
+        "typo3/cms-workspaces" : "^10.4 || ^11.5.0"
     },
     "autoload": {
         "psr-4": {
