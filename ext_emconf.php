@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = [
             'Qc\\QcWidgets\\' => 'Classes/'
         ],
     ],
-    'state' => 'beta',
+    'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
