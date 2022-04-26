@@ -114,7 +114,7 @@ Ce «widget» permet d’afficher la liste des dernières pages modifiées par l
 Ce «widget» permet d’afficher la liste des derniers contenus (tt_content) édités par l’utilisateur connecté.
 
 ### Liste des liens de prévisiualisation d'espaces de travail (Workspace)
-Ce «widget» permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve d'ans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
+Ce «widget» permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve dans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
 
 
 ## TSconfig utilisateur ou groupe
