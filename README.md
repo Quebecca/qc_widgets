@@ -77,13 +77,13 @@ mod{
 
 -----------
 [Version française]
-# Documentation "Widgets Qc" 
+# Documentation «Widgets Qc»
 
 ## À propos
-Cette extension fournit un ensemble de "widgets" pour le module "Dashboard" de TYPO3. La plupart des "widgets" affichent des listes d'enregistrements liés à l’utilisateur connecté.
+Cette extension fournit un ensemble de «widgets» pour le module "Dashboard" de TYPO3. La plupart des «widgets» affichent des listes d'enregistrements liés à l’utilisateur connecté.
 La quantité d'enregistrements affichés par défaut est de 25 et peut être modifiée par TSconfig de Groupe ou d'Utilisateur. 
 
-Les "widgets" offerts sont:
+Les «widgets» offerts sont:
 
 - Liste  des utilisateurs de mon groupe
 - Dernières pages créées par mes groupes
@@ -92,29 +92,29 @@ Les "widgets" offerts sont:
 - Mes derniers contenus édités
 - Liste des liens de prévisiualisation d'espaces de travail (Workspace)
 
-Tous les "widgets" de pages affichent les mêmes informations: uid, titre, état, date de création, date de modification and segment d'URL (slug). Un clic sur le uid ou le titre ouvre le module Page sur l'enregistrement sélectionné.
+Tous les «widgets» de pages affichent les mêmes informations: uid, titre, état, date de création, date de modification and segment d'URL (slug). Un clic sur le uid ou le titre ouvre le module Page sur l'enregistrement sélectionné.
 
-Comme d'habitude, on peut sélectionner quels "widgets" sont disponibles dans les droits d'utilisateur ou de groupe.
+Comme d'habitude, on peut sélectionner quels «widgets» sont disponibles dans les droits d'utilisateur ou de groupe.
 
 ## Détails sur les widgets de l'extension
 
 ### Liste  des utilisateurs de mon groupe
-Ce "widget" permet d'afficher les détails (utilisateur, courriel, nom réel, dernière connexion) des utilisateurs associés aux mêmes groupes que l’utilisateur connecté. Si cet utilisateur est un administrateur TYPO3, le widget va afficher la liste des administrateurs. 
+Ce «widget» permet d'afficher les détails (utilisateur, courriel, nom réel, dernière connexion) des utilisateurs associés aux mêmes groupes que l’utilisateur connecté. Si cet utilisateur est un administrateur TYPO3, le widget va afficher la liste des administrateurs. 
 
 ### Dernières pages créées dans mes groupes
-Ce "widget" permet d’afficher la liste des dernières pages créées par les utilisateurs associés à vos groupes.
+Ce «widgets» permet d’afficher la liste des dernières pages créées par les utilisateurs associés à vos groupes.
 
 ###  Pages sans modification (depuis x mois)
-Ce "widget" permet de lister les pages sans modification depuis "x" mois. Le nombre de mois par défaut est de 3. Il permet notamment de repérer les pages orphelines ou en déficit d'entretien qui peuvent contenir des informations erronées ou dépassées.
+Ce «widget» permet de lister les pages sans modification depuis "x" mois. Le nombre de mois par défaut est de 3. Il permet notamment de repérer les pages orphelines ou en déficit d'entretien qui peuvent contenir des informations erronées ou dépassées.
 
 ### Mes dernières pages modifiées
-Ce "widget" permet d’afficher la liste des dernières pages modifiées par l’utilisateur connecté.
+Ce «widget» permet d’afficher la liste des dernières pages modifiées par l’utilisateur connecté.
 
 ###  Mes derniers contenus édités
-Ce "widget" permet d’afficher la liste des derniers contenus (tt_content) édités par l’utilisateur connecté.
+Ce «widget» permet d’afficher la liste des derniers contenus (tt_content) édités par l’utilisateur connecté.
 
 ### Liste des liens de prévisiualisation d'espaces de travail (Workspace)
-Ce "widget" permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve d'ans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
+Ce «widget» permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve d'ans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
 
 
 ## TSconfig utilisateur ou groupe
