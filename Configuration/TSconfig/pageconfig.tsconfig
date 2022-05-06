@@ -20,6 +20,12 @@ mod{
         listOfmembers{
             dontLookintoSubgroups = 1
         }
+        numberOfRecordsByType{
+            fromTable = tt_content, pages
+            totalRecords = 1
+            totalNewLast24h = 1
+            totalNewLastweek = 1
+        }
     }
 }
 

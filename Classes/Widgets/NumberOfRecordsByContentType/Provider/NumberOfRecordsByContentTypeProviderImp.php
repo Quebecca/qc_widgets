@@ -13,11 +13,22 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     public function getItems(): array
     {
         // Filtrer par periode
+        // get tsconfig options
+        $tablesName = [];
+        $tsConfig = $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.']['numberOfRecordsByType.'];
+        $tsTablesName = explode(',',$tsConfig['fromTable']);
+        foreach ($tsTablesName as $tableName){
+            $tablesName[] = str_replace(' ','', $tableName);
+        }
+        $totalRecordsOption = intval($tsConfig['totalRecords']);
+        $totalNewLast24hOption = intval($tsConfig['totalNewLast24h']);
+        $totalNewLastweekOption = intval($tsConfig['totalNewLastweek']);
 
-        $tables = ['pages', 'tt_content'];
+
+
         $data = [];
-        foreach ($tables as $table){
-            $data [] = $this->renderData($table);
+        foreach ($tablesName as $table){
+            $data [$table] = $this->renderData($table);
         }
 
         return $data;
@@ -26,12 +37,13 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     /**
      * @throws Exception
      */
-    public function renderData(string $tableName): array
+    public function renderData(string $tableName)
     {
         // La periode
         // L'utilisateur TS Config, Admin ??
         // Calculer la periode
         // Tester si la table ne contient pas le champs crdate
+
         $queryBuilder = $this->generateQueryBuilder($tableName);
         $queryBuilder
             ->getRestrictions()
@@ -39,11 +51,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         return $queryBuilder
             ->count('uid')
             ->from($tableName)
-            ->setMaxResults(8)
-            ->where(
-                $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
-            )
             ->execute()
-            ->fetchAllAssociative();
+            ->fetchAssociative()['COUNT(`uid`)'];
     }
 }

@@ -7,7 +7,40 @@
     </span>
 </div>
 <div class="widget-content-main">
-    1400 pages last week
+    <div class="widget-table-wrapper">
+        <f:if condition="{data}">
+            <f:then>
+                <table class="widget-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                           Table name
+                        </th>
+                        <th scope="col">
+                            number of records
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{data}" as="numberOfRecords" key="tableName">
+                       <tr>
+                           <td>
+                            {tableName}
+                           </td>
+                           <td>
+                               {numberOfRecords}
+                           </td>
+                       </tr>
+                    </f:for>
+                    </tbody>
+                </table>
+            </f:then>
+            <f:else>
+                <f:render partial="NoResult" />
+            </f:else>
+        </f:if>
+    </div>
 </div>
 <br>
 
