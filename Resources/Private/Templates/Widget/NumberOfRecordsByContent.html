@@ -12,27 +12,46 @@
             <f:then>
                 <table class="widget-table">
                     <thead>
-                    <tr>
-                        <th scope="col">
-                           Table name
-                        </th>
-                        <th scope="col">
-                            number of records
-                        </th>
+                        <tr>
+                            <th scope="col">
+                               Table name
+                            </th>
+                            <th scope="col">
+                                last x days
+                            </th>
+                            <th scope="col">
+                                last 24h
+                            </th>
+                            <th scope="col">
+                                number of records
+                            </th>
 
-                    </tr>
+                        </tr>
                     </thead>
                     <tbody>
-                    <f:for each="{data}" as="numberOfRecords" key="tableName">
-                       <tr>
-                           <td>
-                            {tableName}
-                           </td>
-                           <td>
-                               {numberOfRecords}
-                           </td>
-                       </tr>
-                    </f:for>
+                        <f:for each="{data}" as="records" key="tableName">
+                            <tr>
+                                <td>{tableName}</td>
+                                <td>
+                                    <f:if condition="{records.numberOfDays}">
+                                        <f:then>{records.numberOfDays}</f:then>
+                                        <f:else>-</f:else>
+                                    </f:if>
+                                </td>
+                                <td>
+                                    <f:if condition="{records.totalNewLast24h}">
+                                        <f:then>{records.totalNewLast24h}</f:then>
+                                        <f:else>-</f:else>
+                                    </f:if>
+                                </td>
+                                <td>
+                                    <f:if condition="{records.totalRecords}">
+                                        <f:then>{records.totalRecords}</f:then>
+                                        <f:else>-</f:else>
+                                    </f:if>
+                                </td>
+                            </tr>
+                        </f:for>
                     </tbody>
                 </table>
             </f:then>

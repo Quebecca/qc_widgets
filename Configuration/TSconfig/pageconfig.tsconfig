@@ -21,10 +21,12 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable = tt_content, pages
+            fromTable =  pages, tt_content
             totalRecords = 1
             totalNewLast24h = 1
-            totalNewLastweek = 1
+            excludeDisabledItems =  0
+            excludeHiddenItems = 0
+            numberOfDays = 30
         }
     }
 }
