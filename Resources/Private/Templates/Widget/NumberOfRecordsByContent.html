@@ -1,30 +1,41 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
-
 <div class="widget-content-title">
     <span>
         {widgetTitle}
     </span>
 </div>
+<f:variable  name="localFile" value="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf"/>
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
+
+        <f:variable name="options" value="{0: 'numberOfDays', 1: 'totalNewLast24h', 2: 'totalRecords'}" />
         <f:if condition="{data}">
             <f:then>
                 <table class="widget-table">
                     <thead>
                         <tr>
-                            <th scope="col">
-                               Table name
-                            </th>
-                            <th scope="col">
-                                last x days
-                            </th>
-                            <th scope="col">
-                                last 24h
-                            </th>
-                            <th scope="col">
-                                number of records
-                            </th>
+                            <f:comment>
+                                <th scope="col">
+                                    <f:translate
+                                            key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:table"  />
+                                </th>
+                                <th scope="col">
+                                    <f:translate
+                                            key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:last"  />
+                                    {numberOfDays}
+                                    <f:translate
+                                            key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:days"  />
+                                </th>
+                                <th scope="col">
+                                    <f:translate
+                                            key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:last"  />24h
+                                </th>
+                                <th scope="col">
+                                    <f:translate
+                                            key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:totalNumberOfRecords"  />
+                                </th>
+                            </f:comment>
 
                         </tr>
                     </thead>
@@ -32,24 +43,12 @@
                         <f:for each="{data}" as="records" key="tableName">
                             <tr>
                                 <td>{tableName}</td>
-                                <td>
-                                    <f:if condition="{records.numberOfDays}">
-                                        <f:then>{records.numberOfDays}</f:then>
-                                        <f:else>-</f:else>
-                                    </f:if>
-                                </td>
-                                <td>
-                                    <f:if condition="{records.totalNewLast24h}">
-                                        <f:then>{records.totalNewLast24h}</f:then>
-                                        <f:else>-</f:else>
-                                    </f:if>
-                                </td>
-                                <td>
-                                    <f:if condition="{records.totalRecords}">
-                                        <f:then>{records.totalRecords}</f:then>
-                                        <f:else>-</f:else>
-                                    </f:if>
-                                </td>
+                                <f:for each="{options}" as="option">
+                                    <f:variable name="recordValue" value="{records.{option}}"/>
+                                    <td>
+                                        <f:render section="recordResult" arguments="{result: recordValue}"/>
+                                    </td>
+                                </f:for>
                             </tr>
                         </f:for>
                     </tbody>
@@ -61,6 +60,11 @@
         </f:if>
     </div>
 </div>
-<br>
-
 </html>
+
+<f:section name="recordResult">
+    <f:if condition="{result}">
+        <f:then>{result}</f:then>
+        <f:else>-</f:else>
+    </f:if>
+</f:section>

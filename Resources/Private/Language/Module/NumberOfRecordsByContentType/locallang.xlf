@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="EXT:qc_widgets/Resources/Private/Language/Module/locallang.xlf" date="2021-09-15T18:22:34Z">
+		<header/>
+		<body>
+        <body>
+            <trans-unit id="numberOfRecordsByContentType" >
+                <source>Number of records by content type</source>
+            </trans-unit>
+            <trans-unit id="table" >
+                <source>Table</source>
+            </trans-unit>
+            <trans-unit id="last" >
+                <source>Last </source>
+            </trans-unit>
+            <trans-unit id="days" >
+                <source>days </source>
+            </trans-unit>
+            <trans-unit id="totalNumberOfRecords" >
+                <source>Total number of records </source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -2,6 +2,7 @@
 namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType;
 
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
@@ -41,11 +42,18 @@ class NumberOfRecordsByContentTypeWidget implements WidgetInterface
         $this->view->setTemplate('Widget/NumberOfRecordsByContent');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
-            'data' => $data
+            'data' => $data,
+            'numberOfDays' =>  $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.']['numberOfRecordsByType.']['numberOfDays']
         ]);
         return $this->view->render();
     }
-
+    /**
+     * @return BackendUserAuthentication
+     */
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
+    }
 
 
 }
