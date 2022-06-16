@@ -7,11 +7,11 @@
 		<body>
             <trans-unit id="numberOfRecordsByContentType" >
                 <source>Number of records by content type</source>
-                <target>Nombre de ligne par le type de contenu</target>
+                <target>Nombre de lignes par type de contenu</target>
             </trans-unit>
             <trans-unit id="numberOfRecordsByContentTypeDesc" >
                 <source>Displays a table of number of records by content type</source>
-                <target>Affiche le nombre de ligne par le type de contenu</target>
+                <target>Affiche le nombre de ligne par type de contenu</target>
             </trans-unit>
             <trans-unit id="table" >
                 <source>Table</source>

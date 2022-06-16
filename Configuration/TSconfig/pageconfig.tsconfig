@@ -21,11 +21,11 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable =  pages, tt_content, be_groups
+            fromTable =  pages, tt_content, be_groups, be_users
             totalRecords = 1
             totalNewLast24h = 1
-            excludeDisabledItems =  0
-            excludeHiddenItems = 0
+            excludeDisabledItems = 1
+            excludeHiddenItems = 1
             numberOfDays = 365
         }
     }

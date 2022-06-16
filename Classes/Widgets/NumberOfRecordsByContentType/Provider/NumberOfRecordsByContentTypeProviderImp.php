@@ -8,14 +8,15 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class NumberOfRecordsByContentTypeProviderImp extends Provider
 {
     const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:';
-
+    /**
+     * @var array|string[]
+     */
     protected array $constraints = [];
 
     public function __construct(string $table, string $orderField, int $limit, string $orderType, LocalizationUtility $localizationUtility = null)
     {
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
-
         $numberOfDays = strtotime(date('Y-m-d'))  - 24*60*60*$this->getTsConfig('numberOfDays');
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
         $this->constraints = [
@@ -28,12 +29,11 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     }
 
     /**
+     * This function is used to return data to the widget
      * @throws Exception
      */
     public function getItems(): array
     {
-        // Filtrer par periode
-        // get tsconfig options
         $tablesName = [];
         $tsTablesName = explode(',',$this->getTsConfig('fromTable'));
         foreach ($tsTablesName as $tableName){
@@ -66,12 +66,22 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         return $data;
     }
 
+    /**
+     * Check if the column exists in the DB to avoid DB errors
+     * @param string $tableName
+     * @param string $column
+     * @return bool
+     */
     public function checkColumnExistence(string $tableName, string $column): bool
     {
         return in_array($column, array_keys($GLOBALS['TCA'][$tableName]['columns']));
 
     }
 
+    /**
+     * This function is used to return the enabled tsconfig options
+     * @return array
+     */
     public function getEnabledConstraints(): array
     {
         $enabledConstraints = [];
@@ -87,22 +97,24 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         return $enabledConstraints;
     }
 
-
+    /**
+     * This function is used to get tsconfig option
+     * @param string $tsConfigName
+     * @return mixed
+     */
     public function getTsConfig(string $tsConfigName){
         return  $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.']['numberOfRecordsByType.'][$tsConfigName];
     }
 
     /**
+     * This function is used to render data based on the passed constraint
+     * @param string $tableName
+     * @param string $constraint
+     * @return mixed
      * @throws Exception
      */
     public function renderData(string $tableName, string $constraint)
     {
-        //debug($constraint);
-        // La periode
-        // L'utilisateur TS Config, Admin ??
-        // Calculer la periode
-        // Tester si la table ne contient pas le champs crdate
-
         $queryBuilder = $this->generateQueryBuilder($tableName);
         $queryBuilder
             ->getRestrictions()
