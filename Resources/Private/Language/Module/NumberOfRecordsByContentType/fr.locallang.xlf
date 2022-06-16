@@ -19,7 +19,7 @@
             </trans-unit>
             <trans-unit id="last" >
                 <source>Last </source>
-                <target>Les dernières </target>
+                <target>Les derniers </target>
             </trans-unit>
             <trans-unit id="days" >
                 <source>days </source>

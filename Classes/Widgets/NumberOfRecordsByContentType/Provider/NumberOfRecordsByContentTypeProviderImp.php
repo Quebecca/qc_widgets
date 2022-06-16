@@ -20,11 +20,12 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         $numberOfDays = strtotime(date('Y-m-d'))  - 24*60*60*$this->getTsConfig('numberOfDays');
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
         $this->constraints = [
-            'totalRecords' => 'true',
-            'totalNewLast24h' => ' crdate >'.$last24h,
-            'numberOfDays' => ' crdate > ' .$numberOfDays,
-            'excludeDisabledItems' => ' AND disabled = 0',
-            'excludeHiddenItems' => ' AND hidden = 0'
+            'totalRecords' => ['','true', true],
+            'totalNewLast24h' => ['crdate', " crdate > $last24h", false],
+            'numberOfDays' => ['crdate'," crdate >  $numberOfDays",false],
+            'excludeDisabledItems' => ['disabled', ' AND disabled = 0', false],
+            'excludeHiddenItems' => ['hidden',' AND hidden = 0', false],
+            'excludDeleted' => ['deleted',' AND deleted = 0', true]
         ];
     }
 
@@ -40,51 +41,39 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             $tablesName[] = str_replace(' ','', $tableName);
         }
 
-        $constraints = $this->getEnabledConstraints();
         $data = [];
-        foreach ($tablesName as $table){
-            foreach ($constraints as $option => $constraint){
-                if($option != 'excludeDisabledItems' && $option != 'excludeHiddenItems'){
-                    if(
-                        in_array('excludeHiddenItems', array_keys($constraints))
-                        && $this->checkColumnExistence($table, 'hidden')
-                    )
-                    {
-                        $constraint .= $this->constraints['excludeHiddenItems'];
+        $enabledConstraints = $this->getEnabledConstraints($tablesName);
+        foreach ($enabledConstraints as $table => $tableConstraints){
+            foreach (['totalRecords', 'totalNewLast24h', 'numberOfDays'] as $recordType){
+
+                if($tableConstraints[$recordType] != null){
+                    $whereClause  = $tableConstraints[$recordType][1];
+                    foreach ([
+                                 'excludDeleted',
+                                 'excludeHiddenItems',
+                                 'excludeDisabledItems'
+                             ] as $constraintItem){
+                        if($tableConstraints[$constraintItem][2] == true){
+                            $whereClause .= ' '. $tableConstraints[$constraintItem][1];
+
+                        }
                     }
-                    if(
-                        in_array('excludeDisabledItems', array_keys($constraints))
-                        && $this->checkColumnExistence($table, 'disabled')
-                    ) {
-                        $constraint .= $this->constraints['excludeDisabledItems'];
-                    }
-                    $constraint .= ' AND deleted = 0';
-                    $data [$table][$option] = $this->renderData($table, $constraint);
+                    $data[$table][$recordType] = $this->renderData($table, $whereClause);
                 }
             }
         }
+
+
         return $data;
-    }
-
-    /**
-     * Check if the column exists in the DB to avoid DB errors
-     * @param string $tableName
-     * @param string $column
-     * @return bool
-     */
-    public function checkColumnExistence(string $tableName, string $column): bool
-    {
-        return in_array($column, array_keys($GLOBALS['TCA'][$tableName]['columns']));
-
     }
 
     /**
      * This function is used to return the enabled tsconfig options
      * @return array
      */
-    public function getEnabledConstraints(): array
+    public function getEnabledConstraints( $tablesName): array
     {
-        $enabledConstraints = [];
+        /*$enabledConstraints = [];
         foreach ($this->constraints as $option => $constraint){
             if(
                 intval($this->getTsConfig($option)) == 1
@@ -92,7 +81,25 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             ){
                 $enabledConstraints[$option] = $constraint;
             }
+        }*/
+        $enabledConstraints = [];
+        foreach ($tablesName as $table){
+          debug($GLOBALS['TCA'][$table]);
+            if($GLOBALS['TCA'][$table] != null){
+                foreach ($this->constraints as $option => $constraint){
+                    if(
+                        intval($this->getTsConfig($option)) == 1
+                        || (intval($this->getTsConfig($option)) >= 1 && $option == 'numberOfDays')
+                        || $option == 'excludDeleted'
+                    ){
+                        $enabledConstraints[$table][$option] = $constraint;
+                        // if the constraint already on true it will added to the enabledConstraints
+                        $enabledConstraints[$table][$option][2] = $this->constraints[$option][2] || in_array($constraint[0], array_keys($GLOBALS['TCA'][$table]['columns'])) || in_array($constraint[0], array_keys($GLOBALS['TCA'][$table]['ctrl'])) ;
+                    }
+                }
+            }
         }
+
         return $enabledConstraints;
     }
 
