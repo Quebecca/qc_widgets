@@ -85,7 +85,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     public function getEnabledConstraints(): array
     {
         $enabledConstraints = [];
-        // todo : verify if the column is present in the table in DB
         foreach ($this->constraints as $option => $constraint){
             if(
                 intval($this->getTsConfig($option)) == 1

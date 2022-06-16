@@ -47,6 +47,7 @@ class NumberOfRecordsByContentTypeWidget implements WidgetInterface
         ]);
         return $this->view->render();
     }
+
     /**
      * @return BackendUserAuthentication
      */
