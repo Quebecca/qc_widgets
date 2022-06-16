@@ -26,8 +26,8 @@ services:
         name: dashboard.widget
         identifier: 'numberOfRecordsByContentType'
         groupNames: 'qcWidgets'
-        title: 'Number of records by content type'
-        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:lastCreatedPageInMyGroupDescription'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:numberOfRecordsByContentType'
+        description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:numberOfRecordsByContentTypeDesc'
         iconIdentifier: 'tx-qc_widgets-createdPages-icon'
         height: 'medium'
         width: 'medium'

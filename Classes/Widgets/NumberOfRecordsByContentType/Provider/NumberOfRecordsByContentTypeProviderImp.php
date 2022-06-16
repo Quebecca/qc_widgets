@@ -7,12 +7,15 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class NumberOfRecordsByContentTypeProviderImp extends Provider
 {
+    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:';
 
     protected array $constraints = [];
 
     public function __construct(string $table, string $orderField, int $limit, string $orderType, LocalizationUtility $localizationUtility = null)
     {
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
+        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
+
         $numberOfDays = strtotime(date('Y-m-d'))  - 24*60*60*$this->getTsConfig('numberOfDays');
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
         $this->constraints = [
