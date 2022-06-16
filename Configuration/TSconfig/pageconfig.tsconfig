@@ -21,12 +21,11 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            // test si la table ne contient pas les deux clononnes hidden et disabled
-            fromTable =  pages, tt_content, be_groups, be_users,sys_category, tx_gabarit_pgu_form_comments_problems, tx_pgumediateurscivils_mjq_mediateurscivils
+            fromTable =  pages, tt_content, be_groups, be_users,sys_category, tx_gabarit_pgu_form_comments_problems, tx_pgumediateurscivils_mjq_mediateurscivils, zkejbg
             totalRecords = 1
             totalNewLast24h = 1
-            excludeDisabledItems = 0
-            excludeHiddenItems = 0
+            excludeDisabledItems = 1
+            excludeHiddenItems = 1
             numberOfDays = 365
         }
     }

@@ -3,6 +3,8 @@ namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType\Provider;
 
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class NumberOfRecordsByContentTypeProviderImp extends Provider
@@ -25,7 +27,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             'numberOfDays' => ['crdate'," crdate >  $numberOfDays",false],
             'excludeDisabledItems' => ['disabled', ' AND disabled = 0', false],
             'excludeHiddenItems' => ['hidden',' AND hidden = 0', false],
-            'excludDeleted' => ['deleted',' AND deleted = 0', true]
+            'excludDeleted' => ['deleted',' AND deleted = 0', false]
         ];
     }
 
@@ -44,15 +46,18 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         $data = [];
         $enabledConstraints = $this->getEnabledConstraints($tablesName);
         foreach ($enabledConstraints as $table => $tableConstraints){
+
             foreach (['totalRecords', 'totalNewLast24h', 'numberOfDays'] as $recordType){
 
-                if($tableConstraints[$recordType] != null){
+                if($tableConstraints[$recordType] != null && $tableConstraints[$recordType][2]){
                     $whereClause  = $tableConstraints[$recordType][1];
                     foreach ([
                                  'excludDeleted',
                                  'excludeHiddenItems',
                                  'excludeDisabledItems'
                              ] as $constraintItem){
+
+
                         if($tableConstraints[$constraintItem][2] == true){
                             $whereClause .= ' '. $tableConstraints[$constraintItem][1];
 
@@ -63,29 +68,20 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             }
         }
 
-
         return $data;
     }
 
     /**
      * This function is used to return the enabled tsconfig options
+     * @param $tablesName
      * @return array
      */
     public function getEnabledConstraints( $tablesName): array
     {
-        /*$enabledConstraints = [];
-        foreach ($this->constraints as $option => $constraint){
-            if(
-                intval($this->getTsConfig($option)) == 1
-                || (intval($this->getTsConfig($option)) >= 1 && $option == 'numberOfDays')
-            ){
-                $enabledConstraints[$option] = $constraint;
-            }
-        }*/
+
         $enabledConstraints = [];
         foreach ($tablesName as $table){
-          debug($GLOBALS['TCA'][$table]);
-            if($GLOBALS['TCA'][$table] != null){
+            if($this->checkIfTableExits($table)){
                 foreach ($this->constraints as $option => $constraint){
                     if(
                         intval($this->getTsConfig($option)) == 1
@@ -93,8 +89,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
                         || $option == 'excludDeleted'
                     ){
                         $enabledConstraints[$table][$option] = $constraint;
-                        // if the constraint already on true it will added to the enabledConstraints
-                        $enabledConstraints[$table][$option][2] = $this->constraints[$option][2] || in_array($constraint[0], array_keys($GLOBALS['TCA'][$table]['columns'])) || in_array($constraint[0], array_keys($GLOBALS['TCA'][$table]['ctrl'])) ;
+                        $enabledConstraints[$table][$option][2] =  $option == 'totalRecords' || in_array($constraint[0],array_keys( $this->getTableColumns($table)));
                     }
                 }
             }
@@ -103,6 +98,20 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         return $enabledConstraints;
     }
 
+    public function checkIfTableExits($tableName) : bool{
+        return GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable($tableName)
+            ->getSchemaManager()
+            ->tablesExist([$tableName]);
+    }
+
+    public function getTableColumns($tableName): array
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable($tableName)
+            ->getSchemaManager()
+            ->listTableColumns($tableName);
+    }
     /**
      * This function is used to get tsconfig option
      * @param string $tsConfigName
