@@ -22,12 +22,25 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         $numberOfDays = strtotime(date('Y-m-d'))  - 24*60*60*$this->getTsConfig('numberOfDays');
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
         $this->constraints = [
-            'totalRecords' => ['','true', true],
-            'totalNewLast24h' => ['crdate', " crdate > $last24h", false],
-            'numberOfDays' => ['crdate'," crdate >  $numberOfDays",false],
-            'excludeDisabledItems' => ['disabled', ' AND disabled = 0', false],
-            'excludeHiddenItems' => ['hidden',' AND hidden = 0', false],
-            'excludDeleted' => ['deleted',' AND deleted = 0', false]
+            'totalRecords' => [
+                0 => ['','true', true]
+            ],
+            'totalNewLast24h' => [
+                0 => ['crdate', " crdate > $last24h", false]
+            ],
+            'numberOfDays' => [
+                0 => ['crdate'," crdate >  $numberOfDays",false]
+            ],
+            'excludeDisabledItems' => [
+                0 => ['disabled', ' AND disabled = 0', false],
+                1 => ['disable', ' AND disable = 0', false],
+            ],
+            'excludeHiddenItems' => [
+                0 => ['hidden',' AND hidden = 0', false]
+            ],
+            'excludDeleted' => [
+                0 => ['deleted',' AND deleted = 0', false]
+            ],
         ];
     }
 
@@ -88,8 +101,14 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
                         || (intval($this->getTsConfig($option)) >= 1 && $option == 'numberOfDays')
                         || $option == 'excludDeleted'
                     ){
-                        $enabledConstraints[$table][$option] = $constraint;
-                        $enabledConstraints[$table][$option][2] =  $option == 'totalRecords' || in_array($constraint[0],array_keys( $this->getTableColumns($table)));
+                        foreach ($constraint as $item){
+                            $enableColumn = in_array($item[0],array_keys( $this->getTableColumns($table)));
+                            if($enableColumn || $option == 'totalRecords'){
+                                $enabledConstraints[$table][$option] = $item;
+                                $enabledConstraints[$table][$option][2] = true;
+                            }
+                        }
+
                     }
                 }
             }
