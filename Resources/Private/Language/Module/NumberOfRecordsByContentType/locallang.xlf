@@ -4,7 +4,7 @@
 		<header/>
 		<body>
             <trans-unit id="numberOfRecordsByContentType" >
-                <source>Number of records by content type</source>
+                <source>Number of records per table</source>
             </trans-unit>
             <trans-unit id="numberOfRecordsByContentTypeDesc" >
                 <source>Displays a table of number of records by content type</source>
@@ -13,6 +13,9 @@
                 <source>Table</source>
             </trans-unit>
             <trans-unit id="last" >
+                <source>Last </source>
+            </trans-unit>
+            <trans-unit id="lastF" >
                 <source>Last </source>
             </trans-unit>
             <trans-unit id="days" >

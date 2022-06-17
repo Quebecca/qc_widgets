@@ -21,7 +21,7 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable =  pages, tt_content, be_groups, be_users,sys_category, tx_gabarit_pgu_form_comments_problems, tx_pgumediateurscivils_mjq_mediateurscivils, zkejbg
+            fromTable =  pages, tt_content, be_groups, be_users,sys_category,fe_groups, tx_pgumediateurscivils_mjq_mediateurscivils, tx_pgucsv2solr
             totalRecords = 1
             totalNewLast24h = 1
             excludeDisabledItems = 1

@@ -6,8 +6,8 @@
 		</header>
 		<body>
             <trans-unit id="numberOfRecordsByContentType" >
-                <source>Number of records by content type</source>
-                <target>Nombre de lignes par type de contenu</target>
+                <source>Number of records per table</source>
+                <target>Nombre d'enregistrements par table</target>
             </trans-unit>
             <trans-unit id="numberOfRecordsByContentTypeDesc" >
                 <source>Displays a table of number of records by content type</source>
@@ -19,7 +19,11 @@
             </trans-unit>
             <trans-unit id="last" >
                 <source>Last </source>
-                <target>Les derniers </target>
+                <target>Derniers </target>
+            </trans-unit>
+            <trans-unit id="lastF" >
+                <source>Last </source>
+                <target>Dernières </target>
             </trans-unit>
             <trans-unit id="days" >
                 <source>days </source>
@@ -27,7 +31,7 @@
             </trans-unit>
             <trans-unit id="totalNumberOfRecords" >
                 <source>Total</source>
-                <target>Totale</target>
+                <target>Total</target>
             </trans-unit>
 		</body>
 	</file>
