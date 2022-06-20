@@ -21,7 +21,7 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable =  pages, tt_content, be_groups, be_users
+            fromTable =  pages, tt_content
             totalRecords = 1
             totalNewLast24h = 1
             excludeDisabledItems = 1
