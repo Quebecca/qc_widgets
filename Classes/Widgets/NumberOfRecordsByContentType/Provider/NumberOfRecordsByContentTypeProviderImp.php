@@ -178,20 +178,18 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      */
     public function renderData(string $tableName, string $constraint)
     {
-        // some tables does not contain uid column
-        $column = array_keys($this->getTableColumns($tableName))[0];
         $queryBuilder = $this->generateQueryBuilder($tableName);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
-        return $queryBuilder
-            ->count($column)
+        return  $queryBuilder
+            ->count('*')
             ->from($tableName)
             ->where(
                 $constraint
             )
             ->execute()
-            ->fetchAssociative()['COUNT(`uid`)'];
+            ->fetchOne();
     }
 
     /**
