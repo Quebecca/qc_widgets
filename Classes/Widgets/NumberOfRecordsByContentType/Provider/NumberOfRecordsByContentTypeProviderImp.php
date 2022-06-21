@@ -34,10 +34,10 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
-        if($this->getTsConfig('numberOfDays')){
-            $this->numberOfDays = intval($this->getTsConfig('numberOfDays')) >= 0 ? intval($this->getTsConfig('numberOfDays')) : self::NUMBER_OF_DAYS;
-        }
+        $this->numberOfDays = $this->getTsConfig('numberOfDays') ? intval($this->getTsConfig('numberOfDays')) : self::NUMBER_OF_DAYS;
         $numberOfDaysSec = strtotime(date('Y-m-d'))  - 24*60*60*$this->numberOfDays;
+
+        // the last element on each array is used to define if the constraint is enabled (1) or disabled (0)
         $this->columns = [
             'totalRecords' => [
                 0 => ['totalRecords','true', 1]
@@ -93,11 +93,11 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             if($this->checkIfTableExits($table)){
                 foreach ($this->columns as $option => $constraints){
                     foreach ($constraints as $constraint){
-                        $userOption = intval($this->getTsConfig($option));
-                        $test = in_array($constraint[0], array_keys($this->getTableColumns($table)));
+                        $userOption = $this->getTsConfig($option) != null ? intval($this->getTsConfig($option)) : $constraint[2];
+                        $checkColumn = $this->checkIfColumnExists($table, $constraint[0]);
                         if($constraint[0] == 'totalRecords')
-                            $test = true;
-                        if($userOption && $test){
+                            $checkColumn = true;
+                        if($userOption && $checkColumn){
                             if($userOption == 1 || $userOption == 0 || ($userOption > 0 && $option == 'numberOfDays')){
                                 $this->columns[$option][2] = $userOption;
                                 $this->tablesConstraints[$table][$option] = $constraint;
@@ -118,22 +118,29 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     {
         $whereClaue = '';
         foreach ($this->constraints as $option => $constraints){
-            $userOption = intval($this->getTsConfig($option));
-            if($userOption && ($userOption == 0 || $userOption == 1)) {
-                foreach ($constraints as  $constraint){
-                    $test = in_array($constraint[0], array_keys($this->getTableColumns($tableName)));
-                    if($test && $userOption == 1){
-                        $whereClaue .= $constraint[1];
-                        //$this->constraints[$option] = $constraint;
-                    }
+            foreach ($constraints as  $constraint){
+                $userOption = $this->getTsConfig($option) != null ?  intval($this->getTsConfig($option)) : $constraint[2];
+                $checkColumn = $this->checkIfColumnExists($tableName, $constraint[0]);
+                if($checkColumn && $userOption == 1){
+                    $whereClaue .= $constraint[1];
+                    break;
                 }
             }
         }
-        if(in_array('deleted', array_keys($this->getTableColumns($tableName))))
+        if($this->checkIfColumnExists($tableName, 'delete'))
             $whereClaue .= ' AND deleted = 0';
         return $whereClaue;
     }
 
+    /**
+     * This function is used to check if column exists in table
+     * @param $table
+     * @param $column
+     * @return bool
+     */
+    public function checkIfColumnExists( $table,  $column) : bool{
+        return in_array($column, array_keys($this->getTableColumns($table)));
+    }
 
     /**
      * This function checks of the table exists

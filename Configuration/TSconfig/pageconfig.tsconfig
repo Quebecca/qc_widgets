@@ -24,9 +24,9 @@ mod{
             fromTable =  pages, tt_content
             totalRecords = 1
             totalNewLast24h = 1
-            excludeDisabledItems = 0
-            excludeHiddenItems = 0
             numberOfDays = 365
+            excludeDisabledItems = 1
+            excludeHiddenItems = 1
         }
     }
 }
