@@ -21,7 +21,7 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable =  pages, tt_content
+            fromTable =  pages, tt_content, be_users
             totalRecords = 1
             totalNewLast24h = 1
             numberOfDays = 365

@@ -127,7 +127,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
                 }
             }
         }
-        if($this->checkIfColumnExists($tableName, 'delete'))
+        if($this->checkIfColumnExists($tableName, 'deleted'))
             $whereClaue .= ' AND deleted = 0';
         return $whereClaue;
     }
