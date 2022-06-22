@@ -6,12 +6,12 @@
 		</header>
 		<body>
             <trans-unit id="numberOfRecordsByContentType" >
-                <source>Number of records per table</source>
+                <source>Number of records by table</source>
                 <target>Nombre d'enregistrements par table</target>
             </trans-unit>
             <trans-unit id="numberOfRecordsByContentTypeDesc" >
-                <source>Displays a table of number of records by content type</source>
-                <target>Affiche le nombre de ligne par type de contenu</target>
+                <source>Displays the number of records by table</source>
+                <target>Affiche le nombre d'enregistrements par table</target>
             </trans-unit>
             <trans-unit id="table" >
                 <source>Table</source>

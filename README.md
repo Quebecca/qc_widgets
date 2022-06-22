@@ -3,7 +3,7 @@ Qc Widgets
 *La [version française](#documentation-qc-widgets) de la documentation suit le texte anglais*
 
 ## About
-This extension provides a set of widgets for the TYPO3 Dasboard Backend module. Most widgets display lists of records related to the current logged in user.
+This extension provides a set of widgets for the TYPO3 Dashboard Backend module. Most widgets display lists of records related to the current logged in user.
 The amount of records to display (default 25) can be changed in User or Group TSconfig. The list of widgets is:
 
 - List of *my* group members
@@ -12,7 +12,7 @@ The amount of records to display (default 25) can be changed in User or Group TS
 - My last modified pages
 - My last modified content elements
 - List of my Workspace preview links
-- Number of records by content type
+- Number of records by table
 
 Screenshot of 4 of the widgets
 
@@ -46,7 +46,7 @@ Related to the logged in user. His recent work on tt_content.
 ### List of my Workspace preview links
 This widget displays a list (default 25) of Workspace preview links created by members who belong to the same groups as the current user. The columns are Workspace title, status (expired or active), creation date, expiration date and key (the key in links like `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`.
 
-### Number of records by content type
+### Number of records by table
 This widget shows for each table mentioned in the tsconfig, the number of records for X days (365 days by default), the number of records in the last 24 hours and the total number of records.
 
 ## User and Group TSconfig
@@ -83,6 +83,7 @@ mod{
                 totalRecordsForTheLast24h = 1
                 totalRecordsByNumberOfDays = 365
             }
+            // This filters will be applied on all tables that they are selected in the 'fromTable' option
             filter {
                 excludeDisabledItems = 1
                 excludeHiddenItems = 1
@@ -173,6 +174,7 @@ mod{
                 totalRecordsForTheLast24h = 1
                 totalRecordsByNumberOfDays = 365
             }
+            // Ces filtres seront appliqués sur toutes les tables qu'ils sont sélectionnés dans l'option 'fromTable'
             filter {
                 excludeDisabledItems = 1
                 excludeHiddenItems = 1
