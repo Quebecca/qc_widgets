@@ -12,6 +12,7 @@ The amount of records to display (default 25) can be changed in User or Group TS
 - My last modified pages
 - My last modified content elements
 - List of my Workspace preview links
+- Number of records by content type
 
 Screenshot of 4 of the widgets
 
@@ -45,6 +46,9 @@ Related to the logged in user. His recent work on tt_content.
 ### List of my Workspace preview links
 This widget displays a list (default 25) of Workspace preview links created by members who belong to the same groups as the current user. The columns are Workspace title, status (expired or active), creation date, expiration date and key (the key in links like `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`.
 
+### Number of records by content type
+This widget shows for each table mentioned in the tsconfig, the number of records for X days (365 days by default), the number of records in the last 24 hours and the total number of records.
+
 ## User and Group TSconfig
 
 ```php
@@ -71,6 +75,19 @@ mod{
         // When value is 0 (zero), the Widget will dig into sub-groups
             dontLookintoSubgroups = 1
         }
+        numberOfRecordsByType{
+            fromTable =  pages, tt_content, be_sessions, sys_redirect, be_users
+            // All the options accept only 0 or 1, except the totalRecordsByNumberOfDays option
+            columns {
+                totalRecords = 1
+                totalRecordsForTheLast24h = 1
+                totalRecordsByNumberOfDays = 365
+            }
+            filter {
+                excludeDisabledItems = 1
+                excludeHiddenItems = 1
+            }
+        }
     }
 }
 ```
@@ -91,6 +108,8 @@ Les «widgets» offerts sont:
 - Mes dernières pages modifiées 
 - Mes derniers contenus édités
 - Liste des liens de prévisiualisation d'espaces de travail (Workspace)
+- Nombre d'enregistrements par table
+
 
 Tous les «widgets» de pages affichent les mêmes informations: uid, titre, état, date de création, date de modification and segment d'URL (slug). Un clic sur le uid ou le titre ouvre le module Page sur l'enregistrement sélectionné.
 
@@ -115,6 +134,9 @@ Ce «widget» permet d’afficher la liste des derniers contenus (tt_content) é
 
 ### Liste des liens de prévisiualisation d'espaces de travail (Workspace)
 Ce «widget» permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve dans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
+
+### Nombre d'enregistrements par table
+Ce «widget» permet d’afficher pour chaque table mentionnée dans la configuration tsconfig le nombre d'enregistrements par X jours (par défaut 365 jours), le nombre d'enregistrements dans les dernières 24 heures et le nombre total d'enregistrements.
 
 
 ## TSconfig utilisateur ou groupe
@@ -142,6 +164,19 @@ mod{
         listOfmembers{
         // Si cette valeur est à 0 (zéro), le widget va rechercher les sous-groupes
             dontLookintoSubgroups = 1
+        }
+        numberOfRecordsByType{
+            fromTable =  pages, tt_content
+            // Toutes les options n'acceptent que 0 ou 1, sauf l'option totalRecordsByNumberOfDays
+            columns {
+                totalRecords = 1
+                totalRecordsForTheLast24h = 1
+                totalRecordsByNumberOfDays = 365
+            }
+            filter {
+                excludeDisabledItems = 1
+                excludeHiddenItems = 1
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
 <div class="widget-content-main">
     <div class="widget-table-wrapper">
 
-        <f:variable name="options" value="{0: 'numberOfDays', 1: 'totalNewLast24h', 2: 'totalRecords'}" />
+        <f:variable name="options" value="{0: 'totalRecordsByNumberOfDays', 1: 'totalRecordsForTheLast24h', 2: 'totalRecords'}" />
         <f:if condition="{data}">
             <f:then>
                 <table class="widget-table">
@@ -22,7 +22,7 @@
                                 <th scope="col">
                                     <f:translate
                                             key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:last"  />
-                                    {numberOfDays}
+                                    {totalRecordsByNumberOfDays}
                                     <f:translate
                                             key="LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:days"  />
                                 </th>
@@ -60,7 +60,7 @@
 </html>
 
 <f:section name="recordResult">
-    <f:if condition="{result}">
+    <f:if condition="{result} >= '0'">
         <f:then>{result}</f:then>
         <f:else>-</f:else>
     </f:if>

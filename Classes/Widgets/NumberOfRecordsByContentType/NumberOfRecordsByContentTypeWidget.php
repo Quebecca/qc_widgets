@@ -3,11 +3,12 @@ namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType;
 
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class NumberOfRecordsByContentTypeWidget implements WidgetInterface
+class NumberOfRecordsByContentTypeWidget implements WidgetInterface, AdditionalCssInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -42,10 +43,16 @@ class NumberOfRecordsByContentTypeWidget implements WidgetInterface
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data,
-            'numberOfDays' =>  $this->dataProvider->getNumberOfDays()
+            'totalRecordsByNumberOfDays' =>  $this->dataProvider->getTotalRecordsByNumberOfDays()
         ]);
         return $this->view->render();
     }
 
+    public function getCssFiles(): array
+    {
+        return [
+            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
+        ];
+    }
 
 }

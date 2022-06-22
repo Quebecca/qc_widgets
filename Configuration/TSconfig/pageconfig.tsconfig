@@ -21,12 +21,17 @@ mod{
             dontLookintoSubgroups = 1
         }
         numberOfRecordsByType{
-            fromTable =  pages, tt_content, be_users
-            totalRecords = 1
-            totalNewLast24h = 1
-            numberOfDays = 365
-            excludeDisabledItems = 1
-            excludeHiddenItems = 1
+            fromTable =  pages, tt_content
+            // All the options accept only 0 or 1, except the totalRecordsByNumberOfDays option
+            columns {
+                totalRecords = 1
+                totalRecordsForTheLast24h = 1
+                totalRecordsByNumberOfDays = 365
+            }
+            filter {
+                excludeDisabledItems = 1
+                excludeHiddenItems = 1
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     /**
      * @var int
      */
-    protected int $numberOfDays = 0;
+    protected int $totalRecordsByNumberOfDays = 0;
     /**
      * @var array
      */
@@ -34,19 +34,21 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
         $last24h = strtotime(date('Y-m-d')) - 24*60*60;
-        $this->numberOfDays = $this->getTsConfig('numberOfDays') ? intval($this->getTsConfig('numberOfDays')) : self::NUMBER_OF_DAYS;
-        $numberOfDaysSec = strtotime(date('Y-m-d'))  - 24*60*60*$this->numberOfDays;
+        $this->totalRecordsByNumberOfDays = $this->getTsConfig('columns','totalRecordsByNumberOfDays')
+            ? intval($this->getTsConfig('columns','totalRecordsByNumberOfDays'))
+            : self::NUMBER_OF_DAYS;
+        $numberOfDaysSec = strtotime(date('Y-m-d'))  - 24*60*60*$this->totalRecordsByNumberOfDays;
 
         // the last element on each array is used to define if the constraint is enabled (1) or disabled (0)
         $this->columns = [
             'totalRecords' => [
                 0 => ['totalRecords','true', 1]
             ],
-            'totalNewLast24h' => [
+            'totalRecordsForTheLast24h' => [
                 0 => ['crdate', " crdate > $last24h", 1],
                 1 => ['createdon', " createdon > $last24h", 1],
             ],
-            'numberOfDays' => [
+            'totalRecordsByNumberOfDays' => [
                 0 => ['crdate'," crdate >  $numberOfDaysSec",$numberOfDaysSec],
                 1 => ['createdon'," createdon >  $numberOfDaysSec",$numberOfDaysSec],
             ]
@@ -69,12 +71,12 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      */
     public function getItems(): array
     {
-        $tables = GeneralUtility::trimExplode(',',$this->getTsConfig('fromTable'), true);
+        $tables = GeneralUtility::trimExplode(',',$this->getTsConfig('','fromTable'), true);
         $this->getEnabledColumns($tables);
         $data = [];
         foreach ($this->tablesConstraints as $table => $columnsOptions){
             foreach ($columnsOptions as $option => $constraint){
-                if($constraint[2] == 1 || ($option == 'numberOfDays' && $constraint[2] >= 1)){
+                if($constraint[2] == 1 || ($option == 'totalRecordsByNumberOfDays' && $constraint[2] >= 1)){
                     $whereClause = $constraint[1];
                     $whereClause .= $this->getAdditionalWhereClause($table);
                     $data[$table][$option] = $this->renderData($table, $whereClause);
@@ -93,12 +95,12 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             if($this->checkIfTableExits($table)){
                 foreach ($this->columns as $option => $constraints){
                     foreach ($constraints as $constraint){
-                        $userOption = $this->getTsConfig($option) != null ? intval($this->getTsConfig($option)) : $constraint[2];
+                        $userOption = $this->getTsConfig('columns',$option) != null ? intval($this->getTsConfig('columns',$option)) : $constraint[2];
                         $checkColumn = $this->checkIfColumnExists($table, $constraint[0]);
                         if($constraint[0] == 'totalRecords')
                             $checkColumn = true;
                         if($userOption && $checkColumn){
-                            if($userOption == 1 || $userOption == 0 || ($userOption > 0 && $option == 'numberOfDays')){
+                            if($userOption == 1 || $userOption == 0 || ($userOption > 0 && $option == 'totalRecordsByNumberOfDays')){
                                 $this->columns[$option][2] = $userOption;
                                 $this->tablesConstraints[$table][$option] = $constraint;
                             }
@@ -119,7 +121,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
         $whereClaue = '';
         foreach ($this->constraints as $option => $constraints){
             foreach ($constraints as  $constraint){
-                $userOption = $this->getTsConfig($option) != null ?  intval($this->getTsConfig($option)) : $constraint[2];
+                $userOption = $this->getTsConfig('filter', $option) != null ?  intval($this->getTsConfig('filter',$option)) : $constraint[2];
                 $checkColumn = $this->checkIfColumnExists($tableName, $constraint[0]);
                 if($checkColumn && $userOption == 1){
                     $whereClaue .= $constraint[1];
@@ -169,11 +171,15 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is used to get tsconfig option
+     * @param string $optionType
      * @param string $tsConfigName
      * @return mixed
      */
-    public function getTsConfig(string $tsConfigName){
-        return  $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.']['numberOfRecordsByType.'][$tsConfigName];
+    public function getTsConfig(string $optionType, string $tsConfigName){
+        $tsconfig = $this->getBackendUser()->getTSConfig()['mod.']['qcWidgets.']['numberOfRecordsByType.'];
+        return $optionType != '' ?
+            $tsconfig[$optionType.'.'][$tsConfigName]
+           : $tsconfig[$tsConfigName];
     }
 
     /**
@@ -202,8 +208,8 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     /**
      * @return int
      */
-    public function getNumberOfDays(): int
+    public function getTotalRecordsByNumberOfDays(): int
     {
-        return $this->numberOfDays;
+        return $this->totalRecordsByNumberOfDays;
     }
 }
