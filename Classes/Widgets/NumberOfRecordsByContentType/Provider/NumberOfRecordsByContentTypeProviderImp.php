@@ -2,6 +2,7 @@
 namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType\Provider;
 
 use Doctrine\DBAL\Driver\Exception;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,12 +34,11 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     {
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
-        $last24h = strtotime(date('Y-m-d')) - 24*60*60;
+        $last24h =strtotime(date('Y-m-d', strtotime('-1 day')));
         $this->totalRecordsByNumberOfDays = $this->getTsConfig('columns','totalRecordsByNumberOfDays')
             ? intval($this->getTsConfig('columns','totalRecordsByNumberOfDays'))
             : self::NUMBER_OF_DAYS;
-        $numberOfDaysSec = strtotime(date('Y-m-d'))  - 24*60*60*$this->totalRecordsByNumberOfDays;
-
+        $numberOfDaysSec = strtotime("-$this->totalRecordsByNumberOfDays day");
         // the last element on each array is used to define if the constraint is enabled (1) or disabled (0)
         $this->columns = [
             'totalRecords' => [
@@ -136,12 +136,14 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is used to check if column exists in table
-     * @param $table
+     * @param $tableName
      * @param $column
      * @return bool
      */
-    public function checkIfColumnExists( $table,  $column) : bool{
-        return in_array($column, array_keys($this->getTableColumns($table)));
+    public function checkIfColumnExists( $tableName,  $column) : bool{
+        return in_array($column, array_keys(
+            $this->getSchemaManager($tableName)->listTableColumns($tableName)
+        ));
     }
 
     /**
@@ -150,23 +152,19 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      * @return bool
      */
     public function checkIfTableExits($tableName) : bool{
-        return GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable($tableName)
-            ->getSchemaManager()
-            ->tablesExist([$tableName]);
+        return $this->getSchemaManager($tableName)->tablesExist([$tableName]);
     }
 
     /**
-     * This function is used to check if the column is existe in the selected table
-     * @param $tableName
-     * @return array
+     * This function is uesd to return the SchemaManager
+     * @param string $tableName
+     * @return AbstractSchemaManager|null
      */
-    public function getTableColumns($tableName): array
+    public function getSchemaManager(string $tableName): ?AbstractSchemaManager
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
-            ->getSchemaManager()
-            ->listTableColumns($tableName);
+            ->getSchemaManager();
     }
 
     /**

@@ -13,13 +13,13 @@
 namespace Qc\QcWidgets\Widgets\WorkspacePreviews;
 
 
+use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
+class WorkspacePreviewsWidget extends AdditionalCssImp implements WidgetInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -56,12 +56,5 @@ class WorkspacePreviewsWidget implements WidgetInterface, AdditionalCssInterface
             'data' => $data
         ]);
         return $this->view->render();
-    }
-
-    public function getCssFiles(): array
-    {
-        return [
-            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
-        ];
     }
 }

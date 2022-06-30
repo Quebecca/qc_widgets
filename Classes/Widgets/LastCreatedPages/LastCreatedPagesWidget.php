@@ -14,13 +14,13 @@
 
 namespace Qc\QcWidgets\Widgets\LastCreatedPages;
 
+use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class LastCreatedPagesWidget implements WidgetInterface, AdditionalCssInterface
+class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -57,15 +57,5 @@ class LastCreatedPagesWidget implements WidgetInterface, AdditionalCssInterface
             'data' => $data
         ]);
         return $this->view->render();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getCssFiles(): array
-    {
-        return [
-            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
-        ];
     }
 }
