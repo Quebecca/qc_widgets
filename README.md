@@ -83,7 +83,7 @@ mod{
                 totalRecordsForTheLast24h = 1
                 totalRecordsByNumberOfDays = 365
             }
-            // This filters will be applied on all tables that they are selected in the 'fromTable' option
+            // This filters will be applied on all tables selected in the 'fromTable' option
             filter {
                 excludeDisabledItems = 1
                 excludeHiddenItems = 1
@@ -174,7 +174,7 @@ mod{
                 totalRecordsForTheLast24h = 1
                 totalRecordsByNumberOfDays = 365
             }
-            // Ces filtres seront appliqués sur toutes les tables qu'ils sont sélectionnés dans l'option 'fromTable'
+            // Ces filtres seront appliqués sur toutes les tables sélectionnés dans l'option 'fromTable'
             filter {
                 excludeDisabledItems = 1
                 excludeHiddenItems = 1
