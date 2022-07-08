@@ -23,9 +23,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
     ],
     'state' => 'stable',
-    'uploadfolder' => 0,
-    'createDirs' => '',
-    'clearCacheOnLoad' => 1,
+    'clearCacheOnLoad' => true,
     'author' => 'quebec.ca',
-    'version' => '1.0.1',
+    'version' => '1.0.2',
 ];

@@ -20,6 +20,20 @@ mod{
         listOfmembers{
             dontLookintoSubgroups = 1
         }
+        numberOfRecordsByType{
+            fromTable =  pages, tt_content
+            // All the options accept only 0 or 1, except the totalRecordsByNumberOfDays option
+            columns {
+                totalRecords = 1
+                totalRecordsForTheLast24h = 1
+                totalRecordsByNumberOfDays = 365
+            }
+            // This filters will be applied to all tables selected in the 'fromTable' option
+            filter {
+                excludeDisabledItems = 1
+                excludeHiddenItems = 1
+            }
+        }
     }
 }
 

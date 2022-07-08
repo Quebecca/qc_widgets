@@ -13,13 +13,13 @@
 namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent;
 
 
+use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class RecentlyModifiedContentWidget implements WidgetInterface, AdditionalCssInterface
+class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -56,12 +56,5 @@ class RecentlyModifiedContentWidget implements WidgetInterface, AdditionalCssInt
             'data' => $data
         ]);
         return $this->view->render();
-    }
-
-    public function getCssFiles(): array
-    {
-        return [
-            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
-        ];
     }
 }

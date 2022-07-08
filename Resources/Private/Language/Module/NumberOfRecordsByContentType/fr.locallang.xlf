@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2021-09-16UTC15:45:380">
+		<header>
+			<authorName>Quebec.ca</authorName>
+		</header>
+		<body>
+            <trans-unit id="numberOfRecordsByContentType" >
+                <source>Number of records by table</source>
+                <target>Nombre d'enregistrements par table</target>
+            </trans-unit>
+            <trans-unit id="numberOfRecordsByContentTypeDesc" >
+                <source>Displays the number of records by table</source>
+                <target>Affiche le nombre d'enregistrements par table</target>
+            </trans-unit>
+            <trans-unit id="table" >
+                <source>Table</source>
+                <target>Table</target>
+            </trans-unit>
+            <trans-unit id="last" >
+                <source>Last </source>
+                <target>Derniers </target>
+            </trans-unit>
+            <trans-unit id="lastF" >
+                <source>Last </source>
+                <target>Dernières </target>
+            </trans-unit>
+            <trans-unit id="days" >
+                <source>days </source>
+                <target>jours </target>
+            </trans-unit>
+            <trans-unit id="totalNumberOfRecords" >
+                <source>Total</source>
+                <target>Total</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -5,3 +5,4 @@ imports:
   - { resource: Backend/Widgets/WorkspacePreviewsWidget.yaml }
   - { resource: Backend/Widgets/PagesWithoutModificationWidget.yaml }
   - { resource: Backend/Widgets/RecentlyModifiedContentWidget.yaml }
+  - { resource: Backend/Widgets/NumberOfRecordsByContentWidget.yaml }

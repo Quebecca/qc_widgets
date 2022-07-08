@@ -13,13 +13,13 @@
 
 namespace Qc\QcWidgets\Widgets\PagesWithoutModification;
 
+use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
-use TYPO3\CMS\Dashboard\Widgets\AdditionalCssInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class PagesWithoutModificationWidget implements WidgetInterface, AdditionalCssInterface
+class PagesWithoutModificationWidget extends AdditionalCssImp implements WidgetInterface
 {
     /** @var WidgetConfigurationInterface */
     private $configuration;
@@ -58,13 +58,5 @@ class PagesWithoutModificationWidget implements WidgetInterface, AdditionalCssIn
             'data' => $data
         ]);
         return $this->view->render();
-    }
-
-
-    public function getCssFiles(): array
-    {
-        return [
-            'EXT:qc_widgets/Resources/Public/Css/widgetstyle.css',
-        ];
     }
 }
