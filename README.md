@@ -47,7 +47,7 @@ Related to the logged in user. His recent work on tt_content.
 This widget displays a list (default 25) of Workspace preview links created by members who belong to the same groups as the current user. The columns are Workspace title, status (expired or active), creation date, expiration date and key (the key in links like `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`.
 
 ### Number of records by table
-This widget shows for each table mentioned in the tsconfig, the number of records for X days (365 days by default), the number of records in the last 24 hours and the total number of records.
+This widget shows for each table set in the tsconfig, the number of records added since X days (365 days by default), the number of records added in the last 24 hours and the total number of records.
 
 ## User and Group TSconfig
 
@@ -137,7 +137,7 @@ Ce «widget» permet d’afficher la liste des derniers contenus (tt_content) é
 Ce «widget» permet d'afficher la liste des 25 derniers liens d’aperçu générés par les utilisateurs d'un ou plusieurs groupes. L'utilisateur connecté verra ses liens et ceux de ses collaborateurs appartenant à l'un ou l'autre des groupes auxquels il est associé. Les colonnes sont : Titre de l'Espace de travail, état (expiré ou actif), date de création, date d'expiration et la clé qu'on retrouve dans l'URL (ex:  `?ADMCMD_prev=8a636e5d5545c1bb1dec5a5f77a96ca4`).
 
 ### Nombre d'enregistrements par table
-Ce «widget» permet d’afficher pour chaque table mentionnée dans la configuration tsconfig le nombre d'enregistrements par X jours (par défaut 365 jours), le nombre d'enregistrements dans les dernières 24 heures et le nombre total d'enregistrements.
+Ce «widget» permet d’afficher pour chaque table configurée dans le TSconfig, le nombre d'enregistrements ajoutés par X jours (par défaut 365 jours), le nombre d'enregistrements ajoutés dans les dernières 24 heures et le nombre total d'enregistrements.
 
 
 ## TSconfig utilisateur ou groupe

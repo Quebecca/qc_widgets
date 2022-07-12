@@ -2,6 +2,7 @@
 
 ## Change log  v1.1.0
 
-2022-07-08 [FEATURE] New widget was added to show the number of records by table.
+2022-07-08 [FEATURE] New widget was added to show the number of records per table.
 
 2022-07-08 [BUGFIX] Fixes for icons used for widgets.
+
