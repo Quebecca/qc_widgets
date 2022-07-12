@@ -25,5 +25,5 @@ $EM_CONF[$_EXTKEY] = [
     'state' => 'stable',
     'clearCacheOnLoad' => true,
     'author' => 'quebec.ca',
-    'version' => '1.0.2',
+    'version' => '1.1.0',
 ];
