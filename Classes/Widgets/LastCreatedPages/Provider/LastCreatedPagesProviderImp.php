@@ -16,6 +16,7 @@ use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LastCreatedPagesProviderImp extends ListOfPagesProvider
 {
@@ -48,7 +49,7 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
     {
         $membersUid = [];
         // get groups
-        $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
+        $groupsUid = GeneralUtility::trimExplode(',', $GLOBALS['BE_USER']->user['usergroup'], true);
         // get uid of members
         foreach ($groupsUid as $groupUid){
             // Returns an array with UID records of all user NOT DELETED sorted by their username

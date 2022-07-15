@@ -145,8 +145,10 @@ class ListOfMembersProviderImp extends Provider
         $users = [];
         foreach ($data as $item){
             // returns the number of all members - prevent to calculate the same member record multiple time
-            if(!in_array($data['uid'], $usersUid)){
-                $this->numberOfUsers++;
+            if(isset($data['uid'])){
+                if(!in_array($data['uid'], $usersUid)){
+                    $this->numberOfUsers++;
+                }
             }
             // create Member Object
             $users[] = $this->memberMap($item);

@@ -91,7 +91,7 @@ class RecentlyModifiedContentProviderImp extends Provider
                 'uid' => $item['uid'],
                 'cType' => $item['cType'],
                 'pid' => $item['pid'],
-                'pageTitle' => $this->pagesRepository->getPage($item['pid'])['title'],
+                'pageTitle' => $this->pagesRepository->getPage($item['pid'])['title'] ?? '',
                 'header' => $item['header'],
                 'bodytext' => $item['bodytext'],
                 'tstamp' =>  date("Y-m-d H:i:s", $item['tstamp']),
