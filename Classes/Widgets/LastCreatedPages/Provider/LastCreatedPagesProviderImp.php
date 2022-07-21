@@ -49,7 +49,7 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
     {
         $membersUid = [];
         // get groups
-        $groupsUid = GeneralUtility::trimExplode(',', $GLOBALS['BE_USER']->user['usergroup'], true);
+        $groupsUid = GeneralUtility::trimExplode(',', $GLOBALS['BE_USER']->user['usergroup']);
         // get uid of members
         foreach ($groupsUid as $groupUid){
             // Returns an array with UID records of all user NOT DELETED sorted by their username
