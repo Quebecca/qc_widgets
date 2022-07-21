@@ -106,14 +106,16 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             if($this->checkIfTableExits($table)){
                 foreach ($this->columns as $option => $constraints){
                     foreach ($constraints as $constraint){
-                        $userOption = $this->getTsConfig('columns',$option) != null ? intval($this->getTsConfig('columns',$option)) : $constraint[2];
-                        $checkColumn = $this->checkIfColumnExists($table, $constraint[0]);
-                        if($constraint[0] == 'totalRecords')
-                            $checkColumn = true;
-                        if($userOption && $checkColumn){
-                            if($userOption == 1 || $userOption == 0 || ($userOption > 0 && $option == 'totalRecordsByNumberOfDays')){
-                                $this->columns[$option][2] = $userOption;
-                                $this->tablesConstraints[$table][$option] = $constraint;
+                        if(is_array($constraint)){
+                            $userOption = $this->getTsConfig('columns',$option) != null ? intval($this->getTsConfig('columns',$option)) : $constraint[2];
+                            $checkColumn = $this->checkIfColumnExists($table, $constraint[0]);
+                            if($constraint[0] == 'totalRecords')
+                                $checkColumn = true;
+                            if($userOption && $checkColumn){
+                                if($userOption == 1 || $userOption == 0 || ($userOption > 0 && $option == 'totalRecordsByNumberOfDays')){
+                                    $this->columns[$option][2] = $userOption;
+                                    $this->tablesConstraints[$table][$option] = $constraint;
+                                }
                             }
                         }
                     }
