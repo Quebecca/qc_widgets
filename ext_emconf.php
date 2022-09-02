@@ -4,8 +4,9 @@
  * Extension Manager/Repository config file for ext "qc_widgets".
  */
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Qc widgets',
+    'title' => 'Qc Widgets',
     'description' => 'Many widgets with info about pages and tt_content modifications, related to groups or current user and also a list of Workspace preview links.',
+    'author' => 'Quebec.ca',
     'category' => 'module',
     'constraints' => [
         'depends' => [
@@ -24,6 +25,5 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'author' => 'quebec.ca',
     'version' => '1.1.0',
 ];
