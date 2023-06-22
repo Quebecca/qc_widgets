@@ -4,10 +4,10 @@
     "license": ["GPL-2.0-or-later"],
     "keywords": ["TYPO3 CMS"],
     "require": {
-        "typo3/cms-core": "^10.4 || ^11.5.0",
-        "typo3/cms-rte-ckeditor": "^10.4 || ^11.5.0",
-        "typo3/cms-fluid-styled-content": "^10.4 || ^11.5.0",
-        "typo3/cms-workspaces" : "^10.4 || ^11.5.0"
+        "typo3/cms-core": "^10.4 || ^12.4.0",
+        "typo3/cms-rte-ckeditor": "^10.4 || ^12.4.0",
+        "typo3/cms-fluid-styled-content": "^10.4 || ^12.4.0",
+        "typo3/cms-workspaces" : "^10.4 || ^12.4.0"
     },
     "autoload": {
         "psr-4": {
