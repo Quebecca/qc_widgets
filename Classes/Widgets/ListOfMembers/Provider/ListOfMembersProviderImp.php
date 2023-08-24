@@ -27,7 +27,7 @@ class ListOfMembersProviderImp extends Provider
     /**
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:';
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:';
 
     /**
      * @var BackendUserRepository
@@ -86,7 +86,7 @@ class ListOfMembersProviderImp extends Provider
         else{
             $queryBuilder =  $this->generateQueryBuilder('be_users');
             // if the current user is not an admin, we return the users in the same groups as the current user
-            $groupsUid = explode(',', $GLOBALS['BE_USER']->user['usergroup']);
+            $groupsUid = explode(',', (string) $GLOBALS['BE_USER']->user['usergroup']);
             $dontLookintoSubgroups = intval($this->userTS['qcWidgets.']['listOfmembers.']['dontLookintoSubgroups']);
             if($dontLookintoSubgroups == 0) {
                 $subgroups = [] ;
@@ -132,7 +132,7 @@ class ListOfMembersProviderImp extends Provider
             )
             ->execute()
             ->fetchOne();
-        return explode(',', $result);
+        return explode(',', (string) $result);
     }
 
     /**
@@ -157,7 +157,6 @@ class ListOfMembersProviderImp extends Provider
     }
 
     /**
-     * @param array $data
      * @return Member
      */
     public function memberMap(array $data) : Member{

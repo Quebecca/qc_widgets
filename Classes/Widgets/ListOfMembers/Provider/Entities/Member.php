@@ -63,9 +63,6 @@ class Member
         return $this->lastLogin;
     }
 
-    /**
-     * @param string $lastLogin
-     */
     public function setLastLogin(string $lastLogin): void
     {
         $this->lastLogin = $lastLogin;
@@ -80,9 +77,6 @@ class Member
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
     public function setUsername(string $username): void
     {
         $this->username = $username;
@@ -96,9 +90,6 @@ class Member
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
     public function setEmail(string $email): void
     {
        $this->email = $email;
@@ -112,9 +103,6 @@ class Member
         return $this->realName;
     }
 
-    /**
-     * @param string $realName
-     */
     public function setRealName(string $realName): void
     {
         $this->realName = $realName;

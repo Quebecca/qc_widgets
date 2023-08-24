@@ -39,9 +39,6 @@ class ListOfMemebers
         return $this->numberOfMembers;
     }
 
-    /**
-     * @param int $numberOfMembers
-     */
     public function setNumberOfMembers(int $numberOfMembers): void
     {
         $this->numberOfMembers = $numberOfMembers;
@@ -55,9 +52,6 @@ class ListOfMemebers
         return $this->isAdmin;
     }
 
-    /**
-     * @param bool $isAdmin
-     */
     public function setIsAdmin(bool $isAdmin): void
     {
         $this->isAdmin = $isAdmin;
@@ -71,9 +65,6 @@ class ListOfMemebers
         return $this->members;
     }
 
-    /**
-     * @param array $members
-     */
     public function setMembers(array $members): void
     {
         $this->members = $members;

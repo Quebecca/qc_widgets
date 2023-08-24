@@ -25,27 +25,7 @@ abstract class Provider
      * Overriding the LONG_FILE attribute
      * @var string
      */
-    const QC_LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
-    
-    /**
-     * @var string
-     */
-    protected string $table = '';
-
-    /**
-     * @var string
-     */
-    protected string $orderField = '';
-
-    /**
-     * @var string
-     */
-    protected string $orderType = '';
-
-    /**
-     * @var int
-     */
-    protected int $limit = 0;
+    public const QC_LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/locallang.xlf:';
 
     /**
      * @var LocalizationUtility
@@ -63,17 +43,13 @@ abstract class Provider
     protected $userTS;
 
     public function __construct(
-        string $table,
-        string $orderField,
-        int $limit,
-        string $orderType,
+        protected string $table,
+        protected string $orderField,
+        protected int $limit,
+        protected string $orderType,
         LocalizationUtility $localizationUtility = null
     ){
         $this->localizationUtility = $localizationUtility ?? GeneralUtility::makeInstance(LocalizationUtility::class);
-        $this->table = $table;
-        $this->orderField = $orderField;
-        $this->orderType = $orderType;
-        $this->limit = $limit;
         $this->initializeTsConfig();
     }
 
@@ -86,7 +62,6 @@ abstract class Provider
     }
 
     /**
-     * @param string $table
      * @return QueryBuilder
      */
     protected function generateQueryBuilder(string $table): QueryBuilder
@@ -113,9 +88,6 @@ abstract class Provider
         return $this->widgetTitle;
     }
 
-    /**
-     * @param string $widgetTitle
-     */
     public function setWidgetTitle(string $widgetTitle){
         $this->widgetTitle = $widgetTitle;
     }

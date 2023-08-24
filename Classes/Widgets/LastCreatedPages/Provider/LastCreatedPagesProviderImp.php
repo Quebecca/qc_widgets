@@ -23,7 +23,7 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
     /**
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:';
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastCreatedPages/locallang.xlf:';
 
     public function __construct(
         string $table,

@@ -22,7 +22,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
     /**
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:';
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/PagesWithoutModification/locallang.xlf:';
 
     /**
      * @var int

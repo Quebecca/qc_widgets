@@ -25,7 +25,7 @@ class RecentlyModifiedContentProviderImp extends Provider
      * Overriding the LONG_FILE attribute
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:';
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:';
 
 
     /**
@@ -70,18 +70,17 @@ class RecentlyModifiedContentProviderImp extends Provider
 
     /**
      * This function is used to map the rendering data from the database, and add controls on these values
-     * @param array $data
      * @return array
      */
     public function dataMap(array $data){
         $result = [];
         foreach ($data as $item){
             if($item['header'] === ''){
-                if(strlen($item['bodytext']) < 50 ){
-                    $item['bodytext'] = substr($item['bodytext'],0, 50);
+                if(strlen((string) $item['bodytext']) < 50 ){
+                    $item['bodytext'] = substr((string) $item['bodytext'],0, 50);
                 }
                 else{
-                    $item['bodytext'] = substr($item['bodytext'],0, 50) . '...';
+                    $item['bodytext'] = substr((string) $item['bodytext'],0, 50) . '...';
                 }
             }
             $status = $this->getItemStatus($item['starttime'], $item['endtime']);

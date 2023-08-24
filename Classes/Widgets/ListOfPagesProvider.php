@@ -19,8 +19,6 @@ abstract class ListOfPagesProvider extends Provider
 {
     /**
      * this function returns the query for pages records
-     * @param QueryBuilder $queryBuilder
-     * @param array $constraints
      * @return array
      * @throws Exception
      */
@@ -42,7 +40,6 @@ abstract class ListOfPagesProvider extends Provider
 
     /**
      * This function returns the formatted items
-     * @param array $result
      * @return array
      */
     public function dataMap(array $result): array {

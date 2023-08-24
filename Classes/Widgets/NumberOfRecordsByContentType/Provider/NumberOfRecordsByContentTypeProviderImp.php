@@ -21,8 +21,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class NumberOfRecordsByContentTypeProviderImp extends Provider
 {
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:';
-    const NUMBER_OF_DAYS = 365;
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:';
+    final public const NUMBER_OF_DAYS = 365;
     /**
      * @var array|\array[][]
      */
@@ -99,7 +99,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function will be used to return the available column for the selected table
-     * @param array $tables
      */
     public function getEnabledColumns(array $tables){
         foreach ($tables as $table){
@@ -126,7 +125,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function return the additional where clause for each table passed in parameter
-     * @param string $tableName
      * @return string
      */
     public function getAdditionalWhereClause(string $tableName): string
@@ -170,7 +168,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is uesd to return the SchemaManager
-     * @param string $tableName
      * @return AbstractSchemaManager|null
      */
     public function getSchemaManager(string $tableName): ?AbstractSchemaManager
@@ -182,8 +179,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is used to get tsconfig option
-     * @param string $optionType
-     * @param string $tsConfigName
      * @return mixed
      */
     public function getTsConfig(string $optionType, string $tsConfigName){
@@ -195,8 +190,6 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is used to render data based on the passed constraint
-     * @param string $tableName
-     * @param string $constraint
      * @return mixed
      * @throws Exception
      */

@@ -21,24 +21,17 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
     /**
      * @var Provider
      */
     protected $dataProvider;
 
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
+        private readonly WidgetConfigurationInterface $configuration,
+        private readonly StandaloneView $view,
         Provider $dataProvider
     )
     {
-        $this->configuration = $configuration;
-        $this->view = $view;
         $this->dataProvider = $dataProvider;
     }
 

@@ -24,7 +24,7 @@ class WorkspacePreviewProviderImp extends Provider
     /**
      * @var string
      */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:';
+    final public const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:';
 
     /**
      * @var WorkspaceService
@@ -68,7 +68,6 @@ class WorkspacePreviewProviderImp extends Provider
 
     /**
      * This function is used to return the data from the database
-     * @param array $workspaces
      * @return array
      * @throws Exception
      */
