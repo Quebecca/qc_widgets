@@ -57,4 +57,9 @@ class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetIn
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
 }

@@ -59,4 +59,9 @@ class LastModifiedPagesWidget extends AdditionalCssImp implements WidgetInterfac
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
 }

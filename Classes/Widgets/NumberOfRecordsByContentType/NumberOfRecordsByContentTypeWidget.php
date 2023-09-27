@@ -57,4 +57,9 @@ class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements Wid
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
 }

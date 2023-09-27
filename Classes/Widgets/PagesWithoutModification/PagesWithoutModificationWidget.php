@@ -59,4 +59,9 @@ class PagesWithoutModificationWidget extends AdditionalCssImp implements WidgetI
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
 }

@@ -58,4 +58,9 @@ class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        // TODO: Implement getOptions() method.
+    }
 }

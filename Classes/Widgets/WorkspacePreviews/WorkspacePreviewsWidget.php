@@ -28,19 +28,12 @@ class WorkspacePreviewsWidget extends AdditionalCssImp implements WidgetInterfac
      */
     protected $dataProvider;
 
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
         Provider $dataProvider
     )
-    {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
-    }
+    {}
 
     /**
      * Render widget view
@@ -56,5 +49,10 @@ class WorkspacePreviewsWidget extends AdditionalCssImp implements WidgetInterfac
             'data' => $data
         ]);
         return $this->view->render();
+    }
+
+    public function getOptions(): array
+    {
+        return [];
     }
 }

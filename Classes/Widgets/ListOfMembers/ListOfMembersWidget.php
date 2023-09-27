@@ -57,4 +57,9 @@ class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface
         ]);
         return $this->view->render();
     }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
 }
