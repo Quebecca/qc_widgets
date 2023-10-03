@@ -117,11 +117,7 @@ class RecentlyModifiedContentProviderImp extends Provider
             ->select('uid', 'cType', 'pid', 'starttime', 'endtime', 'header', 'bodytext',  'tstamp')
             ->from('tt_content')
             ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(8)
-            ->where(
-                $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
-            )
-            ->execute()
+            ->setMaxResults(8)->where($queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)))->executeQuery()
             ->fetchAllAssociative();
     }
 

@@ -102,11 +102,7 @@ class ListOfMembersProviderImp extends Provider
                     'groupName' => $groupName !== null ? $groupName->getTitle() : '',
                    // 'users' => $this->renderUsersData("AND FIND_IN_SET('$groupUid', usergroup)  AND disable = 0")
                     'users' => $this->renderUsersData( 'AND '.
-                        $queryBuilder->expr()
-                            ->andX(
-                                $queryBuilder->expr()->inSet( 'usergroup',$groupUid),
-                                $queryBuilder->expr()->eq('disable',0)
-                            )
+                        $queryBuilder->expr()->and($queryBuilder->expr()->inSet( 'usergroup',$groupUid), $queryBuilder->expr()->eq('disable',0))
                     )
                 ];
             }
@@ -126,11 +122,7 @@ class ListOfMembersProviderImp extends Provider
         $queryBuilder =  $this->generateQueryBuilder('be_groups');
         $result =   $queryBuilder
             ->select('subgroup')
-            ->from('be_groups')
-            ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid, \PDO::PARAM_INT)),
-            )
-            ->execute()
+            ->from('be_groups')->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid, \PDO::PARAM_INT)))->executeQuery()
             ->fetchOne();
         return explode(',', $result);
     }

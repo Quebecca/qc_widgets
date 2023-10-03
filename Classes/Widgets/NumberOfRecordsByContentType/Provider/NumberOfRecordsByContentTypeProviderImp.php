@@ -208,11 +208,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
             ->removeAll();
         return  $queryBuilder
             ->count('*')
-            ->from($tableName)
-            ->where(
-                $constraint
-            )
-            ->execute()
+            ->from($tableName)->where($constraint)->executeQuery()
             ->fetchOne();
     }
 

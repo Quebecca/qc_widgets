@@ -86,9 +86,7 @@ class WorkspacePreviewProviderImp extends Provider
                         $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($keyData) . '}')
                     )
                 )
-                ->orderBy($this->orderField, $this->orderType)
-                ->setMaxResults($this->limit)
-                ->execute()
+                ->orderBy($this->orderField, $this->orderType)->setMaxResults($this->limit)->executeQuery()
                 ->fetchAllAssociative();
             // formatting date for the sys_preview records
             foreach ($result as $item){

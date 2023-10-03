@@ -64,16 +64,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         // if the tstamp is equal '0', we render the tt_contents created before the specified date
         $constraints  = [
             $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-            $queryBuilder->expr()->orX(
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->gt('tstamp',0),
-                ),
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('tstamp',0),
-                ),
-            ),
+            $queryBuilder->expr()->or($queryBuilder->expr()->and($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)), $queryBuilder->expr()->gt('tstamp',0)), $queryBuilder->expr()->and($queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)), $queryBuilder->expr()->eq('tstamp',0))),
 
         ];
         $result = $this->renderData($queryBuilder,$constraints);
