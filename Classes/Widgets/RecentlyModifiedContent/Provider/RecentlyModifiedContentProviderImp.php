@@ -15,6 +15,7 @@ namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent\Provider;
 
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
@@ -109,7 +110,7 @@ class RecentlyModifiedContentProviderImp extends Provider
      * @throws Exception
      */
     public function renderData() : array {
-        $queryBuilder = $this->generateQueryBuilder($this->table);
+/*        $queryBuilder = $this->generateQueryBuilder($this->table);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
@@ -117,8 +118,40 @@ class RecentlyModifiedContentProviderImp extends Provider
             ->select('uid', 'cType', 'pid', 'starttime', 'endtime', 'header', 'bodytext',  'tstamp')
             ->from('tt_content')
             ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(8)->where($queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)))->executeQuery()
+            ->setMaxResults(8)
+            ->where(
+                $queryBuilder->expr()
+                    ->eq('perms_userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
+            )->executeQuery()
+
+            ->fetchAllAssociative();*/
+
+        $qb = $this->generateQueryBuilder("sys_history");
+        $tt_content_uids = $qb
+            ->select('recuid')
+            ->from('sys_history')
+            ->orderBy('tstamp', 'DESC')
+            ->setMaxResults(8)
+            ->where(
+                $qb->expr()
+                    ->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
+            )
+            ->andWhere(
+                $qb->expr()
+                    ->eq('tablename', $qb->createNamedParameter("tt_content"))
+            )
+            ->executeQuery()
+
             ->fetchAllAssociative();
+
+        $elements = [];
+        foreach ($tt_content_uids as $content_uid){
+            $element = BackendUtility::getRecord("tt_content", $content_uid['recuid'],
+                'uid,cType,pid,starttime, endtime,header,bodytext,tstamp');
+            $elements[] = $element;
+        }
+        return $elements;
+
     }
 
 }

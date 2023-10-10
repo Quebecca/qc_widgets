@@ -50,12 +50,12 @@ class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetIn
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/RecentlyModifiedContentWidget');
+        //$this->view->setTemplate('Widget/RecentlyModifiedContentWidget');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $this->view->render("Widget/RecentlyModifiedContentWidget");
     }
 
     public function getOptions(): array

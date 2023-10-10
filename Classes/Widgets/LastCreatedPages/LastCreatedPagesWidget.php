@@ -35,7 +35,8 @@ class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
     public function __construct(
         WidgetConfigurationInterface $configuration,
         StandaloneView $view,
-        Provider $dataProvider
+        Provider $dataProvider,
+        private readonly array $options = []
     )
     {
         $this->configuration = $configuration;
@@ -51,16 +52,16 @@ class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/TableOfPagesWidget');
+        //$this->view->setTemplate('Widget/TableOfPagesWidget');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $this->view->render('Widget/TableOfPagesWidget');
     }
 
     public function getOptions(): array
     {
-        // TODO: Implement getOptions() method.
+        return $this->options;
     }
 }

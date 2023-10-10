@@ -49,13 +49,13 @@ class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements Wid
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/NumberOfRecordsByContent');
+       // $this->view->setTemplate('Widget/NumberOfRecordsByContent');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data,
             'totalRecordsByNumberOfDays' =>  $this->dataProvider->getTotalRecordsByNumberOfDays()
         ]);
-        return $this->view->render();
+        return $this->view->render('Widget/NumberOfRecordsByContent');
     }
 
     public function getOptions(): array

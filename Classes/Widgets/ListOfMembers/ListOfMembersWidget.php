@@ -50,12 +50,12 @@ class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/ListOfMembersWidget');
+        //$this->view->setTemplate('Widget/ListOfMembersWidget');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $this->view->render('Widget/ListOfMembersWidget');
     }
 
     public function getOptions(): array

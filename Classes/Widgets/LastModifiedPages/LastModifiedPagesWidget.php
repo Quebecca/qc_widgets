@@ -51,13 +51,13 @@ class LastModifiedPagesWidget extends AdditionalCssImp implements WidgetInterfac
     {
         $data = $this->dataProvider->getItems();
 
-        $this->view->setTemplate('Widget/TableOfPagesWidget');
+        //$this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $this->view->render("Widget/TableOfPagesWidget");
     }
 
     public function getOptions(): array
