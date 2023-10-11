@@ -14,8 +14,13 @@
 namespace Qc\QcWidgets\Widgets\PagesWithoutModification\Provider;
 
 
+use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PagesWithoutModificationProviderImp extends ListOfPagesProvider
 {
@@ -55,6 +60,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
      * This function returns the array of records after rendering results from the database
      * @return array
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
@@ -62,9 +68,44 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
         // if the tstamp is equal '0', we render the tt_contents created before the specified date
+
+
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $qb = $connectionPool->getQueryBuilderForTable("sys_history");
+        $results = $qb
+            ->select('history_data')
+            ->from('sys_history')
+            ->where(
+                $queryBuilder->expr()->eq('tablename', $qb->createNamedParameter("pages")),
+                $queryBuilder->expr()->eq('recuid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+                $queryBuilder->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
+                $queryBuilder->expr()->or(
+                    $queryBuilder->expr()->and(
+                        $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
+                        $queryBuilder->expr()->gt('tstamp',0)
+                    ),
+                   /* $queryBuilder->expr()->and(
+                        $queryBuilder->expr()->lt('crdate',
+                            $queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
+                        $queryBuilder->expr()->eq('tstamp',0)
+                    )*/
+                )
+            )
+            ->setMaxResults(8)
+            ->orderBy('tstamp', 'DESC')
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = json_decode($result['history_data'])->{'uid'};
+        }
+
+
         $constraints  = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-            $queryBuilder->expr()->or($queryBuilder->expr()->and($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)), $queryBuilder->expr()->gt('tstamp',0)), $queryBuilder->expr()->and($queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)), $queryBuilder->expr()->eq('tstamp',0))),
+          //  $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+          //  $queryBuilder->expr()->or($queryBuilder->expr()->and($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)), $queryBuilder->expr()->gt('tstamp',0)), $queryBuilder->expr()->and($queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)), $queryBuilder->expr()->eq('tstamp',0))),
+            $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY))
 
         ];
         $result = $this->renderData($queryBuilder,$constraints);
