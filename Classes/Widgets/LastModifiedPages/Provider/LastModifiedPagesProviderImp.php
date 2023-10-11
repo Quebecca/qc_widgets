@@ -55,16 +55,16 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     {
         $queryBuilder = $this->generateQueryBuilder($this->table);
 
-
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $qb = $connectionPool->getQueryBuilderForTable("sys_history");
         $results = $qb
             ->select('*')
             ->from('sys_history')
             ->where(
-                $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
-                $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-                $qb->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
+                $qb->expr()->and(
+                    $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
+                    $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+                )
             )
             ->setMaxResults(8)
             ->orderBy('tstamp', 'DESC')
@@ -76,12 +76,12 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
             $pagesUids[] = $result['recuid'];
         }
 
-
-
         $constraints = [
-        //    $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
-
-        $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY))
+            $queryBuilder->expr()->and(
+                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                 $queryBuilder->expr()->eq('deleted', 0)
+             )
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
