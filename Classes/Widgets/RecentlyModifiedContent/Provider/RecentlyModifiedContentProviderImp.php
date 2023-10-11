@@ -107,49 +107,35 @@ class RecentlyModifiedContentProviderImp extends Provider
     /**
      * This function returns the database records
      * @return array
-     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function renderData() : array {
-/*        $queryBuilder = $this->generateQueryBuilder($this->table);
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll();
-        return $queryBuilder
-            ->select('uid', 'cType', 'pid', 'starttime', 'endtime', 'header', 'bodytext',  'tstamp')
-            ->from('tt_content')
-            ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(8)
-            ->where(
-                $queryBuilder->expr()
-                    ->eq('perms_userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
-            )->executeQuery()
-
-            ->fetchAllAssociative();*/
-
-        $qb = $this->generateQueryBuilder("sys_history");
-        $tt_content_uids = $qb
+        $queryBuilder = $this->generateQueryBuilder("sys_history");
+        $tt_content_uids = $queryBuilder
             ->select('recuid')
             ->from('sys_history')
-            ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(8)
             ->where(
-                $qb->expr()
-                    ->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
+                $queryBuilder->expr()
+                    ->eq('userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
             )
             ->andWhere(
-                $qb->expr()
-                    ->eq('tablename', $qb->createNamedParameter("tt_content"))
+                $queryBuilder->expr()
+                    ->eq('tablename', $queryBuilder->createNamedParameter("tt_content"))
             )
+            ->orderBy('tstamp', 'DESC')
+            ->setMaxResults(8)
+            ->groupBy('recuid') // replace distinct
             ->executeQuery()
-
             ->fetchAllAssociative();
-
         $elements = [];
         foreach ($tt_content_uids as $content_uid){
             $element = BackendUtility::getRecord("tt_content", $content_uid['recuid'],
                 'uid,cType,pid,starttime, endtime,header,bodytext,tstamp');
             $elements[] = $element;
         }
+        usort($elements, function ($element1, $element2){
+            return $element1['tstamp'] < $element2['tstamp'];
+        });
         return $elements;
 
     }
