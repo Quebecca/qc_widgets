@@ -21,22 +21,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class WorkspacePreviewsWidget extends AdditionalCssImp implements WidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
-    /**
-     * @var Provider
-     */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
-    {}
+        protected WidgetConfigurationInterface $configuration,
+        private StandaloneView $view,
+        private Provider $dataProvider
+    ){}
 
     /**
      * Render widget view
@@ -46,7 +35,6 @@ class WorkspacePreviewsWidget extends AdditionalCssImp implements WidgetInterfac
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        //$this->view->setTemplate('Widget/WorkspacePreviewsWidget');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data

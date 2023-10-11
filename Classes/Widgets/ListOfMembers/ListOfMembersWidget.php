@@ -21,26 +21,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
-    /**
-     * @var Provider
-     */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
-    {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
-    }
+        protected WidgetConfigurationInterface $configuration,
+        protected StandaloneView $view,
+        protected Provider $dataProvider
+    ){}
 
     /**
      * Render widget view
@@ -50,7 +35,6 @@ class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface
     {
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        //$this->view->setTemplate('Widget/ListOfMembersWidget');
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data

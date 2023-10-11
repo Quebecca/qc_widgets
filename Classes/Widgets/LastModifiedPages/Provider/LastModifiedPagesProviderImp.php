@@ -14,8 +14,13 @@
 namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 
 
+use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LastModifiedPagesProviderImp extends ListOfPagesProvider
 {
@@ -44,12 +49,39 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
      * This function returns the array of records after rendering results from the database
      * @return array
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
         $queryBuilder = $this->generateQueryBuilder($this->table);
+
+
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $qb = $connectionPool->getQueryBuilderForTable("sys_history");
+        $results = $qb
+            ->select('*')
+            ->from('sys_history')
+            ->where(
+                $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
+                $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+                $qb->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
+            )
+            ->setMaxResults(8)
+            ->orderBy('tstamp', 'DESC')
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+
+
+
         $constraints = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
+        //    $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
+
+        $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY))
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);

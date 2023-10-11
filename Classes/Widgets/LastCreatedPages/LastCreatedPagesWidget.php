@@ -22,27 +22,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
-    /**
-     * @var Provider
-     */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider,
-        private readonly array $options = []
-    )
-    {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
-    }
+        protected WidgetConfigurationInterface $configuration,
+        protected StandaloneView $view,
+        protected Provider $dataProvider,
+    ){}
 
     /**
      * Render widget view
@@ -62,6 +46,6 @@ class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
 
     public function getOptions(): array
     {
-        return $this->options;
+        return [];
     }
 }

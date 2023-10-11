@@ -21,27 +21,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class PagesWithoutModificationWidget extends AdditionalCssImp implements WidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
-    /**
-     * @var Provider
-     */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
-
     public function __construct(
-
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
-    {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
-    }
+        protected WidgetConfigurationInterface $configuration,
+        protected StandaloneView $view,
+        protected Provider $dataProvider
+    ){}
 
     /**
      * Render widget view
@@ -50,8 +34,6 @@ class PagesWithoutModificationWidget extends AdditionalCssImp implements WidgetI
     public function renderWidgetContent(): string
     {
         $data = $this->dataProvider->getItems();
-
-        //$this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $this->view->assignMultiple([
             'widgetTitle' => $widgetTitle,
