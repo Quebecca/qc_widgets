@@ -67,21 +67,18 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         // convert the number of months to seconds
         $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
-        // if the tstamp is equal '0', we render the tt_contents created before the specified date
-
-
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $qb = $connectionPool->getQueryBuilderForTable("sys_history");
         $results = $qb
-            ->select('history_data')
+            ->select('recuid')
             ->from('sys_history')
             ->where(
                 $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
-                $qb->expr()->eq('recuid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+                $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
                 $qb->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
                 $qb->expr()->or(
                     $qb->expr()->and(
-                        $qb->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
+                        $qb->expr()->lt('tstamp',$qb->createNamedParameter(time(), \PDO::PARAM_INT)),
                         $qb->expr()->gt('tstamp',0)
                     )
                 )
@@ -93,17 +90,19 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
 
         $pagesUids = [];
         foreach ($results as $result){
-            $pagesUids[] = json_decode($result['history_data'])->{'uid'};
+            $pagesUids[] = $result['recuid'];
         }
 
-
         $constraints  = [
-             $queryBuilder->expr()->and(
-                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
-                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
-                 $queryBuilder->expr()->eq('deleted', 0)
-             )
+            $queryBuilder->expr()->and(
+                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
+                $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                $queryBuilder->expr()->eq('deleted', 0)
+            ),
+
         ];
+
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
     }
