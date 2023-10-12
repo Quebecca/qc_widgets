@@ -70,11 +70,11 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable("sys_history");
         $results = $queryBuilder
-            ->select('history_data')
+            ->select('recuid')
             ->from('sys_history')
             ->where(
                 $queryBuilder->expr()->eq('tablename', $queryBuilder->createNamedParameter("pages")),
-                $queryBuilder->expr()->in('recuid', $queryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY)),
+                $queryBuilder->expr()->in('userid', $queryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY)),
                 $queryBuilder->expr()->eq('actiontype', $queryBuilder->createNamedParameter(RecordHistoryStore::ACTION_ADD, Connection::PARAM_INT))
             )
             ->setMaxResults(8)
@@ -84,7 +84,7 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
 
         $pagesUids = [];
         foreach ($results as $result){
-            $pagesUids[] = json_decode($result['history_data'])->{'uid'};
+            $pagesUids[] = $result['recuid'];
         }
 
         // return results
@@ -92,7 +92,11 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
         $constraints = [];
         if(!empty($membersUid)){
             $constraints = [
-                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY))
+                $queryBuilder->expr()->and(
+                    $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                    $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                    $queryBuilder->expr()->eq('deleted', 0)
+                )
             ];
         }
         $result = $this->renderData($queryBuilder,$constraints);
