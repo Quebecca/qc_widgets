@@ -9,7 +9,7 @@
 ### My last pages
 
 * Page caché - affichée avec l'état - ok
-* Page expiré - affichée avec l'état - ok 
+* Page expiré - affichée avec l'état - ok
 * Page n'est pas encore activée - affichée avec l'état - OK
 * Page créée juste en WS - ne pas affichée - OK
 * Page créée en WS et publier - affichée - OK
@@ -39,7 +39,7 @@
 * La date de la dernière connexion pour chaque utilisateur - OK
 
 
-### Pages without modification in the last 3 months 
+### Pages without modification in the last 3 months
 * à tester sur dev4
 
 ### Number of records by table
@@ -48,3 +48,7 @@
 * Nombre des enregistrements cachés : Ok - n'est pas considérés (Configuration tsconfig disponible)
 * Nombre des enregistrements en WS
 * Nombre des enregistrements supprimés - OK
+
+### List of workspace previews
+* Les administrateurs peuvent voir la totalité des liens WS
+* Chaque utilisateur ne peux voir que ses liens ou les lines de ses groupes
