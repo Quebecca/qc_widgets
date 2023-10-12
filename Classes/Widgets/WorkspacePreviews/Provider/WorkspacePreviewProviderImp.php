@@ -52,7 +52,7 @@ class WorkspacePreviewProviderImp extends Provider
     /**
      * This function returns the array of records after rendering results from the database
      * @return array
-     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
@@ -70,7 +70,7 @@ class WorkspacePreviewProviderImp extends Provider
      * This function is used to return the data from the database
      * @param array $workspaces
      * @return array
-     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function renderData(array $workspaces) : array {
         $previewsData = [];
