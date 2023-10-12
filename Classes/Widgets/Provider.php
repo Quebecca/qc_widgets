@@ -12,6 +12,7 @@
  ***/
 namespace Qc\QcWidgets\Widgets;
 
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -165,5 +166,30 @@ abstract class Provider
             'statusMessage' => ''
         ];
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function getRecordHistoryByUser(QueryBuilder $queryBuilder, array $constraints, $maxResult = null) : array {
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll();
+        $qb = $queryBuilder
+            ->select('*')
+            ->from("sys_history")
+            ->where(
+                ...$constraints
+            );
+
+        if($maxResult){
+            $qb ->setMaxResults($maxResult);
+        }
+        return   $qb->orderBy('tstamp', 'DESC')
+                // ->orderBy($this->orderField, $this->orderType)->setMaxResults($this->limit)->executeQuery()
+                ->executeQuery()
+                ->fetchAllAssociative() ??  [];
+    }
+
 
 }

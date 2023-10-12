@@ -19,6 +19,7 @@ use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -65,46 +66,79 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
     public function getItems(): array
     {
         // convert the number of months to seconds
-        $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
+        $sinceDate =  time() - (1/30) * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $qb = $connectionPool->getQueryBuilderForTable("sys_history");
-        $results = $qb
-            ->select('recuid')
-            ->from('sys_history')
-            ->where(
-                $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
-                $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-                $qb->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
-                $qb->expr()->or(
-                    $qb->expr()->and(
-                        $qb->expr()->lt('tstamp',$qb->createNamedParameter(time(), \PDO::PARAM_INT)),
-                        $qb->expr()->gt('tstamp',0)
-                    )
-                )
-            )
-            ->setMaxResults(8)
-            ->orderBy('tstamp', 'DESC')
-            ->executeQuery()
-            ->fetchAllAssociative();
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
 
-        $pagesUids = [];
-        foreach ($results as $result){
-            $pagesUids[] = $result['recuid'];
-        }
+        $pagesBeforeXMonths = $this->getPagesBeforeXMonths($historyQueryBuilder, $sinceDate);
+        $pagesAfterXMonths = $this->getPagesAfterXMonths($historyQueryBuilder, $sinceDate);
+        $pagesUids = array_diff($pagesBeforeXMonths,$pagesAfterXMonths);
 
         $constraints  = [
-            $queryBuilder->expr()->and(
-                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
-                $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
-                $queryBuilder->expr()->eq('t3ver_wsid', 0),
-                $queryBuilder->expr()->eq('deleted', 0)
-            ),
-
+             $queryBuilder->expr()->and(
+                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                 $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
+                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                 $queryBuilder->expr()->eq('deleted', 0)
+             ),
         ];
 
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
     }
 
+    /**
+     * @param $sysHistoryQb
+     * @param $constraints
+     * @return array
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getHistoryOfPages($sysHistoryQb, $constraints) : array {
+        $historyRecordConstraints = [
+            $sysHistoryQb->expr()->eq('tablename', $sysHistoryQb->createNamedParameter("pages")),
+            $sysHistoryQb->expr()->eq('userid', $sysHistoryQb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+            $sysHistoryQb->expr()->eq('actiontype', $sysHistoryQb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
+            ...$constraints
+            ];
+
+        $results = $this->getRecordHistoryByUser($sysHistoryQb, $historyRecordConstraints);
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+        return $pagesUids;
+
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getPagesBeforeXMonths(QueryBuilder $queryBuilder, $sinceDate): array
+    {
+        $historyBeforeSinceDate = [
+            $queryBuilder->expr()->or(
+                $queryBuilder->expr()->and(
+                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->gt('tstamp',0)
+                )
+            )
+        ];
+
+        return $this->getHistoryOfPages( $queryBuilder, $historyBeforeSinceDate);
+
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getPagesAfterXMonths(QueryBuilder $queryBuilder, $sinceDate): array
+    {
+        $historyAfterSinceDate = [
+            $queryBuilder->expr()->and(
+                $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter(time(), \PDO::PARAM_INT)),
+                $queryBuilder->expr()->gt('tstamp',$sinceDate)
+            )
+        ];
+        return $this->getHistoryOfPages( $queryBuilder,$historyAfterSinceDate);
+    }
 }
