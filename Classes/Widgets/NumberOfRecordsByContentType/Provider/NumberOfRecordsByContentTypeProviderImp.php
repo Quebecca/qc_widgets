@@ -78,7 +78,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
 
     /**
      * This function is used to return data to the widget
-     * @throws Exception
+     * @throws Exception|\Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
@@ -100,6 +100,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     /**
      * This function will be used to return the available column for the selected table
      * @param array $tables
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getEnabledColumns(array $tables){
         foreach ($tables as $table){
@@ -128,6 +129,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      * This function return the additional where clause for each table passed in parameter
      * @param string $tableName
      * @return string
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAdditionalWhereClause(string $tableName): string
     {
@@ -152,6 +154,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      * @param $tableName
      * @param $column
      * @return bool
+     * @throws \Doctrine\DBAL\Exception
      */
     public function checkIfColumnExists( $tableName,  $column) : bool{
         return in_array($column, array_keys(
@@ -163,15 +166,17 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      * This function checks of the table exists
      * @param $tableName
      * @return bool
+     * @throws \Doctrine\DBAL\Exception
      */
     public function checkIfTableExits($tableName) : bool{
         return $this->getSchemaManager($tableName)->tablesExist([$tableName]);
     }
 
     /**
-     * This function is uesd to return the SchemaManager
+     * This function is used to return the SchemaManager
      * @param string $tableName
      * @return AbstractSchemaManager|null
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getSchemaManager(string $tableName): ?AbstractSchemaManager
     {
@@ -198,7 +203,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
      * @param string $tableName
      * @param string $constraint
      * @return mixed
-     * @throws Exception
+     * @throws Exception|\Doctrine\DBAL\Exception
      */
     public function renderData(string $tableName, string $constraint)
     {

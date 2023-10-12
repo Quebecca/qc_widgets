@@ -26,9 +26,25 @@
 
 ### Recently modified content
 
-cotenu caché - affichée avec l'état - ok
-contenu expiré - affichée avec l'état - ok
-contenu n'est pas encore - activée affichée avec l'état - ok
-contenu créée juste en WS - n'est pas affiché
-contenu créée en WS et publier - activée affichée avec l'état - ok
-contenu supprimée - n'est pas affiché
+* contenu caché - affichée avec l'état - ok
+* contenu expiré - affichée avec l'état - ok
+* contenu n'est pas encore - activée affichée avec l'état - ok
+* contenu créée juste en WS - n'est pas affiché
+* contenu créée en WS et publier - activée affichée avec l'état - ok
+* contenu supprimée - n'est pas affiché
+
+
+### List of administrators
+* Liste des administrateurs - OK
+* La date de la dernière connexion pour chaque utilisateur - OK
+
+
+### Pages without modification in the last 3 months 
+* à tester sur dev4
+
+### Number of records by table
+
+* Nombre des enregistrements activés OK
+* Nombre des enregistrements cachés : Ok - n'est pas considérés (Configuration tsconfig disponible)
+* Nombre des enregistrements en WS
+* Nombre des enregistrements supprimés - OK
