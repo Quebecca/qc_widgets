@@ -73,6 +73,13 @@
                                             width="18c" height="18c" title="{item.statusMessage}" />
                                     </span>
                                 </f:if>
+                                <f:if condition="{item.status} == 'hidden'">
+                                    <span>
+                                        <f:image src="EXT:qc_widgets/Resources/Public/Icons/overlay-hidden.svg"
+                                                 width="18c" height="18c" title="{item.statusMessage}" />
+                                    </span>
+                                </f:if>
+
                             </td>
                             <td>{item.cType}</td>
                             <td>{item.tstamp}</td>

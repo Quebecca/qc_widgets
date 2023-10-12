@@ -23,3 +23,12 @@
 * Page créée juste en WS- crée par membre de groupe / user actuel - ne pas affichée - OK
 * Page créée en WS et publier- crée par membre de groupe / user actuel - affichée - OK
 * Page supprimée - crée par membre de groupe / user actuel - n'est pas affichée - OK
+
+### Recently modified content
+
+cotenu caché - affichée avec l'état - ok
+contenu expiré - affichée avec l'état - ok
+contenu n'est pas encore - activée affichée avec l'état - ok
+contenu créée juste en WS - n'est pas affiché
+contenu créée en WS et publier - activée affichée avec l'état - ok
+contenu supprimée - n'est pas affiché

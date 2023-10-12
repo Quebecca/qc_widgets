@@ -132,7 +132,7 @@ abstract class Provider
      * @param $endTime
      * @return string[]
      */
-    public function getItemStatus($startTime, $endTime): array
+    public function getItemStatus($startTime, $endTime, $hidden = null): array
     {
         $status = [];
          // expired, not available, available
@@ -152,6 +152,12 @@ abstract class Provider
                 'status' => 'notAvailable',
                 'statusMessage' => $this->localizationUtility->translate(self::QC_LANG_FILE . 'start') . ' ' . date('d-m-y', $startTime)
                     . " ( $numberOfDays " . $this->localizationUtility->translate(self::QC_LANG_FILE . 'days') . " )"
+            ];
+        }
+        else if($hidden == 1){
+            return [
+                'status' => 'hidden',
+                'statusMessage' => $this->localizationUtility->translate(self::QC_LANG_FILE . 'hidden')
             ];
         }
         return [

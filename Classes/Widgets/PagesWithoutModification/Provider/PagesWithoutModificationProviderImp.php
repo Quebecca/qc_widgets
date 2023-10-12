@@ -76,19 +76,14 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
             ->select('history_data')
             ->from('sys_history')
             ->where(
-                $queryBuilder->expr()->eq('tablename', $qb->createNamedParameter("pages")),
-                $queryBuilder->expr()->eq('recuid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-                $queryBuilder->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
-                $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->and(
-                        $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->gt('tstamp',0)
-                    ),
-                   /* $queryBuilder->expr()->and(
-                        $queryBuilder->expr()->lt('crdate',
-                            $queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
-                        $queryBuilder->expr()->eq('tstamp',0)
-                    )*/
+                $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
+                $qb->expr()->eq('recuid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+                $qb->expr()->eq('actiontype', $qb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
+                $qb->expr()->or(
+                    $qb->expr()->and(
+                        $qb->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
+                        $qb->expr()->gt('tstamp',0)
+                    )
                 )
             )
             ->setMaxResults(8)
@@ -103,10 +98,11 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
 
 
         $constraints  = [
-          //  $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-          //  $queryBuilder->expr()->or($queryBuilder->expr()->and($queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)), $queryBuilder->expr()->gt('tstamp',0)), $queryBuilder->expr()->and($queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)), $queryBuilder->expr()->eq('tstamp',0))),
-            $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY))
-
+             $queryBuilder->expr()->and(
+                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                 $queryBuilder->expr()->eq('deleted', 0)
+             )
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);

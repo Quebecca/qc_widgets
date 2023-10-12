@@ -16,6 +16,8 @@ namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent\Provider;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
@@ -85,7 +87,7 @@ class RecentlyModifiedContentProviderImp extends Provider
                     $item['bodytext'] = substr($item['bodytext'],0, 50) . '...';
                 }
             }
-            $status = $this->getItemStatus($item['starttime'], $item['endtime']);
+            $status = $this->getItemStatus($item['starttime'], $item['endtime'], $item['hidden']);
             $item['status'] = $status['status'];
             $item['statusMessage'] = $status['statusMessage'];
             $result [] = [
@@ -115,23 +117,28 @@ class RecentlyModifiedContentProviderImp extends Provider
             ->select('recuid')
             ->from('sys_history')
             ->where(
-                $queryBuilder->expr()
-                    ->eq('userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT))
-            )
-            ->andWhere(
-                $queryBuilder->expr()
-                    ->eq('tablename', $queryBuilder->createNamedParameter("tt_content"))
+                $queryBuilder->expr()->and(
+                    $queryBuilder->expr()->eq('userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('tablename', $queryBuilder->createNamedParameter("tt_content")),
+                    $queryBuilder->expr()->neq('actiontype', $queryBuilder->createNamedParameter(RecordHistoryStore::ACTION_DELETE, Connection::PARAM_INT)),
+                )
             )
             ->orderBy('tstamp', 'DESC')
             ->setMaxResults(8)
             ->groupBy('recuid') // replace distinct
             ->executeQuery()
             ->fetchAllAssociative();
+
         $elements = [];
         foreach ($tt_content_uids as $content_uid){
-            $element = BackendUtility::getRecord("tt_content", $content_uid['recuid'],
-                'uid,cType,pid,starttime, endtime,header,bodytext,tstamp');
-            $elements[] = $element;
+            $element = BackendUtility::getRecord(
+                "tt_content", $content_uid['recuid'],
+                'uid,cType,pid,starttime, endtime,header,bodytext,tstamp,hidden',
+                "AND t3ver_wsid = 0"
+            );
+            if($element){
+                $elements[] = $element;
+            }
         }
         usort($elements, function ($element1, $element2){
             return $element1['tstamp'] < $element2['tstamp'];
