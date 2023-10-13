@@ -64,7 +64,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
     public function getItems(): array
     {
         // convert the number of months to seconds
-        $sinceDate =  time() - (1/30) * (29*24*60*60) ;
+        $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
 
