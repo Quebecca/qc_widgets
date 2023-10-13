@@ -17,10 +17,6 @@ namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LastModifiedPagesProviderImp extends ListOfPagesProvider
 {
@@ -54,23 +50,14 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     public function getItems(): array
     {
         $queryBuilder = $this->generateQueryBuilder($this->table);
-
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $qb = $connectionPool->getQueryBuilderForTable("sys_history");
-        $results = $qb
-            ->select('*')
-            ->from('sys_history')
-            ->where(
-                $qb->expr()->and(
-                    $qb->expr()->eq('tablename', $qb->createNamedParameter("pages")),
-                    $qb->expr()->eq('userid', $qb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-                )
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+        $historyConstraints = [
+            $historyQueryBuilder->expr()->and(
+                $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
             )
-            ->setMaxResults(8)
-            ->orderBy('tstamp', 'DESC')
-            ->executeQuery()
-            ->fetchAllAssociative();
-
+        ];
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
         $pagesUids = [];
         foreach ($results as $result){
             $pagesUids[] = $result['recuid'];

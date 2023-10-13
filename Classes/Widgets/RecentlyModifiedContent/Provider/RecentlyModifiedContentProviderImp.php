@@ -112,22 +112,15 @@ class RecentlyModifiedContentProviderImp extends Provider
      * @throws \Doctrine\DBAL\Exception
      */
     public function renderData() : array {
-        $queryBuilder = $this->generateQueryBuilder("sys_history");
-        $tt_content_uids = $queryBuilder
-            ->select('recuid')
-            ->from('sys_history')
-            ->where(
-                $queryBuilder->expr()->and(
-                    $queryBuilder->expr()->eq('userid', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('tablename', $queryBuilder->createNamedParameter("tt_content")),
-                    $queryBuilder->expr()->neq('actiontype', $queryBuilder->createNamedParameter(RecordHistoryStore::ACTION_DELETE, Connection::PARAM_INT)),
-                )
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+        $historyConstraints = [
+            $historyQueryBuilder->expr()->and(
+                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)),
+                $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("tt_content")),
+                $historyQueryBuilder->expr()->neq('actiontype', $historyQueryBuilder->createNamedParameter(RecordHistoryStore::ACTION_DELETE, Connection::PARAM_INT)),
             )
-            ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(8)
-            ->groupBy('recuid') // replace distinct
-            ->executeQuery()
-            ->fetchAllAssociative();
+        ];
+        $tt_content_uids = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
 
         $elements = [];
         foreach ($tt_content_uids as $content_uid){

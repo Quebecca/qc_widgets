@@ -17,7 +17,6 @@ use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -67,20 +66,15 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
             }
         }
 
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $queryBuilder = $connectionPool->getQueryBuilderForTable("sys_history");
-        $results = $queryBuilder
-            ->select('recuid')
-            ->from('sys_history')
-            ->where(
-                $queryBuilder->expr()->eq('tablename', $queryBuilder->createNamedParameter("pages")),
-                $queryBuilder->expr()->in('userid', $queryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY)),
-                $queryBuilder->expr()->eq('actiontype', $queryBuilder->createNamedParameter(RecordHistoryStore::ACTION_ADD, Connection::PARAM_INT))
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+        $historyConstraints = [
+            $historyQueryBuilder->expr()->and(
+                $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+                $historyQueryBuilder->expr()->in('userid', $historyQueryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY)),
+                $historyQueryBuilder->expr()->eq('actiontype', $historyQueryBuilder->createNamedParameter(RecordHistoryStore::ACTION_ADD, Connection::PARAM_INT))
             )
-            ->setMaxResults(8)
-            ->orderBy('tstamp', 'DESC')
-            ->executeQuery()
-            ->fetchAllAssociative();
+           ];
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
 
         $pagesUids = [];
         foreach ($results as $result){

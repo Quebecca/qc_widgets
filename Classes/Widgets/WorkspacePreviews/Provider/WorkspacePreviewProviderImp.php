@@ -13,7 +13,6 @@
 
 namespace Qc\QcWidgets\Widgets\WorkspacePreviews\Provider;
 
-use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

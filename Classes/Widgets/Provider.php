@@ -181,12 +181,12 @@ abstract class Provider
             ->where(
                 ...$constraints
             );
-
         if($maxResult){
             $qb ->setMaxResults($maxResult);
         }
-        return   $qb->orderBy('tstamp', 'DESC')
-                // ->orderBy($this->orderField, $this->orderType)->setMaxResults($this->limit)->executeQuery()
+        return
+            $qb->orderBy('tstamp', 'DESC')
+                ->groupBy('recuid') // replace distinct
                 ->executeQuery()
                 ->fetchAllAssociative() ??  [];
     }
