@@ -68,75 +68,36 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
 
-        $pagesBeforeXMonths = $this->getPagesBeforeXMonths($historyQueryBuilder, $sinceDate);
-        $pagesAfterXMonths = $this->getPagesAfterXMonths($historyQueryBuilder, $sinceDate);
-        $pagesUids = array_diff($pagesBeforeXMonths,$pagesAfterXMonths);
+        $historyRecordConstraints = [
+            $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+            $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+        ];
 
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyRecordConstraints);
+
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+
+        // if the tstamp is equal '0', we render the tt_contents created before the specified date
         $constraints  = [
-             $queryBuilder->expr()->and(
-                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
-                 $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
-                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
-                 $queryBuilder->expr()->eq('deleted', 0)
-             ),
+            $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+            $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->gt('tstamp',0),
+                ),
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->lt('crdate',$queryBuilder->createNamedParameter($sinceDate,\PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('tstamp',0),
+                ),
+            ),
+
         ];
 
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
     }
 
-    /**
-     * @param $sysHistoryQb
-     * @param $constraints
-     * @return array
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function getHistoryOfPages($sysHistoryQb, $constraints) : array {
-        $historyRecordConstraints = [
-            $sysHistoryQb->expr()->eq('tablename', $sysHistoryQb->createNamedParameter("pages")),
-            $sysHistoryQb->expr()->eq('userid', $sysHistoryQb->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
-            $sysHistoryQb->expr()->eq('actiontype', $sysHistoryQb->createNamedParameter(RecordHistoryStore::ACTION_MODIFY, Connection::PARAM_INT)),
-            ...$constraints
-            ];
-
-        $results = $this->getRecordHistoryByUser($sysHistoryQb, $historyRecordConstraints);
-        $pagesUids = [];
-        foreach ($results as $result){
-            $pagesUids[] = $result['recuid'];
-        }
-        return $pagesUids;
-
-    }
-
-    /**
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function getPagesBeforeXMonths(QueryBuilder $queryBuilder, $sinceDate): array
-    {
-        $historyBeforeSinceDate = [
-            $queryBuilder->expr()->or(
-                $queryBuilder->expr()->and(
-                    $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->gt('tstamp',0)
-                )
-            )
-        ];
-
-        return $this->getHistoryOfPages( $queryBuilder, $historyBeforeSinceDate);
-
-    }
-
-    /**
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function getPagesAfterXMonths(QueryBuilder $queryBuilder, $sinceDate): array
-    {
-        $historyAfterSinceDate = [
-            $queryBuilder->expr()->and(
-                $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter(time(), \PDO::PARAM_INT)),
-                $queryBuilder->expr()->gt('tstamp',$sinceDate)
-            )
-        ];
-        return $this->getHistoryOfPages( $queryBuilder,$historyAfterSinceDate);
-    }
 }
