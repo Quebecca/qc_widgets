@@ -17,9 +17,6 @@ namespace Qc\QcWidgets\Widgets\PagesWithoutModification\Provider;
 use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 
 class PagesWithoutModificationProviderImp extends ListOfPagesProvider
 {
