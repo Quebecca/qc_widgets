@@ -1,51 +1,51 @@
 ##Recently modified content
 
 ### Test
-Tester les options TSCondig qui controllent l'affichage des données (disponibles dans le fichier : pageconfig.tsconfig) 
+Tester les options TSCondig qui controllent l'affichage des données (disponibles dans le fichier : pageconfig.tsconfig)
 
 ### My last pages
 
-* Page caché - affichée avec l'état - ok
-* Page expiré - affichée avec l'état - ok
-* Page n'est pas encore activée - affichée avec l'état - OK
-* Page créée juste en WS - ne pas affichée - OK
-* Page créée en WS et publier - affichée - OK
-* Page supprimée - n'est pas affichée - OK
+1) Page caché - affichée avec l'état - ok
+2) Page expiré - affichée avec l'état - ok
+3) Page n'est pas encore activée - affichée avec l'état - OK
+4) Page créée juste en WS - ne pas affichée - OK
+5) Page créée en WS et publier - affichée - OK
+6) Page supprimée - n'est pas affichée - OK
 
 ### Last pages created in my groups
 
-* Page caché - crée par membre de groupe / user actuel - affichée avec l'état - ok
-* Page expiré - crée par membre de groupe / user actuel - affichée avec l'état - ok
-* Page n'est pas encore activée- crée par membre de groupe / user actuel - affichée avec l'état - OK
-* Page créée juste en WS- crée par membre de groupe / user actuel - ne pas affichée - OK
-* Page créée en WS et publier- crée par membre de groupe / user actuel - affichée - OK
-* Page supprimée - crée par membre de groupe / user actuel - n'est pas affichée - OK
+1) Page caché - crée par membre de groupe / user actuel - affichée avec l'état - ok
+2) Page expiré - crée par membre de groupe / user actuel - affichée avec l'état - ok
+3) Page n'est pas encore activée- crée par membre de groupe / user actuel - affichée avec l'état - OK
+4) Page créée juste en WS- crée par membre de groupe / user actuel - ne pas affichée - OK
+5) Page créée en WS et publier- crée par membre de groupe / user actuel - affichée - OK
+6) Page supprimée - crée par membre de groupe / user actuel - n'est pas affichée - OK
 
 ### Recently modified content
 
-* contenu caché - affichée avec l'état - ok
-* contenu expiré - affichée avec l'état - ok
-* contenu n'est pas encore - activée affichée avec l'état - ok
-* contenu crée juste en WS - n'est pas affiché
-* contenu crée en WS et publier - activée affichée avec l'état - ok
-* contenu supprimé - n'est pas affiché
+1) Contenu caché - affichée avec l'état - ok
+2) Contenu expiré - affichée avec l'état - ok
+3) Contenu n'est pas encore - activée affichée avec l'état - ok
+4) Contenu crée juste en WS - n'est pas affiché
+5) Contenu crée en WS et publier - activée affichée avec l'état - ok
+6) Contenu supprimé - n'est pas affiché
 
 
 ### List of administrators
-* Liste des administrateurs - OK
-* La date de la dernière connexion pour chaque utilisateur - OK
+1) Liste des administrateurs - OK
+La date de la dernière connexion pour chaque utilisateur - OK
 
 
 ### Pages without modification in the last 3 months
-* à tester sur dev4
+1) Changer le nombre de mois par l'option tsconfig numberOfMonths
 
 ### Number of records by table
 
-* Nombre des enregistrements activés OK
-* Nombre des enregistrements cachés : Ok - n'est pas considérés (Configuration tsconfig disponible)
-* Nombre des enregistrements en WS
-* Nombre des enregistrements supprimés - OK
+1) Nombre des enregistrements activés OK
+2) Nombre des enregistrements cachés : Ok - n'est pas considérés (Configuration tsconfig disponible)
+3) Nombre des enregistrements en WS
+4) Nombre des enregistrements supprimés - OK
 
 ### List of workspace previews
-* Les administrateurs peuvent voir la totalité des liens WS
-* Chaque utilisateur ne peux voir que ses liens ou les lines de ses groupes
+1) Les administrateurs peuvent voir la totalité des liens WS
+2) Chaque utilisateur ne peux voir que ses liens ou les lines de ses groupes
