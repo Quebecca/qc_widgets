@@ -1,10 +1,7 @@
 ##Recently modified content
 
 ### Test
-* Tester les éléments affichés dans le widgets pour les différents utilisateurs
-* Tester les différents cas d'un élements (Supprimer, Masquer, en WS)
-* Tester si le widget n'affiche pas les éléments en double
-* Tester les options TS config
+Tester les options TSCondig qui controllent l'affichage des données (disponibles dans le fichier : pageconfig.tsconfig) 
 
 ### My last pages
 
@@ -29,9 +26,9 @@
 * contenu caché - affichée avec l'état - ok
 * contenu expiré - affichée avec l'état - ok
 * contenu n'est pas encore - activée affichée avec l'état - ok
-* contenu créée juste en WS - n'est pas affiché
-* contenu créée en WS et publier - activée affichée avec l'état - ok
-* contenu supprimée - n'est pas affiché
+* contenu crée juste en WS - n'est pas affiché
+* contenu crée en WS et publier - activée affichée avec l'état - ok
+* contenu supprimé - n'est pas affiché
 
 
 ### List of administrators
