@@ -1,7 +1,4 @@
-##Recently modified content
-
-### Test
-Tester les options TSConfig qui contrôlent l'affichage des données (disponibles dans le fichier : pageconfig.tsconfig)
+##Qc Widgets
 
 ### My last pages -
 
@@ -69,3 +66,6 @@ Classe de test : WorkspacePreviewProviderImp
 
 1) Les administrateurs peuvent voir la totalité des liens WS
 2) Chaque utilisateur ne peut voir que ses liens ou les lines de ses groupes
+
+### Test
+Tester les options TSConfig qui contrôlent l'affichage des données (disponibles dans le fichier : pageconfig.tsconfig)
