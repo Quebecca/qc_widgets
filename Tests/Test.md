@@ -1,4 +1,4 @@
-##Qc Widgets
+##Qc Widgets - Tests fonctionnels
 
 ### My last pages -
 
