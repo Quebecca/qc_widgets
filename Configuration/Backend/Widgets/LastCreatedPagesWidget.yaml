@@ -20,7 +20,6 @@ services:
     class: 'Qc\QcWidgets\Widgets\LastCreatedPages\LastCreatedPagesWidget'
     arguments:
       $dataProvider: '@dashboard.provider.lastCreatedPages'
-      $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget

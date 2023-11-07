@@ -20,7 +20,6 @@ services:
     class: 'Qc\QcWidgets\Widgets\PagesWithoutModification\PagesWithoutModificationWidget'
     arguments:
       $dataProvider: '@dashboard.provider.pagesWithoutModification'
-      $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget

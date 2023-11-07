@@ -13,19 +13,29 @@
 namespace Qc\QcWidgets\Widgets\RecentlyModifiedContent;
 
 
+use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetInterface
+class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
     public function __construct(
         protected WidgetConfigurationInterface $configuration,
-        protected StandaloneView $view,
+        private readonly BackendViewFactory $backendViewFactory,
         protected Provider $dataProvider
     ){}
+
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
+    }
 
     /**
      * Render widget view
@@ -33,13 +43,14 @@ class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetIn
      */
     public function renderWidgetContent(): string
     {
+        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'pgu/pgu-widgets']);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render("Widget/RecentlyModifiedContentWidget");
+        return $view->render("Widget/RecentlyModifiedContentWidget");
     }
 
     public function getOptions(): array

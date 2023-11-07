@@ -12,19 +12,29 @@
 
 namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements WidgetInterface
+class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
     public function __construct(
         protected WidgetConfigurationInterface $configuration,
-        protected StandaloneView $view,
+        private readonly BackendViewFactory $backendViewFactory,
         protected Provider $dataProvider
     ){}
+
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
+    }
 
     /**
      * Render widget view
@@ -32,14 +42,15 @@ class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements Wid
      */
     public function renderWidgetContent(): string
     {
+        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'pgu/pgu-widgets']);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data,
             'totalRecordsByNumberOfDays' =>  $this->dataProvider->getTotalRecordsByNumberOfDays()
         ]);
-        return $this->view->render('Widget/NumberOfRecordsByContent');
+        return $view->render('Widget/NumberOfRecordsByContent');
     }
 
     public function getOptions(): array
