@@ -23,12 +23,16 @@ use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 
 class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
+    /**
+     * @var ServerRequestInterface
+     */
+    private ServerRequestInterface $request;
+
     public function __construct(
         protected WidgetConfigurationInterface $configuration,
         private readonly BackendViewFactory $backendViewFactory,
         protected Provider $dataProvider
     ){}
-
 
     /**
      * @param ServerRequestInterface $request
