@@ -48,7 +48,7 @@ class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
      */
     public function renderWidgetContent(): string
     {
-        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'Qc/QcWidgets']);
+        $view = $this->backendViewFactory->create($this->request);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $view->assignMultiple([
