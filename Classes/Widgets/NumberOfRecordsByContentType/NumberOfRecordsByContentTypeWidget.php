@@ -47,7 +47,7 @@ class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements Wid
      */
     public function renderWidgetContent(): string
     {
-        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'qc/qc-widgets']);
+        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'Qc/QcWidgets']);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $view->assignMultiple([
