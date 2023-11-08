@@ -44,7 +44,7 @@ class ListOfMembersWidget extends AdditionalCssImp implements WidgetInterface, R
      */
     public function renderWidgetContent(): string
     {
-        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard', 'pgu/pgu-widgets']);
+        $view = $this->backendViewFactory->create($this->request, ['typo3/cms-dashboard']);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
         $view->assignMultiple([
