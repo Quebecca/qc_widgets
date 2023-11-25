@@ -16,6 +16,8 @@ use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LastCreatedPagesProviderImp extends ListOfPagesProvider
@@ -44,6 +46,7 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
      * This function returns the array of records after rendering results from the database
      * @return array
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
@@ -62,12 +65,32 @@ class LastCreatedPagesProviderImp extends ListOfPagesProvider
                 }
             }
         }
+
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+        $historyConstraints = [
+            $historyQueryBuilder->expr()->and(
+                $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+                $historyQueryBuilder->expr()->in('userid', $historyQueryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY)),
+                $historyQueryBuilder->expr()->eq('actiontype', $historyQueryBuilder->createNamedParameter(RecordHistoryStore::ACTION_ADD, Connection::PARAM_INT))
+            )
+           ];
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
+
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+
         // return results
         $queryBuilder = $this->generateQueryBuilder($this->table);
         $constraints = [];
         if(!empty($membersUid)){
             $constraints = [
-                $queryBuilder->expr()->in('cruser_id', $queryBuilder->createNamedParameter($membersUid,  ConnectionAlias::PARAM_INT_ARRAY))
+                $queryBuilder->expr()->and(
+                    $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                    $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                    $queryBuilder->expr()->eq('deleted', 0)
+                )
             ];
         }
         $result = $this->renderData($queryBuilder,$constraints);

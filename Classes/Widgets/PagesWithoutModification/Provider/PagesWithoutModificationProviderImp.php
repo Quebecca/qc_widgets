@@ -14,6 +14,7 @@
 namespace Qc\QcWidgets\Widgets\PagesWithoutModification\Provider;
 
 
+use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 
@@ -55,15 +56,30 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
      * This function returns the array of records after rendering results from the database
      * @return array
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
         // convert the number of months to seconds
         $sinceDate =  time() - $this->numberOfMonths * (29*24*60*60) ;
         $queryBuilder = $this->generateQueryBuilder($this->table);
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+
+        $historyRecordConstraints = [
+            $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+            $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+        ];
+
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyRecordConstraints);
+
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+
         // if the tstamp is equal '0', we render the tt_contents created before the specified date
         $constraints  = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT)),
+            $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
             $queryBuilder->expr()->orX(
                 $queryBuilder->expr()->andX(
                     $queryBuilder->expr()->lt('tstamp',$queryBuilder->createNamedParameter($sinceDate, \PDO::PARAM_INT)),
@@ -76,6 +92,7 @@ class PagesWithoutModificationProviderImp extends ListOfPagesProvider
             ),
 
         ];
+
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);
     }

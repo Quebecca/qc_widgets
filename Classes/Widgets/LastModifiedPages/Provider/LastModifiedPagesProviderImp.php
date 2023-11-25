@@ -14,6 +14,7 @@
 namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 
 
+use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
 
@@ -44,12 +45,30 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
      * This function returns the array of records after rendering results from the database
      * @return array
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
         $queryBuilder = $this->generateQueryBuilder($this->table);
+        $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
+        $historyConstraints = [
+            $historyQueryBuilder->expr()->and(
+                $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
+                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
+            )
+        ];
+        $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
+        $pagesUids = [];
+        foreach ($results as $result){
+            $pagesUids[] = $result['recuid'];
+        }
+
         $constraints = [
-            $queryBuilder->expr()->eq('cruser_id', $queryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
+            $queryBuilder->expr()->and(
+                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                 $queryBuilder->expr()->eq('t3ver_wsid', 0),
+                 $queryBuilder->expr()->eq('deleted', 0)
+             )
         ];
         $result = $this->renderData($queryBuilder,$constraints);
         return $this->dataMap($result);

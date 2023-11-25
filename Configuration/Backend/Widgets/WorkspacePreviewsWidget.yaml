@@ -20,7 +20,6 @@ services:
     class: 'Qc\QcWidgets\Widgets\WorkspacePreviews\WorkspacePreviewsWidget'
     arguments:
       $dataProvider: '@dashboard.provider.workspacePreviews'
-      $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget

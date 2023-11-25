@@ -118,7 +118,7 @@ Comme d'habitude, on peut sélectionner quels «widgets» sont disponibles dans 
 
 ## Détails sur les widgets de l'extension
 
-### Liste  des utilisateurs de mon groupe
+### Liste des utilisateurs de mon groupe
 Ce «widget» permet d'afficher les détails (utilisateur, courriel, nom réel, dernière connexion) des utilisateurs associés aux mêmes groupes que l’utilisateur connecté. Si cet utilisateur est un administrateur TYPO3, le widget va afficher la liste des administrateurs. 
 
 ### Dernières pages créées dans mes groupes

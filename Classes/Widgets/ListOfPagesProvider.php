@@ -34,9 +34,7 @@ abstract class ListOfPagesProvider extends Provider
             ->where(
                 ...$constraints
             )
-            ->orderBy($this->orderField, $this->orderType)
-            ->setMaxResults($this->limit)
-            ->execute()
+            ->orderBy($this->orderField, $this->orderType)->setMaxResults($this->limit)->executeQuery()
             ->fetchAllAssociative();
     }
 

@@ -12,33 +12,33 @@
 
 namespace Qc\QcWidgets\Widgets\NumberOfRecordsByContentType;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements WidgetInterface
+class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
     /**
-     * @var Provider
+     * @var ServerRequestInterface
      */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
+    private ServerRequestInterface $request;
 
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
+        protected WidgetConfigurationInterface $configuration,
+        private readonly BackendViewFactory $backendViewFactory,
+        protected Provider $dataProvider
+    ){}
+
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function setRequest(ServerRequestInterface $request): void
     {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
+        $this->request = $request;
     }
 
     /**
@@ -47,14 +47,19 @@ class NumberOfRecordsByContentTypeWidget extends AdditionalCssImp implements Wid
      */
     public function renderWidgetContent(): string
     {
+        $view = $this->backendViewFactory->create($this->request);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/NumberOfRecordsByContent');
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data,
             'totalRecordsByNumberOfDays' =>  $this->dataProvider->getTotalRecordsByNumberOfDays()
         ]);
-        return $this->view->render();
+        return $view->render('Widget/NumberOfRecordsByContent');
+    }
+
+    public function getOptions(): array
+    {
+        return [];
     }
 }

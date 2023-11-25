@@ -14,48 +14,52 @@
 
 namespace Qc\QcWidgets\Widgets\LastCreatedPages;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface
+class LastCreatedPagesWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
     /**
-     * @var Provider
+     * @var ServerRequestInterface
      */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
+    private ServerRequestInterface $request;
 
     public function __construct(
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
-    {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
-    }
+        protected WidgetConfigurationInterface $configuration,
+        private readonly BackendViewFactory $backendViewFactory,
+        protected Provider $dataProvider,
+    ){}
 
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
+    }
     /**
      * Render widget view
      * @return string
      */
     public function renderWidgetContent(): string
     {
+        $view = $this->backendViewFactory->create($this->request);
         $data = $this->dataProvider->getItems();
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->setTemplate('Widget/TableOfPagesWidget');
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $view->render('Widget/TableOfPagesWidget');
+    }
+
+    public function getOptions(): array
+    {
+        return [];
     }
 }

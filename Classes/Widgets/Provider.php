@@ -12,6 +12,7 @@
  ***/
 namespace Qc\QcWidgets\Widgets;
 
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -132,7 +133,7 @@ abstract class Provider
      * @param $endTime
      * @return string[]
      */
-    public function getItemStatus($startTime, $endTime): array
+    public function getItemStatus($startTime, $endTime, $hidden = null): array
     {
         $status = [];
          // expired, not available, available
@@ -154,10 +155,41 @@ abstract class Provider
                     . " ( $numberOfDays " . $this->localizationUtility->translate(self::QC_LANG_FILE . 'days') . " )"
             ];
         }
+        else if($hidden == 1){
+            return [
+                'status' => 'hidden',
+                'statusMessage' => $this->localizationUtility->translate(self::QC_LANG_FILE . 'hidden')
+            ];
+        }
         return [
             'status' => 'available',
             'statusMessage' => ''
         ];
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function getRecordHistoryByUser(QueryBuilder $queryBuilder, array $constraints, $maxResult = null) : array {
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll();
+        $qb = $queryBuilder
+            ->select('*')
+            ->from("sys_history")
+            ->where(
+                ...$constraints
+            );
+        if($maxResult){
+            $qb ->setMaxResults($maxResult);
+        }
+        return
+            $qb->orderBy('tstamp', 'DESC')
+                ->groupBy('recuid') // replace distinct
+                ->executeQuery()
+                ->fetchAllAssociative() ??  [];
+    }
+
 
 }

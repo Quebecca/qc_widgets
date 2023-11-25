@@ -13,34 +13,33 @@
 
 namespace Qc\QcWidgets\Widgets\LastModifiedPages;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Qc\QcWidgets\Widgets\AdditionalCssImp;
 use Qc\QcWidgets\Widgets\Provider;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class LastModifiedPagesWidget extends AdditionalCssImp implements WidgetInterface
+class LastModifiedPagesWidget extends AdditionalCssImp implements WidgetInterface, RequestAwareWidgetInterface
 {
-    /** @var WidgetConfigurationInterface */
-    private $configuration;
     /**
-     * @var Provider
+     * @var ServerRequestInterface
      */
-    protected $dataProvider;
-
-    /** @var StandaloneView */
-    private $view;
+    private ServerRequestInterface $request;
 
     public function __construct(
+       protected WidgetConfigurationInterface $configuration,
+       private readonly BackendViewFactory $backendViewFactory,
+       protected Provider $dataProvider
+    ){}
 
-        WidgetConfigurationInterface $configuration,
-        StandaloneView $view,
-        Provider $dataProvider
-    )
+    /**
+     * @param ServerRequestInterface $request
+     */
+    public function setRequest(ServerRequestInterface $request): void
     {
-        $this->configuration = $configuration;
-        $this->view = $view;
-        $this->dataProvider = $dataProvider;
+        $this->request = $request;
     }
 
     /**
@@ -49,14 +48,18 @@ class LastModifiedPagesWidget extends AdditionalCssImp implements WidgetInterfac
      */
     public function renderWidgetContent(): string
     {
+        $view = $this->backendViewFactory->create($this->request);
         $data = $this->dataProvider->getItems();
-
-        $this->view->setTemplate('Widget/TableOfPagesWidget');
         $widgetTitle = $this->dataProvider->getWidgetTitle();
-        $this->view->assignMultiple([
+        $view->assignMultiple([
             'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
-        return $this->view->render();
+        return $view->render("Widget/TableOfPagesWidget");
+    }
+
+    public function getOptions(): array
+    {
+        return [];
     }
 }

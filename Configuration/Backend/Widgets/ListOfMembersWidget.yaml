@@ -20,7 +20,6 @@ services:
     class: 'Qc\QcWidgets\Widgets\ListOfMembers\ListOfMembersWidget'
     arguments:
       $dataProvider: '@dashboard.provider.listOfMembers'
-      $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget

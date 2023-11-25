@@ -20,7 +20,6 @@ services:
     class: 'Qc\QcWidgets\Widgets\NumberOfRecordsByContentType\NumberOfRecordsByContentTypeWidget'
     arguments:
       $dataProvider: '@dashboard.provider.numberOfRecordsByContentType'
-      $view: '@dashboard.views.widget'
     tags:
       -
         name: dashboard.widget

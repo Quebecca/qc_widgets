@@ -13,7 +13,6 @@
 
 namespace Qc\QcWidgets\Widgets\WorkspacePreviews\Provider;
 
-use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\Provider;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -52,7 +51,7 @@ class WorkspacePreviewProviderImp extends Provider
     /**
      * This function returns the array of records after rendering results from the database
      * @return array
-     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getItems(): array
     {
@@ -70,7 +69,7 @@ class WorkspacePreviewProviderImp extends Provider
      * This function is used to return the data from the database
      * @param array $workspaces
      * @return array
-     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function renderData(array $workspaces) : array {
         $previewsData = [];
@@ -86,9 +85,7 @@ class WorkspacePreviewProviderImp extends Provider
                         $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($keyData) . '}')
                     )
                 )
-                ->orderBy($this->orderField, $this->orderType)
-                ->setMaxResults($this->limit)
-                ->execute()
+                ->orderBy($this->orderField, $this->orderType)->setMaxResults($this->limit)->executeQuery()
                 ->fetchAllAssociative();
             // formatting date for the sys_preview records
             foreach ($result as $item){
