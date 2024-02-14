@@ -18,5 +18,6 @@
         "typo3/cms": {
             "extension-key": "qc_widgets"
         }
-    }
+    },
+	"version": "12.4.8"
 }

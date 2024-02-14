@@ -1,6 +1,10 @@
 table {
     font-size : 11px;
 }
+.status-icon img {
+    width:18px !important;
+    height : 18px !important;
+}
 .group-name {
     text-align : center;
 }
