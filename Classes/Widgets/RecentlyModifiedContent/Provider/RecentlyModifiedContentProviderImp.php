@@ -80,6 +80,7 @@ class RecentlyModifiedContentProviderImp extends Provider
         $result = [];
         foreach ($data as $item){
             if($item['header'] === ''){
+                $item['bodytext'] = trim($item['bodytext']);
                 if(strlen($item['bodytext']) < 50 ){
                     $item['bodytext'] = substr($item['bodytext'],0, 50);
                 }
@@ -96,7 +97,7 @@ class RecentlyModifiedContentProviderImp extends Provider
                 'pid' => $item['pid'],
                 'pageTitle' => $this->pagesRepository->getPage($item['pid'])['title'] ?? '',
                 'header' => $item['header'],
-                'bodytext' => $item['bodytext'],
+                'bodytext' => strip_tags($item['bodytext']),
                 'tstamp' =>  date("Y-m-d H:i:s", $item['tstamp']),
                 'status' => $item['status'],
                 'statusMessage' => $item['statusMessage']
