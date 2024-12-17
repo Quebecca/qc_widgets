@@ -1,5 +1,8 @@
 # Qc widgets
 
+## Change log v2.0.0
+2024-12-17 [FEATURE] Add Support for Typo3 V12.
+
 ## Change log  v1.1.0
 
 2022-07-21 [TASK] Add support for php 8.1
