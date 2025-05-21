@@ -40,7 +40,9 @@ class WorkspacePreviewProviderImp extends Provider
     {
         parent::__construct($table,$orderField,$limit,$orderType);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'listOfMyWorkspaceLinks'));
-        $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
+        if(ExtensionManagementUtility::isLoaded('workspaces')) {
+            $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
+        }
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['workspaceProviderLinks.']['limit']);
         // get the limit value from the tsconfig
         if($tsConfigLimit && $tsConfigLimit > 0){

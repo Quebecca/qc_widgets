@@ -19,6 +19,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\DataHandling\History\RecordHistoryStore;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
@@ -52,7 +53,9 @@ class RecentlyModifiedContentProviderImp extends Provider
         parent::__construct($table,$orderField,$limit,$orderType);
         $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PageRepository::class);
         $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'recentlyModifiedContent'));
-        $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
+        if(ExtensionManagementUtility::isLoaded('workspaces')) {
+            $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
+        }
         // get the limit value from the tsconfig
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['recentlyModifiedContent.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){

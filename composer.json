@@ -6,8 +6,7 @@
     "require": {
         "typo3/cms-core": "^12.4.0",
         "typo3/cms-rte-ckeditor": "^12.4.0",
-        "typo3/cms-fluid-styled-content": "^12.4.0",
-        "typo3/cms-workspaces" : "^12.4.0"
+        "typo3/cms-fluid-styled-content": "^12.4.0"
     },
     "autoload": {
         "psr-4": {
