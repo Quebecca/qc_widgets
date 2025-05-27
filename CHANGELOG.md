@@ -1,5 +1,8 @@
 # Qc widgets
 
+## Change log v2.0.1
+2025-05-27 [BUGFIX] Remove the requirement for the TYPO3 Workspace extension.
+
 ## Change log v2.0.0
 2024-12-17 [FEATURE] Add Support for Typo3 V12.
 
