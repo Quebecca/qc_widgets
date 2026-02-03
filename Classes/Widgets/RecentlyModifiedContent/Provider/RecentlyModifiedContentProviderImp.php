@@ -25,12 +25,6 @@ use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
 class RecentlyModifiedContentProviderImp extends Provider
 {
-    /**
-     * Overriding the LONG_FILE attribute
-     * @var string
-     */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/RecentlyModifiedContent/locallang.xlf:';
-
 
     /**
      * @var WorkspaceService
@@ -52,7 +46,6 @@ class RecentlyModifiedContentProviderImp extends Provider
     {
         parent::__construct($table,$orderField,$limit,$orderType);
         $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PageRepository::class);
-        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'recentlyModifiedContent'));
         if(ExtensionManagementUtility::isLoaded('workspaces')) {
             $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         }
@@ -119,7 +112,7 @@ class RecentlyModifiedContentProviderImp extends Provider
         $historyQueryBuilder = $this->generateQueryBuilder("sys_history");
         $historyConstraints = [
             $historyQueryBuilder->expr()->and(
-                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],\PDO::PARAM_INT)),
+                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'],Connection::PARAM_INT)),
                 $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("tt_content")),
                 $historyQueryBuilder->expr()->neq('actiontype', $historyQueryBuilder->createNamedParameter(RecordHistoryStore::ACTION_DELETE, Connection::PARAM_INT)),
             )

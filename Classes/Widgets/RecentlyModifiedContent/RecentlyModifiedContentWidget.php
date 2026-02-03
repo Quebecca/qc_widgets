@@ -50,9 +50,7 @@ class RecentlyModifiedContentWidget extends AdditionalCssImp implements WidgetIn
     {
         $view = $this->backendViewFactory->create($this->request);
         $data = $this->dataProvider->getItems();
-        $widgetTitle = $this->dataProvider->getWidgetTitle();
         $view->assignMultiple([
-            'widgetTitle' => $widgetTitle,
             'data' => $data
         ]);
         return $view->render("Widget/RecentlyModifiedContentWidget");

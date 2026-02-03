@@ -25,7 +25,7 @@ services:
         name: dashboard.widget
         identifier: 'listOfMembers'
         groupNames: 'qcWidgets'
-        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembers'
+        title: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfAdminsMembers'
         description: 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/ListOfMembers/locallang.xlf:listOfMembersDescription'
         iconIdentifier: 'tx-qc_widgets-members-icon'
         height: 'medium'

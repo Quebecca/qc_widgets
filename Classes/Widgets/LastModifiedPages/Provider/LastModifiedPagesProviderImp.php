@@ -13,17 +13,12 @@
 
 namespace Qc\QcWidgets\Widgets\LastModifiedPages\Provider;
 
-
-use Doctrine\DBAL\Connection as ConnectionAlias;
 use Doctrine\DBAL\Driver\Exception;
 use Qc\QcWidgets\Widgets\ListOfPagesProvider;
+use TYPO3\CMS\Core\Database\Connection;
 
 class LastModifiedPagesProviderImp extends ListOfPagesProvider
 {
-    /**
-     * @var string
-     */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/LastModifiedPages/locallang.xlf:';
 
     public function __construct(
         string $table,
@@ -33,7 +28,6 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'myLastPages'));
         // control the limit value, if the user has already specified a value for limiting the results
         $tsConfigLimit = intval($this->userTS['qcWidgets.']['lastModifiedPages.']['limit']);
         if($tsConfigLimit && $tsConfigLimit > 0){
@@ -54,7 +48,7 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
         $historyConstraints = [
             $historyQueryBuilder->expr()->and(
                 $historyQueryBuilder->expr()->eq('tablename', $historyQueryBuilder->createNamedParameter("pages")),
-                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], \PDO::PARAM_INT))
+                $historyQueryBuilder->expr()->eq('userid', $historyQueryBuilder->createNamedParameter($GLOBALS['BE_USER']->user['uid'], Connection::PARAM_INT))
             )
         ];
         $results = $this->getRecordHistoryByUser($historyQueryBuilder, $historyConstraints, $this->limit);
@@ -65,7 +59,7 @@ class LastModifiedPagesProviderImp extends ListOfPagesProvider
 
         $constraints = [
             $queryBuilder->expr()->and(
-                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  ConnectionAlias::PARAM_INT_ARRAY)),
+                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pagesUids,  Connection::PARAM_INT_ARRAY)),
                  $queryBuilder->expr()->eq('t3ver_wsid', 0),
                  $queryBuilder->expr()->eq('deleted', 0)
              )

@@ -1,5 +1,9 @@
 # Qc widgets
 
+## Change log v3.0.0
+2026-02-03 [FEATURE] dd Support for Typo3 V13.
+
+
 ## Change log v2.0.1
 2025-05-27 [BUGFIX] Remove the requirement for the TYPO3 Workspace extension.
 

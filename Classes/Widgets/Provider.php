@@ -107,13 +107,6 @@ abstract class Provider
         return $GLOBALS['BE_USER'];
     }
 
-    /*
-     * @return string
-     */
-    public function getWidgetTitle() : string {
-        return $this->widgetTitle;
-    }
-
     /**
      * @param string $widgetTitle
      */
