@@ -1,0 +1,23 @@
+name: Publish to TER
+
+on:
+  push:
+    tags:
+      - '*' # Déclenchement pour chaque nouveau tag
+
+jobs:
+  publish:
+    name: Upload extension to TER
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: TYPO3 Extension Uploader
+        uses: tomasnorre/typo3-upload-ter@v1.1.0
+        with:
+          # Utilisation des secrets configurés précédemment
+          extension-key: ${{ secrets.TYPO3_EXTENSION_KEY }}
+          api-token: ${{ secrets.TYPO3_API_TOKEN }}
+          # Commentaire de version extrait du tag
+          comment: 'Updated for TYPO3 v13 compatibility'
