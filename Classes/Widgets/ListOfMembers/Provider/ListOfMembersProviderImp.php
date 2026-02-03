@@ -21,6 +21,7 @@ use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Connection;
 
 class ListOfMembersProviderImp extends Provider
 {
@@ -122,7 +123,7 @@ class ListOfMembersProviderImp extends Provider
         $queryBuilder =  $this->generateQueryBuilder('be_groups');
         $result =   $queryBuilder
             ->select('subgroup')
-            ->from('be_groups')->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid, \PDO::PARAM_INT)))->executeQuery()
+            ->from('be_groups')->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($groupUid, Connection::PARAM_INT)))->executeQuery()
             ->fetchOne();
         return explode(',', $result);
     }

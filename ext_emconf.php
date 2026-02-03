@@ -10,10 +10,10 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'module',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-12.9.99',
-            'fluid_styled_content' => '12.4.0-12.9.99',
-            'rte_ckeditor' => '12.4.0-12.9.99',
-            'workspaces' => '12.4.0-12.9.99'
+            'typo3' => '13.4.0-13.9.99',
+            'fluid_styled_content' => '13.4.0-13.9.99',
+            'rte_ckeditor' => '13.4.0-13.9.99',
+            'workspaces' => '13.4.0-13.9.99'
         ],
         'conflicts' => [
         ],
@@ -24,5 +24,5 @@ $EM_CONF[$_EXTKEY] = [
         ],
     ],
     'state' => 'stable',
-    'version' => '2.0.1',
+    'version' => '3.0.0',
 ];

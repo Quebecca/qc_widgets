@@ -1,3 +1,4 @@
+options.dashboard.dashboardPresetsForNewUsers = qcWidgets
 mod{
     qcWidgets{
         //This settings is to allow the user to select the number of records to show in the widgets
@@ -36,5 +37,3 @@ mod{
         }
     }
 }
-
-

@@ -20,10 +20,6 @@ use TYPO3\CMS\Workspaces\Service\WorkspaceService;
 
 class WorkspacePreviewProviderImp extends Provider
 {
-    /**
-     * @var string
-     */
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/WorkspacePreviews/locallang.xlf:';
 
     /**
      * @var WorkspaceService
@@ -39,7 +35,6 @@ class WorkspacePreviewProviderImp extends Provider
     )
     {
         parent::__construct($table,$orderField,$limit,$orderType);
-        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE . 'listOfMyWorkspaceLinks'));
         if(ExtensionManagementUtility::isLoaded('workspaces')) {
             $this->workspaceService = $workspaceService ?? GeneralUtility::makeInstance(WorkspaceService::class);
         }

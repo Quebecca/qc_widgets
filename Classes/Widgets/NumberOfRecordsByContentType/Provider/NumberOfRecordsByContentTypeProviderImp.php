@@ -21,7 +21,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class NumberOfRecordsByContentTypeProviderImp extends Provider
 {
-    const LANG_FILE = 'LLL:EXT:qc_widgets/Resources/Private/Language/Module/NumberOfRecordsByContentType/locallang.xlf:';
     const NUMBER_OF_DAYS = 365;
     /**
      * @var array|\array[][]
@@ -44,7 +43,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     public function __construct(string $table, string $orderField, int $limit, string $orderType, LocalizationUtility $localizationUtility = null)
     {
         parent::__construct($table, $orderField, $limit, $orderType, $localizationUtility);
-        $this->setWidgetTitle($this->localizationUtility->translate(self::LANG_FILE.'numberOfRecordsByContentType'));
+
         $last24h =strtotime(date('Y-m-d', strtotime('-1 day')));
         $this->totalRecordsByNumberOfDays = $this->getTsConfig('columns','totalRecordsByNumberOfDays')
             ? intval($this->getTsConfig('columns','totalRecordsByNumberOfDays'))
@@ -182,7 +181,7 @@ class NumberOfRecordsByContentTypeProviderImp extends Provider
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
-            ->getSchemaManager();
+            ->createSchemaManager();
     }
 
     /**
